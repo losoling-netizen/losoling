@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>銀髮族輕鬆開口說英文 App</title>
+  
   <style>
     :root {
       --bg-color: #f0f7f4;
@@ -56,7 +57,7 @@
       padding-bottom: 90px;
     }
 
-    /* ===== New banner-style header ===== */
+    /* ===== Header ===== */
     header {
       background: linear-gradient(180deg, #faf8f1 0%, var(--banner-bg) 100%);
       padding: 18px 18px 16px 18px;
@@ -68,675 +69,162 @@
       overflow: hidden;
     }
 
-    .banner-leaf-deco {
-      position: absolute;
-      pointer-events: none;
-      opacity: 0.9;
-    }
-
-    .banner-leaf-deco.top-left {
-      top: -10px;
-      left: -14px;
-      width: 64px;
-      height: 64px;
-      transform: rotate(-10deg);
-    }
-
-    .banner-leaf-deco.bottom-right {
-      bottom: -16px;
-      right: -10px;
-      width: 56px;
-      height: 56px;
-      transform: rotate(160deg) scaleY(-1);
-      opacity: 0.5;
-    }
-
-    .banner-top-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      position: relative;
-      z-index: 1;
-    }
-
-    .banner-heading-block {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .banner-leaf-icon {
-      width: 26px;
-      height: 26px;
-      flex-shrink: 0;
-    }
-
-    .banner-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--banner-title-dark);
-      letter-spacing: 0.5px;
-      line-height: 1.2;
-    }
-
-    .banner-title .accent {
-      color: var(--banner-title-green);
-    }
+    .banner-leaf-deco { position: absolute; pointer-events: none; opacity: 0.9; }
+    .banner-leaf-deco.top-left { top: -10px; left: -14px; width: 64px; height: 64px; transform: rotate(-10deg); }
+    .banner-leaf-deco.bottom-right { bottom: -16px; right: -10px; width: 56px; height: 56px; transform: rotate(160deg) scaleY(-1); opacity: 0.5; }
+    
+    .banner-top-row { display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 1; }
+    .banner-heading-block { display: flex; align-items: center; gap: 8px; }
+    .banner-leaf-icon { width: 26px; height: 26px; flex-shrink: 0; }
+    
+    .banner-title { font-size: 1.5rem; font-weight: 800; color: var(--banner-title-dark); letter-spacing: 0.5px; line-height: 1.2; }
+    .banner-title .accent { color: var(--banner-title-green); }
 
     .settings-btn {
-      background: #ffffff;
-      border: 2px solid var(--primary-dark);
-      color: var(--primary-dark);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: transform 0.15s;
-      flex-shrink: 0;
+      background: #ffffff; border: 2px solid var(--primary-dark); color: var(--primary-dark);
+      width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: transform 0.15s; flex-shrink: 0;
     }
-
     .settings-btn:active { transform: scale(0.9); }
 
-    .banner-subtitle {
-      margin: 6px 0 14px 34px;
-      font-size: 0.92rem;
-      font-weight: 600;
-      color: var(--text-sub);
-      position: relative;
-      z-index: 1;
-    }
+    .banner-subtitle { margin: 6px 0 14px 34px; font-size: 0.92rem; font-weight: 600; color: var(--text-sub); position: relative; z-index: 1; }
 
-    .banner-feature-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .banner-feature-item {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: #ffffff;
-      border: 1px solid #ece6d4;
-      border-radius: 16px;
-      padding: 7px 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-    }
-
-    .banner-feature-icon {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      flex-shrink: 0;
-    }
-
+    .banner-feature-row { display: flex; justify-content: space-between; gap: 8px; position: relative; z-index: 1; }
+    .banner-feature-item { flex: 1; display: flex; align-items: center; gap: 6px; background: #ffffff; border: 1px solid #ece6d4; border-radius: 16px; padding: 7px 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+    .banner-feature-icon { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
     .banner-feature-icon.learn { background: #e5f3e5; color: #3f8a4a; }
     .banner-feature-icon.speak { background: #e4eefb; color: #2f6fb0; }
     .banner-feature-icon.grow { background: #fbe9e6; color: #d1685e; }
 
-    .banner-feature-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.15;
-      min-width: 0;
-    }
-
-    .banner-feature-title {
-      font-size: 0.78rem;
-      font-weight: 800;
-    }
-
+    .banner-feature-text { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+    .banner-feature-title { font-size: 0.78rem; font-weight: 800; }
     .banner-feature-title.learn { color: #3f8a4a; }
     .banner-feature-title.speak { color: #2f6fb0; }
     .banner-feature-title.grow { color: #d1685e; }
+    .banner-feature-sub { font-size: 0.66rem; color: var(--text-sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .banner-feature-sub {
-      font-size: 0.66rem;
-      color: var(--text-sub);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    /* ===== End banner-style header ===== */
-
+    /* ===== Navigation Tabs (加大加高按鈕，更好點擊) ===== */
     nav.app-nav {
-      display: flex;
-      background: #ffffff;
-      padding: 10px 8px;
-      gap: 6px;
-      border-bottom: 1px solid var(--gray-border);
-      position: sticky;
-      top: 143px;
-      z-index: 90;
-      overflow-x: auto;
-      scrollbar-width: none;
+      display: flex; background: #ffffff; padding: 12px 8px; gap: 8px; border-bottom: 1px solid var(--gray-border);
+      position: sticky; top: 143px; z-index: 90; overflow-x: auto; scrollbar-width: none;
     }
-
     nav.app-nav::-webkit-scrollbar { display: none; }
-
     .nav-tab {
-      flex: 1;
-      min-width: 95px;
-      background-color: #f3f4f6;
-      border: 2px solid #d1d5db;
-      color: var(--text-sub);
-      font-size: 0.95rem;
-      font-weight: bold;
-      padding: 8px 10px;
-      border-radius: 20px;
-      cursor: pointer;
-      text-align: center;
-      white-space: nowrap;
-      transition: all 0.2s;
+      flex: 1; min-width: 95px; background-color: #f3f4f6; border: 2.5px solid #d1d5db; color: var(--text-sub);
+      font-size: 1.05rem; font-weight: 800; padding: 14px 10px; border-radius: 22px; cursor: pointer; text-align: center; white-space: nowrap; transition: all 0.2s;
+      min-height: 56px; display: flex; align-items: center; justify-content: center;
     }
+    .nav-tab.active { background-color: var(--primary-color); border-color: var(--primary-dark); color: #1b4332; box-shadow: 0 4px 10px rgba(0,0,0,0.12); }
+    
+    .container { padding: 16px; flex: 1; }
 
-    .nav-tab.active {
-      background-color: var(--primary-color);
-      border-color: var(--primary-dark);
-      color: #1b4332;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.12);
-    }
+    .progress-card { background: #ffffff; border: 2px solid #c8e6c9; border-radius: 18px; padding: 14px 16px; margin-bottom: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.04); }
+    .progress-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: bold; font-size: 1.05rem; color: var(--primary-dark); }
+    .progress-bar-bg { width: 100%; height: 18px; background-color: var(--primary-light); border-radius: 10px; overflow: hidden; border: 1px solid #c8e6c9; }
+    .progress-bar-val { height: 100%; width: 0%; background: linear-gradient(90deg, #88d49e, #2e7d32); border-radius: 10px; transition: width 0.4s ease; }
 
-    .container {
-      padding: 16px;
-      flex: 1;
-    }
-
-    .progress-card {
-      background: #ffffff;
-      border: 2px solid #c8e6c9;
-      border-radius: 18px;
-      padding: 14px 16px;
-      margin-bottom: 18px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-    }
-
-    .progress-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-      font-weight: bold;
-      font-size: 1.05rem;
-      color: var(--primary-dark);
-    }
-
-    .progress-bar-bg {
-      width: 100%;
-      height: 18px;
-      background-color: var(--primary-light);
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid #c8e6c9;
-    }
-
-    .progress-bar-val {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #88d49e, #2e7d32);
-      border-radius: 10px;
-      transition: width 0.4s ease;
-    }
-
-    .theme-cards-container {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-
+    .theme-cards-container { display: flex; flex-direction: column; gap: 18px; }
     .theme-big-card {
-      background-color: #ffffff;
-      border-radius: 22px;
-      padding: 20px 18px;
-      border: 3px solid;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      transition: transform 0.15s;
+      background-color: #ffffff; border-radius: 22px; padding: 20px 18px; border: 3px solid; box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+      display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; transition: transform 0.15s;
     }
-
     .theme-big-card:active { transform: scale(0.98); }
-
     .theme-big-card.daily { border-color: #a8e6cf; background: linear-gradient(180deg, #ffffff 60%, #f1f8e9 100%); }
     .theme-big-card.travel { border-color: #90caf9; background: linear-gradient(180deg, #ffffff 60%, #e3f2fd 100%); }
     .theme-big-card.social { border-color: #ffcc80; background: linear-gradient(180deg, #ffffff 60%, #fff3e0 100%); }
     .theme-big-card.health { border-color: #ef9a9a; background: linear-gradient(180deg, #ffffff 60%, #ffebee 100%); }
 
-    .theme-card-title {
-      font-size: 1.6rem;
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-
+    .theme-card-title { font-size: 1.6rem; font-weight: 800; margin-bottom: 12px; }
     .theme-card-title.daily { color: #2e7d32; }
     .theme-card-title.travel { color: #1565c0; }
     .theme-card-title.social { color: #e65100; }
     .theme-card-title.health { color: #c62828; }
-
     .theme-icon-circle {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3.5rem;
-      margin-bottom: 14px;
-      box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+      width: 110px; height: 110px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem; margin-bottom: 14px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
     }
-
     .theme-icon-circle.daily { background-color: #e8f5e9; }
     .theme-icon-circle.travel { background-color: #e3f2fd; }
     .theme-icon-circle.social { background-color: #fff3e0; }
     .theme-icon-circle.health { background-color: #ffebee; }
+    .theme-desc { font-size: 1rem; color: var(--text-sub); margin-bottom: 18px; font-weight: 600; line-height: 1.4; }
 
-    .theme-desc {
-      font-size: 1rem;
-      color: var(--text-sub);
-      margin-bottom: 18px;
-      font-weight: 600;
-      line-height: 1.4;
-    }
-
+    /* 開始學習主題按鈕加高加大 */
     .theme-start-btn {
-      width: 100%;
-      padding: 14px 20px;
-      border-radius: 25px;
-      border: none;
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: #ffffff;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      width: 100%; padding: 18px 20px; border-radius: 25px; border: none; font-size: 1.35rem; font-weight: 800; color: #ffffff;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      min-height: 62px;
     }
-
     .theme-start-btn.daily { background-color: #388e3c; }
     .theme-start-btn.travel { background-color: #1976d2; }
     .theme-start-btn.social { background-color: #f57c00; }
     .theme-start-btn.health { background-color: #d32f2f; }
 
-    .practice-view-panel {
-      display: none;
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 20px 16px;
-      border: 3px solid var(--primary-color);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-      text-align: center;
-    }
+    .practice-view-panel { display: none; background: #ffffff; border-radius: 20px; padding: 20px 16px; border: 3px solid var(--primary-color); box-shadow: 0 6px 18px rgba(0,0,0,0.08); text-align: center; }
+    .practice-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    
+    /* 返回主題按鈕加高加大 */
+    .btn-back-theme { background: var(--primary-light); border: 2.5px solid var(--primary-dark); color: var(--primary-dark); padding: 12px 18px; border-radius: 18px; font-weight: bold; font-size: 1.1rem; cursor: pointer; min-height: 50px; }
+    .practice-word-badge { background: var(--primary-light); color: var(--primary-dark); padding: 6px 14px; border-radius: 14px; font-size: 1rem; font-weight: bold; }
 
-    .practice-top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
+    .practice-en-box { font-size: 2.2rem; font-weight: 900; color: #1b4332; margin: 20px 0 10px 0; line-height: 1.25; min-height: 4.2rem; display: flex; align-items: center; justify-content: center; word-break: break-word; letter-spacing: 0.5px; }
+    .practice-zh-box { font-size: 1.3rem; font-weight: bold; color: #4b5563; margin-bottom: 24px; min-height: 2.2rem; background: #f8faf8; padding: 10px 14px; border-radius: 12px; display: inline-block; border: 1px dashed #a8e6cf; }
 
-    .btn-back-theme {
-      background: var(--primary-light);
-      border: 2px solid var(--primary-dark);
-      color: var(--primary-dark);
-      padding: 6px 14px;
-      border-radius: 16px;
-      font-weight: bold;
-      font-size: 0.95rem;
-      cursor: pointer;
-    }
-
-    .practice-word-badge {
-      background: var(--primary-light);
-      color: var(--primary-dark);
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 0.9rem;
-      font-weight: bold;
-    }
-
-    .practice-en-box {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: #1b4332;
-      margin: 20px 0 10px 0;
-      line-height: 1.3;
-      min-height: 3.6rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .practice-zh-box {
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: #4b5563;
-      margin-bottom: 24px;
-      min-height: 2.2rem;
-    }
-
-    .practice-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-    }
-
-    .btn-large-audio {
-      background-color: var(--primary-light);
-      border: 3px solid var(--primary-color);
-      color: var(--primary-dark);
-      padding: 14px;
-      border-radius: 20px;
-      font-size: 1.25rem;
-      font-weight: 800;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.06);
-    }
-
+    .practice-actions { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+    
+    /* 聆聽發音按鈕加高加大 */
+    .btn-large-audio { background-color: var(--primary-light); border: 3px solid var(--primary-color); color: var(--primary-dark); padding: 20px; border-radius: 22px; font-size: 1.4rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); min-height: 68px; }
     .btn-large-audio:active { background-color: var(--accent-color); }
+    
+    .practice-controls-row { display: flex; gap: 12px; }
+    
+    /* 下一張與標記學會按鈕加高加大 */
+    .btn-ctrl-action { flex: 1; padding: 18px; border-radius: 18px; border: 2.5px solid var(--primary-dark); background-color: #ffffff; color: var(--primary-dark); font-size: 1.2rem; font-weight: 800; cursor: pointer; min-height: 60px; display: flex; align-items: center; justify-content: center; }
+    .btn-ctrl-action.primary { background-color: var(--primary-dark); color: #ffffff; }
 
-    .practice-controls-row {
-      display: flex;
-      gap: 10px;
-    }
+    .filter-pills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    
+    /* 分類標籤按鈕加高加大 */
+    .sub-filter-pill { background: #ffffff; border: 2.5px solid #a8e6cf; color: var(--primary-dark); padding: 14px 10px; border-radius: 18px; font-size: 1.1rem; font-weight: 800; text-align: center; cursor: pointer; width: 100%; box-shadow: 0 2px 6px rgba(0,0,0,0.04); transition: all 0.2s; min-height: 54px; display: flex; align-items: center; justify-content: center; }
+    .sub-filter-pill.active { background: var(--primary-dark); color: #ffffff; border-color: var(--primary-dark); box-shadow: 0 4px 10px rgba(0,0,0,0.12); }
 
-    .btn-ctrl-action {
-      flex: 1;
-      padding: 12px;
-      border-radius: 16px;
-      border: 2px solid var(--primary-dark);
-      background-color: #ffffff;
-      color: var(--primary-dark);
-      font-size: 1.05rem;
-      font-weight: bold;
-      cursor: pointer;
-    }
+    .card-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+    .item-card { background: #ffffff; border: 2.5px solid #c8e6c9; border-radius: 18px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+    .item-card.learned { border-color: var(--gold-color); background-color: #fffdf2; }
+    .item-info { flex: 1; padding-right: 12px; }
+    .item-tag { font-size: 0.85rem; background: var(--primary-light); color: var(--primary-dark); padding: 4px 10px; border-radius: 10px; font-weight: bold; display: inline-block; margin-bottom: 6px; }
+    .item-en { font-size: 1.5rem; font-weight: 900; color: #1b4332; line-height: 1.3; word-break: break-word; }
+    .item-zh { font-size: 1.15rem; color: var(--text-sub); margin-top: 4px; font-weight: bold; }
+    .item-btns { display: flex; flex-direction: column; gap: 8px; }
 
-    .btn-ctrl-action.primary {
-      background-color: var(--primary-dark);
-      color: #ffffff;
-    }
+    /* 圓形按鈕放大確保長者好點擊 */
+    .btn-circle { width: 56px; height: 56px; border-radius: 50%; border: 2.5px solid var(--primary-color); background: #e8f5e9; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .btn-circle.progress-toggle { border-color: var(--gray-border); background: #f3f4f6; }
+    .btn-circle.progress-toggle.done { border-color: var(--gold-color); background: #fff8e1; }
 
-    .filter-pills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
+    /* 分頁列按鈕加高加大 */
+    .pagination-bar { display: flex; justify-content: space-between; align-items: center; background: #ffffff; padding: 14px 16px; border-radius: 18px; border: 2.5px solid var(--gray-border); margin-bottom: 20px; }
+    .page-btn { background: var(--primary-color); color: #1b4332; border: 2.5px solid var(--primary-dark); padding: 12px 20px; border-radius: 14px; font-weight: 800; font-size: 1.1rem; cursor: pointer; min-height: 52px; display: flex; align-items: center; justify-content: center; }
+    .page-btn:disabled { background: #e5e5e5; color: #a0a0a0; border-color: #d1d5db; cursor: not-allowed; }
+    .page-info { font-weight: bold; color: var(--text-main); font-size: 1.1rem; }
 
-    .sub-filter-pill {
-      background: #ffffff;
-      border: 2.5px solid #a8e6cf;
-      color: var(--primary-dark);
-      padding: 10px 8px;
-      border-radius: 18px;
-      font-size: 1.02rem;
-      font-weight: 800;
-      text-align: center;
-      cursor: pointer;
-      width: 100%;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-      transition: all 0.2s;
-    }
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+    .modal-box { background: #ffffff; width: 100%; max-width: 420px; border-radius: 24px; padding: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border: 3px solid var(--primary-color); max-height: 90vh; overflow-y: auto; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 2px solid var(--primary-light); padding-bottom: 10px; }
+    .modal-title { font-size: 1.35rem; font-weight: 800; color: var(--primary-dark); }
+    .modal-close { background: transparent; border: none; font-size: 1.8rem; cursor: pointer; color: #6b7280; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
 
-    .sub-filter-pill.active {
-      background: var(--primary-dark);
-      color: #ffffff;
-      border-color: var(--primary-dark);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
-    }
+    .setting-group { margin-bottom: 20px; }
+    .setting-label { font-weight: bold; margin-bottom: 10px; display: block; color: var(--text-main); font-size: 1.1rem; }
+    .setting-options { display: flex; gap: 10px; }
+    
+    /* 設定選項按鈕加高加大 */
+    .opt-btn { flex: 1; padding: 14px 10px; border: 2.5px solid var(--gray-border); background: #ffffff; border-radius: 14px; font-weight: bold; font-size: 1.05rem; cursor: pointer; text-align: center; min-height: 54px; display: flex; align-items: center; justify-content: center; }
+    .opt-btn.active { background: var(--primary-color); border-color: var(--primary-dark); color: #1b4332; }
 
-    .card-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .item-card {
-      background: #ffffff;
-      border: 2.5px solid #c8e6c9;
-      border-radius: 18px;
-      padding: 14px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-    }
-
-    .item-card.learned {
-      border-color: var(--gold-color);
-      background-color: #fffdf2;
-    }
-
-    .item-info {
-      flex: 1;
-      padding-right: 12px;
-    }
-
-    .item-tag {
-      font-size: 0.8rem;
-      background: var(--primary-light);
-      color: var(--primary-dark);
-      padding: 2px 8px;
-      border-radius: 8px;
-      font-weight: bold;
-      display: inline-block;
-      margin-bottom: 4px;
-    }
-
-    .item-en {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: #1b4332;
-      line-height: 1.3;
-    }
-
-    .item-zh {
-      font-size: 1.05rem;
-      color: var(--text-sub);
-      margin-top: 2px;
-    }
-
-    .item-btns {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .btn-circle {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 2px solid var(--primary-color);
-      background: #e8f5e9;
-      font-size: 1.3rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .btn-circle.progress-toggle {
-      border-color: var(--gray-border);
-      background: #f3f4f6;
-    }
-
-    .btn-circle.progress-toggle.done {
-      border-color: var(--gold-color);
-      background: #fff8e1;
-    }
-
-    .pagination-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #ffffff;
-      padding: 10px 14px;
-      border-radius: 18px;
-      border: 2px solid var(--gray-border);
-      margin-bottom: 20px;
-    }
-
-    .page-btn {
-      background: var(--primary-color);
-      color: #1b4332;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 14px;
-      font-weight: 800;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-
-    .page-btn:disabled {
-      background: #e5e5e5;
-      color: #a0a0a0;
-      cursor: not-allowed;
-    }
-
-    .page-info {
-      font-weight: bold;
-      color: var(--text-main);
-      font-size: 1rem;
-    }
-
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .modal-box {
-      background: #ffffff;
-      width: 100%;
-      max-width: 420px;
-      border-radius: 24px;
-      padding: 22px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      border: 3px solid var(--primary-color);
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
-      border-bottom: 2px solid var(--primary-light);
-      padding-bottom: 10px;
-    }
-
-    .modal-title {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-    }
-
-    .modal-close {
-      background: transparent;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #6b7280;
-    }
-
-    .setting-group { margin-bottom: 18px; }
-    .setting-label { font-weight: bold; margin-bottom: 8px; display: block; color: var(--text-main); }
-    .setting-options { display: flex; gap: 8px; }
-
-    .opt-btn {
-      flex: 1;
-      padding: 10px 6px;
-      border: 2px solid var(--gray-border);
-      background: #ffffff;
-      border-radius: 14px;
-      font-weight: bold;
-      font-size: 0.95rem;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .opt-btn.active {
-      background: var(--primary-color);
-      border-color: var(--primary-dark);
-      color: #1b4332;
-    }
-
-    .google-translate-link {
-      position: fixed;
-      bottom: 16px;
-      left: 16px;
-      background: #ffffff;
-      border: 2.5px solid var(--primary-color);
-      color: var(--primary-dark);
-      padding: 10px 16px;
-      border-radius: 25px;
-      font-size: 0.95rem;
-      font-weight: 800;
-      text-decoration: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 500;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .search-input {
-      width: 100%;
-      padding: 12px 16px;
-      border: 2.5px solid #c8e6c9;
-      border-radius: 18px;
-      font-size: 1rem;
-      margin-bottom: 12px;
-      outline: none;
-    }
-
-    .toast-msg {
-      position: fixed;
-      top: 85px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #1b4332;
-      color: #ffffff;
-      padding: 10px 20px;
-      border-radius: 20px;
-      font-weight: bold;
-      font-size: 0.95rem;
-      z-index: 2000;
-      opacity: 0;
-      transition: opacity 0.3s;
-      pointer-events: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
+    .google-translate-link { position: fixed; bottom: 16px; left: 16px; background: #ffffff; border: 2.5px solid var(--primary-color); color: var(--primary-dark); padding: 14px 20px; border-radius: 25px; font-size: 1.05rem; font-weight: 800; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 500; display: flex; align-items: center; gap: 6px; min-height: 52px; }
+    .search-input { width: 100%; padding: 16px 18px; border: 2.5px solid #c8e6c9; border-radius: 18px; font-size: 1.1rem; margin-bottom: 14px; outline: none; }
+    .toast-msg { position: fixed; top: 85px; left: 50%; transform: translateX(-50%); background: #1b4332; color: #ffffff; padding: 14px 24px; border-radius: 20px; font-weight: bold; font-size: 1.05rem; z-index: 2000; opacity: 0; transition: opacity 0.3s; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
     .toast-msg.show { opacity: 1; }
   </style>
 </head>
@@ -799,8 +287,6 @@
   </nav>
 
   <div class="container">
-
-    <!-- Progress Banner -->
     <div class="progress-card">
       <div class="progress-head">
         <span>📊 學習總進度</span>
@@ -814,50 +300,41 @@
     <!-- TAB 1: 🚀 開始學習 -->
     <div id="tab-start">
       <div id="theme-selection-grid" class="theme-cards-container">
-        <!-- Theme 1: Daily -->
         <div class="theme-big-card daily">
           <div class="theme-card-title daily">生活日常</div>
           <div class="theme-icon-circle daily">🧺</div>
-          <div class="theme-desc">打招呼、購物、問路、看醫生...等日常基礎英文單字與對話</div>
-          <button class="theme-start-btn daily" onclick="enterThemePractice('s_daily')">開始學習 ➔</button>
+          <div class="theme-desc">打招呼, 購物, 問路, 看醫生...等日常基礎英文單字與對話</div>
+          <button class="theme-start-btn daily" onclick="enterThemePractice('daily')">開始學習 ➔</button>
         </div>
-
-        <!-- Theme 2: Travel -->
         <div class="theme-big-card travel">
           <div class="theme-card-title travel">旅遊英文</div>
           <div class="theme-icon-circle travel">✈️</div>
-          <div class="theme-desc">機場、飯店、交通、觀光...出國旅行必備應用英文</div>
-          <button class="theme-start-btn travel" onclick="enterThemePractice('s_travel')">開始學習 ➔</button>
+          <div class="theme-desc">機場, 飯店, 交通, 觀光...出國旅行必備應用英文</div>
+          <button class="theme-start-btn travel" onclick="enterThemePractice('travel')">開始學習 ➔</button>
         </div>
-
-        <!-- Theme 3: Dining -->
         <div class="theme-big-card social">
-          <div class="theme-card-title social">餐廳英文</div>
+          <div class="theme-card-title social">餐廳飲食</div>
           <div class="theme-icon-circle social">🍽️</div>
-          <div class="theme-desc">點餐、詢問、結帳...餐廳聚會與飲食英語輕鬆學</div>
-          <button class="theme-start-btn social" onclick="enterThemePractice('s_social')">開始學習 ➔</button>
+          <div class="theme-desc">點餐, 詢問, 結帳...餐廳聚會與飲食英語輕鬆學</div>
+          <button class="theme-start-btn social" onclick="enterThemePractice('social')">開始學習 ➔</button>
         </div>
-
-        <!-- Theme 4: Health -->
         <div class="theme-big-card health">
-          <div class="theme-card-title health">醫療求助</div>
+          <div class="theme-card-title health">醫療健康</div>
           <div class="theme-icon-circle health">🏥</div>
-          <div class="theme-desc">身體不適、醫院藥局、緊急求助等實用英語會話</div>
-          <button class="theme-start-btn health" onclick="enterThemePractice('s_health')">開始學習 ➔</button>
+          <div class="theme-desc">身體不適, 醫院藥局, 緊急求助等實用英語會話</div>
+          <button class="theme-start-btn health" onclick="enterThemePractice('health')">開始學習 ➔</button>
         </div>
       </div>
 
-      <!-- Practice Viewer -->
+      <!-- 練習面板 -->
       <div id="theme-practice-panel" class="practice-view-panel">
         <div class="practice-top-bar">
           <button class="btn-back-theme" onclick="exitThemePractice()">⬅️ 返回主題</button>
-          <span class="practice-word-badge" id="pract-count-badge">第 1 / 150 頁</span>
+          <span class="practice-word-badge" id="pract-count-badge">第 1 頁</span>
         </div>
-
-        <div class="item-tag" id="pract-ctx-tag">生活日常 (打招呼)</div>
-        <div class="practice-en-box" id="pract-en-text">Hello, how are you?</div>
-        <div class="practice-zh-box" id="pract-zh-text">你好，你好嗎？</div>
-
+        <div class="item-tag" id="pract-ctx-tag">標籤</div>
+        <div class="practice-en-box" id="pract-en-text">English</div>
+        <div class="practice-zh-box" id="pract-zh-text">中文</div>
         <div class="practice-actions">
           <button class="btn-large-audio" id="pract-speak-btn" onclick="speakCurrentPractice()">🔊 按我聆聽發音</button>
           <div class="practice-controls-row">
@@ -868,46 +345,41 @@
       </div>
     </div>
 
+    <!-- TAB 2: 單字練習 -->
     <div id="tab-vocab" style="display: none;">
-      <input type="text" id="vocab-search-input" class="search-input" placeholder="🔍 搜尋單字或中文..." oninput="onVocabSearch()">
-
-      <!-- Clean 2x2 Grid Layout for 4 Themes -->
+      <input type="text" id="vocab-search-input" class="search-input" placeholder="🔍 搜尋英文或中文..." oninput="onVocabSearch()">
       <div class="filter-pills-grid">
-        <button class="sub-filter-pill active" onclick="setVocabThemeFilter('v_daily', this)">🏠 生活日常</button>
-        <button class="sub-filter-pill" onclick="setVocabThemeFilter('v_travel', this)">✈️ 旅遊英文</button>
-        <button class="sub-filter-pill" onclick="setVocabThemeFilter('v_social', this)">🍽️ 餐廳飲食</button>
-        <button class="sub-filter-pill" onclick="setVocabThemeFilter('v_health', this)">🏥 醫療健康</button>
+        <button class="sub-filter-pill active" onclick="setVocabThemeFilter('daily', this)">🏠 生活日常</button>
+        <button class="sub-filter-pill" onclick="setVocabThemeFilter('travel', this)">✈️ 旅遊英文</button>
+        <button class="sub-filter-pill" onclick="setVocabThemeFilter('social', this)">🍽️ 餐廳飲食</button>
+        <button class="sub-filter-pill" onclick="setVocabThemeFilter('health', this)">🏥 醫療健康</button>
       </div>
-
       <div class="card-list" id="vocab-card-list"></div>
-
       <div class="pagination-bar">
         <button class="page-btn" id="vocab-prev-btn" onclick="changeVocabPage(-1)">⬅️ 上一頁</button>
-        <span class="page-info" id="vocab-page-info">第 1 / 1 頁</span>
+        <span class="page-info" id="vocab-page-info">第 1 頁</span>
         <button class="page-btn" id="vocab-next-btn" onclick="changeVocabPage(1)">下一頁 ➔</button>
       </div>
     </div>
 
+    <!-- TAB 3: 情境模式 -->
     <div id="tab-scenario" style="display: none;">
       <input type="text" id="scenario-search-input" class="search-input" placeholder="🔍 搜尋情境或句子..." oninput="onScenarioSearch()">
-
-      <!-- Clean 2x2 Grid Layout for 4 Themes -->
       <div class="filter-pills-grid">
-        <button class="sub-filter-pill active" onclick="setScenarioThemeFilter('s_daily', this)">🏠 生活日常</button>
-        <button class="sub-filter-pill" onclick="setScenarioThemeFilter('s_travel', this)">✈️ 旅遊英文</button>
-        <button class="sub-filter-pill" onclick="setScenarioThemeFilter('s_social', this)">🍽️ 餐廳飲食</button>
-        <button class="sub-filter-pill" onclick="setScenarioThemeFilter('s_health', this)">🏥 醫療健康</button>
+        <button class="sub-filter-pill active" onclick="setScenarioThemeFilter('daily', this)">🏠 生活日常</button>
+        <button class="sub-filter-pill" onclick="setScenarioThemeFilter('travel', this)">✈️ 旅遊英文</button>
+        <button class="sub-filter-pill" onclick="setScenarioThemeFilter('social', this)">🍽️ 餐廳飲食</button>
+        <button class="sub-filter-pill" onclick="setScenarioThemeFilter('health', this)">🏥 醫療健康</button>
       </div>
-
       <div class="card-list" id="scenario-card-list"></div>
-
       <div class="pagination-bar">
         <button class="page-btn" id="scen-prev-btn" onclick="changeScenarioPage(-1)">⬅️ 上一頁</button>
-        <span class="page-info" id="scen-page-info">第 1 / 1 頁</span>
+        <span class="page-info" id="scen-page-info">第 1 頁</span>
         <button class="page-btn" id="scen-next-btn" onclick="changeScenarioPage(1)">下一頁 ➔</button>
       </div>
     </div>
 
+    <!-- TAB 4: 進度分析 -->
     <div id="tab-analytics" style="display: none;">
       <div class="progress-card" style="margin-top:10px;">
         <div style="font-weight:bold; margin-bottom:10px; font-size:1.2rem; color:var(--primary-dark);">📈 學習成果總計</div>
@@ -929,30 +401,25 @@
       <div id="analytics-theme-breakdown"></div>
 
       <div style="text-align:center; margin-top:24px; display:flex; flex-direction:column; gap:12px;">
-        <button class="btn-ctrl-action" style="border-color:#10b981; color:#047857;" onclick="fetchAllCloudData(true)">☁️ 重新同步雲端 Excel 資料</button>
-        <button class="btn-ctrl-action" style="border-color:#ef4444; color:#ef4444;" onclick="openConfirmResetModal()">🔄 重置學習紀錄</button>
+        <button class="btn-ctrl-action" style="border-color:#ef4444; color:#ef4444; width:100%; justify-content:center;" onclick="openConfirmResetModal()">🔄 重置學習紀錄</button>
       </div>
     </div>
-
   </div>
 
-  <!-- Google Translate Link -->
   <a href="https://translate.google.com/?hl=zh-TW" target="_blank" class="google-translate-link">
     🌐 Google 翻譯
   </a>
 </div>
 
-<!-- Toast Notification -->
 <div class="toast-msg" id="app-toast"></div>
 
-<!-- Settings Modal Overlay -->
+<!-- 設定彈出視窗 -->
 <div class="modal-overlay" id="settings-modal">
   <div class="modal-box">
     <div class="modal-header">
       <div class="modal-title">⚙️ 偏好設定</div>
       <button class="modal-close" onclick="closeSettingsModal()">✖</button>
     </div>
-
     <div class="setting-group">
       <label class="setting-label">🗣️ 英語發音腔調 (Accent)</label>
       <div class="setting-options">
@@ -960,7 +427,6 @@
         <button class="opt-btn" id="accent-opt-uk" onclick="setAppAccent('en-GB')">🇬🇧 英式發音</button>
       </div>
     </div>
-
     <div class="setting-group">
       <label class="setting-label">🔍 字體大小 (Font Size)</label>
       <div class="setting-options">
@@ -969,7 +435,6 @@
         <button class="opt-btn" id="font-opt-xl" onclick="setAppFontSize('xl')">特大</button>
       </div>
     </div>
-
     <div class="setting-group">
       <label class="setting-label">🔊 發音速度 (Speech Speed)</label>
       <div class="setting-options">
@@ -978,14 +443,13 @@
         <button class="opt-btn" id="rate-opt-norm" onclick="setAppSpeechRate(1.0)">🐇 標準</button>
       </div>
     </div>
-
     <div style="margin-top:20px; text-align:center;">
-      <button class="btn-ctrl-action primary" style="width:100%;" onclick="closeSettingsModal()">儲存並關閉</button>
+      <button class="btn-ctrl-action primary" style="width:100%; justify-content:center;" onclick="closeSettingsModal()">儲存並關閉</button>
     </div>
   </div>
 </div>
 
-<!-- Confirm Reset Modal -->
+<!-- 確認重置彈出視窗 -->
 <div class="modal-overlay" id="confirm-reset-modal">
   <div class="modal-box" style="text-align:center;">
     <div style="font-size:2.5rem; margin-bottom:10px;">⚠️</div>
@@ -993,276 +457,653 @@
     <div style="color:var(--text-sub); margin-bottom:20px;">重置後標記學會的項目與進度將全部歸零。</div>
     <div style="display:flex; gap:10px;">
       <button class="btn-ctrl-action" onclick="closeConfirmResetModal()">取消</button>
-      <button class="btn-ctrl-action" style="background:#ef4444; color:#fff; border-color:#dc2626;" onclick="executeResetProgress()">確認歸零</button>
+      <button class="btn-ctrl-action" style="background:#ef4444; color:#fff; border-color:#dc2626; justify-content:center;" onclick="executeResetProgress()">確認歸零</button>
     </div>
   </div>
 </div>
 
 <script>
-  const CSV_PUBHTML_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQwef8ptl-E5yjVN9LLV6SddtJPPZnnN6oIMirUoL-jjln8jvXMU0XM8PhuI9bSFw/pubhtml";
-
-  let appSettings = {
-    fontSize: 'lg',
-    speechRate: 0.8,
-    accent: 'en-US'
-  };
-
+  let appSettings = { fontSize: 'lg', speechRate: 0.8, accent: 'en-US' };
   let currentNavTab = 'start';
-  let vocabThemeFilter = 'v_daily';
-  let scenarioThemeFilter = 's_daily';
-
-  let vocabPage = 1;
-  let scenarioPage = 1;
+  let vocabThemeFilter = 'daily';
+  let scenarioThemeFilter = 'daily';
+  let vocabPage = 1, scenarioPage = 1;
   const ITEMS_PER_PAGE = 8;
-
-  let currentPractTheme = 's_daily';
+  
+  let currentPractTheme = 'daily';
   let currentPractIndex = 0;
   let learnedMap = {};
 
-  function buildMassiveDefaultDataset() {
-    const rawVocab = [];
-    const rawScenario = [];
+  // ==========================================
+  // ★ 您真實提供的四大主題完整資料庫 ★
+  // ==========================================
+  
+  const dailyVocabs = [
+    ["House", "房子"], ["Home", "家"], ["Door", "門"], ["Window", "窗戶"], ["Kitchen", "廚房"],
+    ["Bedroom", "臥室"], ["Bed", "床"], ["Table", "桌子"], ["Chair", "椅子"], ["Computer", "電腦"],
+    ["Internet", "網路"], ["Wi-Fi", "無線網路"], ["Phone", "電話"], ["Battery", "電池"], ["Charger", "充電器"],
+    ["Soap", "肥皂"], ["Shampoo", "洗髮精"], ["Toothbrush", "牙刷"], ["Toothpaste", "牙膏"], ["Towel", "毛巾"],
+    ["Work", "工作"], ["Study", "學習 / 溫習"], ["Learn", "學習"], ["Read", "閱讀"], ["Write", "寫"],
+    ["Listen", "聽"], ["Speak", "說"], ["Question", "問題"], ["Answer", "回答"], ["Information", "資訊"],
+    ["Example", "例子"], ["Practice", "練習"], ["Finish", "完成"], ["Start", "開始"], ["Stop", "停止"],
+    ["Wait", "等待"], ["Task", "任務"], ["Office", "辦公室"], ["Schedule", "時程表 / 日程表"], ["Meeting", "會議"],
+    ["Store", "商店"], ["Supermarket", "超市"], ["Market", "市場"], ["Buy", "購買"], ["Pay", "付款"],
+    ["Cost", "價格 ; 花費"], ["Money", "錢"], ["Change", "零錢"], ["Price", "價格"], ["Discount", "折扣"],
+    ["Cash", "現金"], ["Card", "卡片"], ["Receipt", "收據 / 發票"], ["Clothes", "衣服"], ["Shirt", "襯衫"],
+    ["Pants", "褲子"], ["Shoes", "鞋子"], ["Hat", "帽子"], ["Umbrella", "雨傘"], ["Bag", "包包"],
+    ["Wallet", "錢包"], ["Key", "鑰匙"], ["Family", "家人"], ["Friend", "朋友"], ["Husband", "丈夫"],
+    ["Wife", "妻子"], ["Child", "小孩"], ["Baby", "嬰兒"], ["Father", "父親"], ["Mother", "母親"],
+    ["Brother", "兄弟"], ["Sister", "姐妹"], ["Neighbor", "鄰居"], ["People", "人們"], ["Smile", "微笑"],
+    ["Happy", "快樂的"], ["Sad", "難過的"], ["Angry", "生氣的"], ["Tired", "疲倦的"], ["Busy", "忙碌的"],
+    ["Free", "有空的"], ["Relaxed", "放鬆的"], ["Bored", "無聊的"], ["Excited", "興奮的"], ["Nervous", "緊張的"],
+    ["Calm", "冷靜的"], ["Polite", "有禮貌的"], ["Kind", "仁慈的 / 友善的"], ["Honest", "誠實的"], ["Today", "今天"],
+    ["Tomorrow", "明天"], ["Yesterday", "昨天"], ["Morning", "早上"], ["Afternoon", "下午"], ["Evening", "晚上"],
+    ["Night", "夜晚"], ["Now", "現在"], ["Later", "稍後"], ["Early", "早"], ["Late", "晚 / 遲到"],
+    ["Time", "時間"], ["Hour", "小時"], ["Minute", "分鐘"], ["Second", "秒"], ["Monday", "星期一"],
+    ["Tuesday", "星期二"], ["Wednesday", "星期三"], ["Thursday", "星期四"], ["Friday", "星期五"], ["Saturday", "星期六"],
+    ["Sunday", "星期日"], ["Weather", "天氣"], ["Sunny", "晴朗的"], ["Cloudy", "多雲的"], ["Rainy", "下雨的"],
+    ["Windy", "有風的"], ["Cold", "冷的"], ["Warm", "溫暖的"], ["Cool", "涼爽的"], ["Rain", "雨 / 下雨"],
+    ["Temperature", "溫度"], ["Beautiful", "美麗的"], ["Clean", "乾淨的"], ["Dirty", "骯髒的"], ["Big", "大的"],
+    ["Small", "小的"], ["Long", "長的"], ["Short", "短的"], ["Fast", "快的"], ["Slow", "慢的"],
+    ["Easy", "簡單的"], ["Difficult", "困難的"], ["Important", "重要的"], ["Correct", "正確的"], ["Wrong", "錯誤的"],
+    ["Left", "左邊"], ["Right", "右邊"], ["Straight", "直的 / 直接"], ["Here", "這裡"], ["There", "那裡"],
+    ["Near", "附近"], ["Far", "遠的"], ["Open", "打開 / 開著的"], ["Close", "關閉"], ["Hello", "你好"],
+    ["Goodbye", "再見"], ["Please", "請"], ["Thank / Thanks", "感謝 / 謝謝"], ["Welcome", "不客氣 / 歡迎"], ["Sorry", "對不起"]
+  ];
 
-    function generateVocabCategory(theme, themeName, baseList, descriptorList) {
-      const set = new Set();
-      const items = [];
+  const travelVocabs = [
+    ["Airport", "機場"], ["Terminal", "航廈"], ["Check-in", "報到 / 入住 / 登記"], ["Passport", "護照"], ["Boarding pass", "登機證"],
+    ["Gate", "登機門"], ["Flight", "航班"], ["Luggage / Baggage", "行李"], ["Suitcase", "行李箱"], ["Carry-on", "手提行李"],
+    ["Security", "安檢"], ["Immigration", "入境審查"], ["Customs", "海關"], ["Baggage claim", "行李提領處"], ["Departure", "出發 / 離境"],
+    ["Arrival", "抵達 / 入境"], ["Transfer", "轉機 / 換乘"], ["Delay", "延誤"], ["Cancel", "取消"], ["Oversized", "超大尺寸的"],
+    ["Hotel", "飯店"], ["Reservation", "預訂"], ["Lobby", "大廳"], ["Front desk", "前台 / 櫃台"], ["Key card", "感應房卡"],
+    ["Single room", "單人房"], ["Double room", "雙人房"], ["Twin room", "雙床房"], ["Elevator", "電梯"], ["Checkout", "退房"],
+    ["Luggage storage", "行李寄放"], ["Deposit", "押金"], ["Wi-Fi password", "無線網路密碼"], ["Shuttle bus", "接駁巴士"], ["Laundry", "洗衣"],
+    ["Housekeeping", "客房清潔"], ["Air conditioner", "冷氣 / 空調"], ["No-smoking", "禁菸的"], ["Wake-up call", "喚醒服務"], ["Receipt", "收據"],
+    ["Bus stop", "公車站"], ["Train station", "火車站"], ["Subway", "地鐵"], ["Platform", "月台"], ["Ticket office", "售票處"],
+    ["One-way", "單程的"], ["Round-trip", "來回的"], ["Taxi / Cab", "計程車"], ["Meter", "計程表"], ["Destination", "目的地"],
+    ["Fare", "票價 / 車資"], ["Timetable", "時刻表"], ["Transit", "轉乘 / 運輸"], ["Driver", "司機"], ["Route", "路線"],
+    ["Intersection", "十字路口"], ["Direction", "方向"], ["Map", "地圖"], ["Straight", "直走"], ["Turn left / right", "左轉 / 右轉"],
+    ["Shopping mall", "購物中心"], ["Souvenir", "紀念品"], ["Fitting room", "試衣間"], ["Try on", "試穿"], ["Size", "尺寸"],
+    ["Discount", "折扣"], ["Tax refund / Tax-free", "退稅 / 免稅"], ["Tax-free shop", "免稅店"], ["Cashier", "收銀台 / 結帳櫃台"], ["Credit card", "信用卡"],
+    ["Cash", "現金"], ["Exchange rate", "匯率"], ["Foreign currency", "外幣"], ["ATM", "自動提款機"], ["Wrap / Pack", "包裝 / 打包"],
+    ["Out of stock", "無現貨 / 賣完"], ["Receipt", "發票 / 收據"], ["Guarantee / Warranty", "保固"], ["Price tag", "標價籤"], ["Bargain", "殺價 / 便宜貨"],
+    ["Attraction / Sight", "景點"], ["Ticket", "門票"], ["Opening hours", "開放時間"], ["Guide", "導覽 / 導遊"], ["Map / Brochure", "地圖 / 導覽手冊"],
+    ["Photography", "拍照"], ["Flash", "閃光燈"], ["Tour", "導覽行程"], ["Queue / Line", "排隊"], ["Entrance", "入口"],
+    ["Exit", "出口"], ["Information desk", "詢問處"], ["Restroom / Toilet", "洗手間"], ["Wi-Fi", "無線網路"], ["SIM card", "電信卡 / SIM 卡"],
+    ["eSIM", "電子 SIM 卡"], ["Charger", "充電器"], ["Power bank", "行動電源"], ["Charging station", "充電站"], ["Lost and found", "失物招領處"]
+  ];
 
-      baseList.forEach(b => {
-        if (!set.has(b[0])) {
-          set.add(b[0]);
-          items.push({ theme, themeName, word: b[0], zh: b[1] });
+  const socialVocabs = [
+    ["Table", "餐桌"], ["Reservation", "預訂"], ["Menu", "菜單"], ["Order", "點餐"], ["Recommend", "推薦"],
+    ["Appetizer", "開胃菜"], ["Main course", "主餐"], ["Entrée", "主菜"], ["Side dish", "配菜"], ["Dessert", "甜點"],
+    ["Beverage", "飲料"], ["Specialty", "招牌；特色"], ["Special", "今日特餐"], ["Set menu", "套餐"], ["Combo", "套餐組合"],
+    ["Portion", "份量"], ["Water", "水"], ["Still", "不含氣泡的"], ["Sparkling", "氣泡的"], ["Ice", "冰塊"],
+    ["Refill", "續杯"], ["Napkin", "餐巾紙"], ["Straw", "吸管"], ["Fork and knife", "刀叉"], ["Restroom", "洗手間"],
+    ["Vegetarian", "素食的"], ["Vegan", "純素的"], ["Gluten", "麩質"], ["Allergy", "過敏"], ["Nut", "堅果"],
+    ["Shellfish", "甲殼類海鮮"], ["Dairy", "乳製品"], ["Pork", "豬肉"], ["Beef", "牛肉"], ["Seafood", "海鮮"],
+    ["Rare", "三分熟"], ["Medium", "五分熟"], ["Well-done", "全熟"], ["Spicy", "辣的"], ["Mild", "清淡的；不辣的"],
+    ["Sweet", "甜的"], ["Sour", "酸的"], ["Salty", "鹹的"], ["Fresh", "新鮮的"], ["Grilled", "烤的"],
+    ["Fried", "炸的"], ["Steamed", "蒸的"], ["Baked", "烘烤的"], ["Raw", "生的"], ["Sauce", "醬汁"],
+    ["Dressing", "沙拉醬"], ["Onion", "洋蔥"], ["Garlic", "大蒜"], ["Salt", "鹽"], ["Pepper", "胡椒"],
+    ["Without", "不要；不加"], ["Extra", "額外的"], ["Substitute", "替代；更換"], ["Change", "更改"], ["Cancel", "取消"],
+    ["Check / Bill", "帳單"], ["Split", "分開；分攤"], ["Separate", "分開的"], ["Total", "總額"], ["Service charge", "服務費"],
+    ["Gratuity", "小費"], ["Tip", "小費"], ["Cash", "現金"], ["Credit card", "信用卡"], ["Contactless", "感應式的"],
+    ["Mobile payment", "行動支付"], ["Receipt", "收據"], ["Change (Money)", "零錢；找零"], ["Takeaway / Takeout", "外帶"], ["Dine-in", "內用"],
+    ["Container", "餐盒"], ["Bag", "袋子"], ["Leftovers", "剩菜"], ["Waiter / Waitress", "服務生"], ["Server", "服務人員"],
+    ["Waitlist", "候位名單"], ["Queue", "排隊"], ["Wait time", "等待時間"], ["Available", "有空的；可用的"], ["Occupied", "有人使用的"],
+    ["Reserved", "已預訂的"], ["Window seat", "靠窗座位"], ["Outdoor", "戶外的"], ["High chair", "兒童高腳椅"], ["Children's menu", "兒童菜單"],
+    ["Self-service", "自動服務"], ["Counter", "櫃台"], ["Food court", "美食街"], ["Street food", "街頭小吃"], ["QR code", "掃碼"],
+    ["Overcharge", "多收費"], ["Wrong order", "送錯餐點"], ["Delicious", "美味的"], ["Compliment", "稱讚"], ["patio", "庭院座位"]
+  ];
+
+  const healthVocabs = [
+    ["Emergency", "緊急狀況"], ["Police", "警察"], ["Hospital", "醫院"], ["Ambulance", "救護車"], ["Fire station", "消防局"],
+    ["Passport", "護照"], ["Stolen", "被盜 / 被竊"], ["Lost", "遺失"], ["Pickpocket", "扒手"], ["Robbery", "強盜 / 搶劫"],
+    ["Wallet", "錢包"], ["Credit card", "信用卡"], ["Cash", "現金"], ["Identification (ID)", "身分證明文件"], ["Embassy", "大使館"],
+    ["Consulate", "領事館"], ["Officer", "警員 / 官員"], ["Report", "報案 / 報告"], ["Proof", "證明"], ["Claim", "理賠 / 索賠"],
+    ["Insurance", "保險"], ["Document", "文件"], ["Theft", "偷竊罪"], ["Suspect", "嫌犯"], ["Description", "特徵描述"],
+    ["Doctor", "醫生"], ["Nurse", "護理師"], ["Clinic", "診所"], ["Pharmacy", "藥局"], ["Medication", "藥物"],
+    ["Prescription", "處方箋"], ["Pain", "疼痛"], ["Fever", "發燒"], ["Injury", "傷害 / 受傷"], ["Bleeding", "出血"],
+    ["Fracture", "骨折"], ["Allergy", "過敏"], ["Allergic reaction", "過敏反應"], ["Asthma", "氣喘"], ["Dizziness", "頭暈"],
+    ["Nausea", "噁心 / 想吐"], ["Diarrhea", "腹瀉"], ["Food poisoning", "食物中毒"], ["Infection", "感染"], ["Burn", "燙傷 / 燒傷"],
+    ["Bandage", "繃帶 / 創可貼"], ["Ointment", "藥膏"], ["Painkiller", "止痛藥"], ["Ambulance fee", "救護車費用"], ["First aid", "急救"],
+    ["Missed flight", "錯過班機"], ["Cancellation", "取消"], ["Delay", "延誤"], ["Lost luggage", "行李遺失"], ["Damaged luggage", "行李破損"],
+    ["Rebook", "重新預訂"], ["Compensation", "賠償 / 補償"], ["Gate change", "登機門變更"], ["Boarding pass", "登機證"], ["Overbooking", "超額預訂"],
+    ["Breakdown", "故障 / 壞掉"], ["Flat tire", "爆胎 / 輪胎沒氣"], ["Collision", "碰撞事故"], ["Tow truck", "拖吊車"], ["Gasoline / Petrol", "汽油"],
+    ["Accident", "意外事故"], ["Driver's license", "駕照"], ["Insurance policy", "保險單"], ["Ticket", "罰單"], ["Fine", "罰款"],
+    ["Earthquake", "地震"], ["Typhoon", "颱風"], ["Flood", "洪水 / 積水"], ["Evacuation", "疏散 / 撤離"], ["Shelter", "避難所"],
+    ["Exit", "出口"], ["Fire alarm", "火警鈴"], ["Smoke", "濃煙"], ["Extinguisher", "滅火器"], ["Tsunami", "津波 / 海嘯"],
+    ["Lost child", "走失 / 兒童走失"], ["Separated", "走散 / 分開"], ["Communication", "溝通 / 通訊"], ["Translator", "翻譯員"], ["Language barrier", "語言障礙"],
+    ["Contact", "聯繫"], ["Address", "地址"], ["Landmark", "地標"], ["Coordinates", "座標 / 定位"], ["Battery", "電池 / 電量"],
+    ["Charger", "充電器"], ["Lockout", "被鎖在門外"], ["Scam", "詐騙"], ["Fraud", "詐欺 / 刷卡盜刷"], ["Threat", "威脅"],
+    ["Assault", "襲擊 / 攻擊"], ["Harassment", "騷擾"], ["Safe", "安全"], ["Dangerous", "危險"], ["Rescue", "救援"]
+  ];
+
+  const dailyScens = [
+    ["We are looking for a house with a garden.", "我們正在找一間有花園的房子。"],
+    ["I will stay at home all day today.", "我今天打算一整天都待在家裡。"],
+    ["Please remember to lock the front door.", "請記得把大門鎖上。"],
+    ["Can you open the window to let fresh air in?", "你能打開窗戶讓新鮮空氣進來嗎？"],
+    ["She is cleaning the kitchen counter right now.", "她現在正在清理廚房的檯面。"],
+    ["My bedroom faces east, so it gets morning sun.", "我的臥室朝東，所以早晨有陽光照射。"],
+    ["I replaced the bed sheets with clean ones.", "我把床單換成了乾淨的。"],
+    ["Put your books on the dining table.", "把你的書放在餐桌上。"],
+    ["Pull up a chair and join us.", "拉把椅子過來加入我們吧。"],
+    ["My laptop computer needs to be restarted.", "我的筆記型電腦需要重新啟動。"],
+    ["The internet signal is very strong here.", "這裡的網路訊號很強。"],
+    ["What is the password for your home Wi-Fi?", "請問你家的無線網路密碼是多少？"],
+    ["My phone rang while I was taking a shower.", "我洗澡的時候手機響了。"],
+    ["My wireless mouse needs a new battery.", "我的無線滑鼠需要換新電池。"],
+    ["I left my phone charger in the living room.", "我把手機充電器放在客廳了。"],
+    ["Hand soap is placed next to the sink.", "洗手乳放在洗手台旁邊。"],
+    ["I bought a new bottle of herbal shampoo.", "我買了一瓶新的草本洗髮精。"],
+    ["Replace your toothbrush every three months.", "每三個月請更換一次牙刷。"],
+    ["Squeeze the toothpaste from the bottom.", "請從底部擠牙膏。"],
+    ["Hang your bath towel after taking a shower.", "洗完澡後請把浴巾掛起來。"],
+    ["I have a lot of work to complete today.", "我今天有許多工作要完成。"],
+    ["I need a quiet space to study for the test.", "我需要一個安靜的地方來準備考試。"],
+    ["It takes time to learn a foreign language.", "學習一門外語需要時間。"],
+    ["I like to read news articles in the morning.", "我喜歡在早晨閱讀新聞文章。"],
+    ["Please write down your notes in this notebook.", "請把你的筆記寫在這本筆記本上。"],
+    ["Listen to the recording carefully twice.", "請仔細聆聽錄音兩遍。"],
+    ["He speaks three different languages fluently.", "他能流利地說三種不同的語言。"],
+    ["Do you have any question about the project?", "對於這個專案你有任何問題嗎？"],
+    ["She gave a clear answer to my email.", "她針對我的電子郵件給予了明確的回覆。"],
+    ["Check the company website for more information.", "請查看公司網站以獲取更多資訊。"],
+    ["Let me give you a practical example.", "讓我給你舉一個實際的例子。"],
+    ["Regular practice helps improve your skills.", "規律的練習有助於提升你的技能。"],
+    ["Did you finish your homework on time?", "你按時完成你的作業了嗎？"],
+    ["The meeting will start in five minutes.", "會議將在五分鐘後開始。"],
+    ["Please stop making noise when others work.", "當別人工作時請停止製造噪音。"],
+    ["Can you wait for me at the entrance?", "你可以在入口處等我嗎？"],
+    ["She assigned a new task to the team.", "她分配了一個新任務給團隊。"],
+    ["My office is located on the third floor.", "我的辦公室位於三樓。"],
+    ["Let me check my schedule for next week.", "讓我查一下下週的時程表。"],
+    ["The weekly team meeting was postponed.", "每週的團隊會議被延期了。"],
+    ["The local store sells daily necessities.", "這家在地商店販售生活必需品。"],
+    ["I buy fresh vegetables at the supermarket.", "我在超市購買新鮮蔬菜。"],
+    ["The morning market is always full of life.", "早晨的傳統市場總是充滿活力。"],
+    ["I plan to buy some household supplies today.", "我今天計畫買一些家庭用品。"],
+    ["You can pay using your debit card.", "你可以使用簽帳金融卡付款。"],
+    ["Maintenance costs have increased this month.", "本月的維護費用增加了。"],
+    ["Save some money for future house repairs.", "存一些錢以備未來房屋維修之用。"],
+    ["I don't have exact change for the machine.", "我沒有剛好的零錢投販賣機。"],
+    ["The price of milk went up slightly.", "牛奶的價格稍微上漲了。"],
+    ["They offer a discount for bulk orders.", "大量訂購他們有提供折扣。"],
+    ["I rarely carry large amounts of cash.", "我很少攜帶大量現金。"],
+    ["Tap your membership card at the door.", "在門口感應您的會員卡。"],
+    ["Keep your receipt in case of return.", "保留收據以防退貨。"],
+    ["Put your dirty clothes into the basket.", "把你的髒衣服放進籃子裡。"],
+    ["Iron your dress shirt before the interview.", "面試前燙平你的襯衫。"],
+    ["These pants fit very comfortably around the waist.", "這條褲子腰部穿起來非常舒適。"],
+    ["Take off your shoes before entering the house.", "進屋前請脫鞋。"],
+    ["Wear a sun hat when working outdoors.", "在戶外工作時請戴上遮陽帽。"],
+    ["Leave your wet umbrella near the door.", "把濕雨傘放在門口附近。"],
+    ["I packed my gym gear in this bag.", "我把健身裝備打包在這個包包裡。"],
+    ["I left my wallet on the desk.", "我把錢包忘在桌上了。"],
+    ["I need to make a duplicate key.", "我需要打一把備份鑰匙。"],
+    ["I usually spend my weekends with family.", "我通常和家人一起度過週末。"],
+    ["An old friend visited me this afternoon.", "今天下午一位老朋友來拜訪我。"],
+    ["My husband usually cooks dinner on weekends.", "我丈夫通常在週末煮晚餐。"],
+    ["My wife is preparing for her presentation.", "我妻子正在準備她的簡報。"],
+    ["The child is playing quietly with blocks.", "這孩子正安靜地玩積木。"],
+    ["The baby fell asleep after drinking milk.", "嬰兒喝完牛奶後睡著了。"],
+    ["My father taught me how to ride a bike.", "我父親教我如何騎腳踏車。"],
+    ["My mother waters the plants every morning.", "我母親每天早上都會給植物澆水。"],
+    ["My elder brother works as a designer.", "我的哥哥是位設計師。"],
+    ["My sister helps me review my English.", "我的姐姐幫我複習英文。"],
+    ["Our neighbor brought us homemade cookies.", "我們的鄰居帶來了自製的餅乾。"],
+    ["Many people prefer working from home now.", "現在許多人更喜歡在家工作。"],
+    ["A warm smile can make someone's day.", "一個溫暖的微笑能讓人開心一整天。"],
+    ["I am very happy with my new job.", "我對我的新工作非常滿意。"],
+    ["It made me sad to hear the news.", "聽到這個消息讓我感到難過。"],
+    ["Try to calm down when you feel angry.", "當你感到生氣時試著冷靜下來。"],
+    ["I felt tired after working all afternoon.", "工作了一個下午後我感到疲倦。"],
+    ["He is too busy to answer the phone right now.", "他現在太忙了，無法接電話。"],
+    ["Are you free for a coffee chat this Sunday?", "這個星期天你有空喝杯咖啡聊天嗎？"],
+    ["Taking a walk makes me feel relaxed.", "散步讓我感到放鬆。"],
+    ["I feel bored when I have nothing to do.", "當我無事可做時會感到無聊。"],
+    ["She was excited about starting her business.", "她對即將創業感到非常興奮。"],
+    ["It's normal to feel nervous before a speech.", "演講前感到緊張是很正常的。"],
+    ["Keep calm and deal with the problem.", "保持冷靜並處理問題。"],
+    ["Always be polite to everyone you meet.", "對你遇到的每個人都要保持禮貌。"],
+    ["Thank you for your kind help.", "感謝您的熱心幫助。"],
+    ["An honest feedback is very valuable.", "誠實的反饋是非常寶貴的。"],
+    ["Today is a good day to start a new habit.", "今天是培養新習慣的好日子。"],
+    ["I will finish reading this book tomorrow.", "我明天會把這本書讀完。"],
+    ["Yesterday was a very productive day for me.", "昨天對我來說是非常充實的一天。"],
+    ["I usually jog in the park in the morning.", "我通常早上去公園慢跑。"],
+    ["Let's review the document this afternoon.", "我們今天下午來審查這份文件。"],
+    ["I prefer reading a book in the evening.", "我比較喜歡在晚上看書。"],
+    ["Turn off the lights before sleeping at night.", "晚上睡覺前請關燈。"],
+    ["Please take a look at the form now.", "現在請看一下這份表格。"],
+    ["I will clean up my desk a bit later.", "稍後我會清理我的書桌。"],
+    ["I got up early to catch the morning breeze.", "我早起為了享受清晨的微風。"],
+    ["Don't stay up late, it's bad for health.", "不要熬夜，那對健康不好。"],
+    ["Time management is an important life skill.", "時間管理是一項重要的生活技能。"],
+    ["I spend one hour reading every day.", "我每天花一小時閱讀。"],
+    ["Give me five minutes to organize my thoughts.", "給我五分鐘整理一下思緒。"],
+    ["The computer boots up in just a few seconds.", "電腦開機只需要幾秒鐘。"],
+    ["Monday mornings are usually quite busy.", "星期一早上通常很忙碌。"],
+    ["We have a weekly routine on Tuesday.", "我們每週二有例行事務。"],
+    ["Wednesday marks the middle of the workweek.", "星期三代表工作週過了一半。"],
+    ["I plan to clean my room on Thursday.", "我打算在星期四打掃房間。"],
+    ["Everyone is looking forward to Friday night.", "大家都期待著星期五的夜晚。"],
+    ["On Saturday, I like to sleep in a bit.", "星期六我喜歡多睡一會兒懶覺。"],
+    ["Sunday evening is a good time to rest.", "星期日晚上是休息的好時間。"],
+    ["The weather is unusually warm today.", "今天的天氣異常溫暖。"],
+    ["It is a sunny day, perfect for drying clothes.", "今天是個晴天，非常適合曬衣服。"],
+    ["The sky turned cloudy in the late afternoon.", "傍晚時分天空變得多雲。"],
+    ["On rainy days, I like listening to music indoors.", "下雨天我喜歡待在室內聽音樂。"],
+    ["It was so windy that my hat blew off.", "風太大了，把我的帽子都吹走了。"],
+    ["It gets cold inside without heating.", "沒有暖氣室內會變得寒冷。"],
+    ["Put on a warm sweater before going out.", "出門前穿上一件保暖的毛衣。"],
+    ["Autumn brings cool and comfortable breeze.", "秋天帶來涼爽舒適的微風。"],
+    ["The rain started just as I stepped out.", "我剛踏出門就開始下雨了。"],
+    ["The room temperature is adjusted to 25 degrees.", "室溫已調整為 25 度。"],
+    ["The sunset created a beautiful sky tonight.", "今晚的夕陽創造了美麗的天空。"],
+    ["Keep your working space tidy and clean.", "保持你的工作空間整潔乾淨。"],
+    ["Wash your hands if they are dirty.", "如果手髒了請洗手。"],
+    ["A big desk gives you plenty of space.", "一張大桌子能提供充足的空間。"],
+    ["A small portable light is useful for reading.", "一盞小巧的攜帶燈對閱讀很有用。"],
+    ["We had a long phone conversation yesterday.", "我們昨天打了很久的電話。"],
+    ["Keep your explanation clear and short.", "讓你的解釋保持簡短清晰。"],
+    ["This new software runs very fast.", "這套新軟體執行得非常快。"],
+    ["Progress might be slow, but keep going.", "進度可能緩慢，但請繼續堅持。"],
+    ["Following a clear list makes work easy.", "遵循清晰的清單能讓工作變簡單。"],
+    ["Solving this puzzle was quite difficult.", "解決這個難題相當困難。"],
+    ["Sleep quality is very important for mental health.", "睡眠品質對心理健康非常重要。"],
+    ["Double check your numbers to ensure they are correct.", "再次核對你的數字以確保其正確無誤。"],
+    ["It is okay to make a wrong guess sometimes.", "有時候猜錯了也沒關係。"],
+    ["Place the notepad on the left side of your keyboard.", "請把筆記本放在鍵盤的左側。"],
+    ["The light switch is on your right side.", "電燈開關在你的右側。"],
+    ["Draw a straight line on the paper.", "在紙上畫一條直線。"],
+    ["Sign your name right here on the document.", "請在這裡的文件上簽名。"],
+    ["Put the empty boxes over there in the store room.", "把空箱子放到那邊的儲藏室裡。"],
+    ["My house is located near a quiet library.", "我家位於一間安靜的圖書館附近。"],
+    ["The post office is not far from my apartment.", "郵局離我的公寓不遠。"],
+    ["Keep the door open to allow ventilation.", "保持門開著以利通風。"],
+    ["Close all apps when you finish using the computer.", "使用完電腦請關閉所有應用程式。"],
+    ["Hello! How are you doing today?", "你好！你今天過得好嗎？"],
+    ["Goodbye! Take care on your way home.", "再見！回家路上小心。"],
+    ["Please lower your voice when using the phone.", "講電話時請降低音量。"],
+    ["Thanks for taking time to assist me.", "感謝你抽空協助我。"],
+    ["You are always welcome to drop by.", "歡迎隨時過來拜訪。"],
+    ["I am sorry for the late response.", "很抱歉回覆晚了。"]
+  ];
+
+  const travelScens = [
+    ["Where is the airport terminal?", "飛機場航廈在哪裡？"],
+    ["Which terminal does my flight leave from?", "我的航班在哪個航廈起飛？"],
+    ["Where is the check-in counter?", "報到櫃檯在哪裡？"],
+    ["Here is my passport and booking confirmation.", "這是我的護照和預訂確認單。"],
+    ["Can I have my electronic boarding pass?", "我可以領取我的電子登機證嗎？"],
+    ["What time does boarding start at this gate?", "請問這登機門幾點開始登機？"],
+    ["Is my flight on schedule?", "我的航班有準時嗎？"],
+    ["How many bags can I check in?", "我可以託運幾件行李？"],
+    ["My suitcase exceeds the weight limit.", "我的行李箱超過重量限制了。"],
+    ["Can I take this carry-on bag into the cabin?", "我可以把這件手提行李帶上飛機嗎？"],
+    ["Where is the security check area?", "安全檢查區在哪裡？"],
+    ["Please show your passport at immigration.", "請在入境審查處出示您的護照。"],
+    ["I have nothing to declare at customs.", "我在海關沒有東西需要申報。"],
+    ["Where is the baggage claim for flight 123?", "123 航班的行李提領處在哪裡？"],
+    ["Where is the departure hall?", "出境大廳在哪裡？"],
+    ["The arrival time is delayed by 20 minutes.", "抵達時間延誤了 20 分鐘。"],
+    ["Where should I go for a flight transfer?", "辦理轉機應該去哪裡？"],
+    ["The flight was delayed due to bad weather.", "航班因惡劣天氣而延誤。"],
+    ["Has the flight been canceled?", "航班被取消了嗎？"],
+    ["Where can I drop off oversized luggage?", "我在哪裡可以託運超大尺寸行李？"],
+    ["Is the hotel near the city center?", "這家飯店靠近市中心嗎？"],
+    ["I have a reservation under my name.", "我有一個用我名字登記的預訂。"],
+    ["Let's meet in the hotel lobby.", "我們在飯店大廳見面吧。"],
+    ["Please leave your key at the front desk.", "請把你的鑰匙留在前台。"],
+    ["My key card is not working.", "我的感應房卡無法使用。"],
+    ["Is there a single room available?", "還有單人房嗎？"],
+    ["I booked a double room with one large bed.", "我預訂了一間單床雙人房。"],
+    ["We prefer a twin room with two separate beds.", "我們比較想要有兩張獨立單人床的雙床房。"],
+    ["Where is the elevator to the 5th floor?", "通往 5 樓的電梯在哪裡？"],
+    ["What is the latest time for checkout?", "最晚的退房時間是幾點？"],
+    ["Do you offer luggage storage after checkout?", "退房後你們有提供行李寄放服務嗎？"],
+    ["How much deposit do I need to pay?", "我需要付多少押金？"],
+    ["What is the Wi-Fi password for the room?", "房間的無線網路密碼是多少？"],
+    ["Does the hotel provide an airport shuttle bus?", "飯店有提供機場接駁巴士嗎？"],
+    ["Is there a self-service laundry here?", "這裡有自助洗衣設備嗎？"],
+    ["Could housekeeping bring extra towels?", "客房清潔能幫忙拿幾條額外的毛巾來嗎？"],
+    ["The air conditioner in my room is leaking.", "我房間的冷氣在漏水。"],
+    ["Is this a non-smoking room?", "這是一間禁菸客房嗎？"],
+    ["Can I request a wake-up call at 7 AM?", "我可以預約早上 7 點的喚醒服務嗎？"],
+    ["May I have a detailed receipt for my stay?", "可以給我一份住宿的詳細收據嗎？"],
+    ["Where is the nearest bus stop?", "最近的公車站在哪裡？"],
+    ["How far is the train station from here?", "火車站離這裡有多遠？"],
+    ["Which subway line goes to downtown?", "哪條地鐵線可以到市中心？"],
+    ["What platform does the train leave from?", "這班火車從哪個月台發車？"],
+    ["Where can I find the ticket office?", "我在哪裡可以找到售票處？"],
+    ["I need a one-way ticket to the city.", "我需要一張到市區的單程票。"],
+    ["A round-trip ticket is cheaper.", "買來回票比較划算。"],
+    ["Where can I hail a taxi?", "我可以在哪裡招計程車？"],
+    ["Please turn on the meter, please.", "請按下計程車跳表計費。"],
+    ["Please take me to this destination.", "請載我到這個目的地。"],
+    ["How much is the bus fare?", "公車費是多少？"],
+    ["Can I see the timetable for today?", "我可以看一下今天的時刻表嗎？"],
+    ["You need to transit at the next station.", "你需要在下一站轉乘。"],
+    ["Could the driver stop here?", "司機能在這裡停車嗎？"],
+    ["Is this the correct route to the museum?", "這是去博物館的正確路線嗎？"],
+    ["Turn left at the next intersection.", "在下一個十字路口左轉。"],
+    ["Am I walking in the right direction?", "我走的方向正確嗎？"],
+    ["Can you show me on the map?", "你可以在地圖上指給我看嗎？"],
+    ["Go straight for two blocks.", "直走兩個街區。"],
+    ["Turn right at the traffic light.", "在紅綠燈處右轉。"],
+    ["What time does the shopping mall close?", "購物中心幾點關門？"],
+    ["I want to buy some local souvenirs.", "我想買一些當地的紀念品。"],
+    ["Where is the fitting room?", "試衣間在哪裡？"],
+    ["Can I try this shirt on?", "我可以試穿這件襯衫嗎？"],
+    ["Do you have this in a larger size?", "這個有大一點的尺寸嗎？"],
+    ["Is there any discount on this item?", "這件商品有任何折扣嗎？"],
+    ["Can I apply for a tax refund here?", "我可以在這裡辦理退稅嗎？"],
+    ["Is this store a tax-free shop?", "這家店是免稅商店嗎？"],
+    ["Where is the cashier to pay for this?", "付款的收銀台在哪裡？"],
+    ["Can I pay by credit card?", "我可以用信用卡付款嗎？"],
+    ["Do you accept cash in foreign currency?", "你們接受外幣現金嗎？"],
+    ["What is today's exchange rate?", "今天的匯率是多少？"],
+    ["Where can I exchange foreign currency?", "我在哪裡可以兌換外幣？"],
+    ["Is there an international ATM nearby?", "附近有可以跨國提款的 ATM 嗎？"],
+    ["Could you gift-wrap this for me?", "可以幫我把這個包裝成禮物嗎？"],
+    ["Sorry, this item is currently out of stock.", "抱歉，這件商品目前沒有現貨。"],
+    ["Please keep your receipt for tax refund.", "請保留您的發票以辦理退稅。"],
+    ["Does this camera come with an international warranty?", "這台相機有國際保固嗎？"],
+    ["The price tag says twenty dollars.", "標價籤上寫著二十元。"],
+    ["Can we bargain for a better price?", "我們可以討價還價爭取更好的價格嗎？"],
+    ["What is the most famous attraction here?", "這裡最著名的景點是什麼？"],
+    ["Where can I buy an admission ticket?", "我在哪裡可以買入場門票？"],
+    ["What are the opening hours of the museum?", "博物館的開放時間是幾點？"],
+    ["Is an English audio guide available?", "有提供英文語音導覽嗎？"],
+    ["Can I grab a free brochure?", "我可以拿一份免費導覽手冊嗎？"],
+    ["Is photography allowed inside?", "裡面允許拍照嗎？"],
+    ["Please do not use flash here.", "請勿在此處使用閃光燈。"],
+    ["Can I sign up for the city tour?", "我可以報名參加市區導覽行程嗎？"],
+    ["Is this the line for buying tickets?", "這是排隊買門票的隊伍嗎？"],
+    ["Where is the main entrance?", "正門入口在哪裡？"],
+    ["Follow the sign to the emergency exit.", "遵循指示標誌前往緊急出口。"],
+    ["Ask the staff at the information desk.", "去詢問處問工作人員。"],
+    ["Is there a public restroom nearby?", "附近有公共洗手間嗎？"],
+    ["Is there free public Wi-Fi here?", "這裡有免費的公共無線網路嗎？"],
+    ["Where can I buy a tourist SIM card?", "我在哪裡可以買到遊客用的 SIM 卡？"],
+    ["How do I activate this eSIM on my phone?", "我該如何在手機上啟用這個 eSIM？"],
+    ["Can I borrow a phone charger here?", "我可以在這裡借手機充電器嗎？"],
+    ["Are power banks allowed on the plane?", "行動電源可以帶上飛機嗎？"],
+    ["Is there a free charging station nearby?", "附近有免費的手機充電站嗎？"],
+    ["Where is the lost and found office?", "失物招領處在哪裡？"]
+  ];
+
+  const socialScens = [
+    ["Is this table available?", "這張桌子有人用嗎？"],
+    ["I have a reservation under the name...", "我有一個用...名字的預訂。"],
+    ["Could we see the menu, please?", "可以給我們看菜單嗎？"],
+    ["Are you ready to order?", "您準備好點餐了嗎？"],
+    ["What do you recommend?", "你有什麼推薦的嗎？"],
+    ["I'd like an appetizer to start.", "我想先來一份開胃菜。"],
+    ["The main course comes with a side dish.", "主餐附有一份配菜。"],
+    ["What entrees do you recommend?", "您推薦哪一道主菜？"],
+    ["Can I choose a side dish?", "我可以選一份配菜嗎？"],
+    ["Could we see the dessert menu?", "可以給我們看甜點菜單嗎？"],
+    ["What beverages do you have?", "你們有哪些飲料？"],
+    ["What's the house specialty?", "你們的招牌菜是什麼？"],
+    ["What is today's special?", "今天的特餐是什麼？"],
+    ["Does the set menu include a drink?", "套餐有包含飲料嗎？"],
+    ["Can I get this as a combo?", "我可以把這個升級成套餐嗎？"],
+    ["Is the portion large?", "份量大嗎？"],
+    ["Could we have some water, please?", "可以給我們一點水嗎？"],
+    ["I'd like still water.", "我想要無氣泡水。"],
+    ["I like sparkling water.", "我喜歡氣泡水。"],
+    ["No ice, please.", "去冰，謝謝。"],
+    ["Could I get a refill?", "可以幫我續杯嗎？"],
+    ["Could I have another napkin?", "可以再給我一張餐巾紙嗎？"],
+    ["Could I have a straw, please?", "可以給我一根吸管嗎？"],
+    ["Could I have a fork and knife?", "可以給我刀和叉嗎？"],
+    ["Could you tell me where the restroom is?", "可以告訴我洗手間在哪裡嗎？"],
+    ["Do you have vegetarian dishes?", "你們有素食的菜色嗎？"],
+    ["Is this dish vegan?", "這道菜是純素的嗎？"],
+    ["Does this contain gluten?", "這裡面含有麩質嗎？"],
+    ["I have a severe food allergy to nuts.", "我對堅果有嚴重的食物過敏。"],
+    ["I am allergic to nuts.", "我對堅果過敏。"],
+    ["Does this contain shellfish?", "這裡面有甲殼類海鮮嗎？"],
+    ["I cannot eat dairy products.", "我不能吃乳製品。"],
+    ["Is there any pork in this dish?", "這道菜裡有豬肉嗎？"],
+    ["Does this dish contain beef?", "這道菜含有牛肉嗎？"],
+    ["I'd like to try some local seafood.", "我想嘗試一些當地的海鮮。"],
+    ["I'd like my steak rare.", "我的牛排要三分熟。"],
+    ["I like the meat medium.", "我喜歡肉五分熟。"],
+    ["I'd like the steak well-done.", "我的牛排要全熟。"],
+    ["Is this dish very spicy?", "這道菜很辣嗎？"],
+    ["I'd like something mild.", "我想要清淡一點的。"],
+    ["This dessert is very sweet.", "這個甜點非常甜。"],
+    ["The sauce tastes a little sour.", "這醬汁嘗起來有點酸。"],
+    ["This soup is too salty.", "這湯太鹹了。"],
+    ["Are the vegetables fresh?", "這些蔬菜新鮮嗎？"],
+    ["I like the chicken grilled.", "我喜歡烤雞。"],
+    ["Is the fish fried?", "這魚是炸的嗎？"],
+    ["I like steamed vegetables.", "我喜歡蒸蔬菜。"],
+    ["Is the bread freshly baked?", "這麵包是剛烤好的嗎？"],
+    ["Is this fish raw?", "這魚是生的嗎？"],
+    ["Could you put the sauce on the side?", "可以把醬汁放在旁邊嗎？"],
+    ["I like the creamy dressing.", "我喜歡奶油沙拉醬。"],
+    ["Please leave out the onion.", "請不要加洋蔥。"],
+    ["Is there garlic in the sauce?", "醬汁裡面有大蒜嗎？"],
+    ["Please pass me the salt.", "請把鹽遞給我。"],
+    ["Could you add more pepper?", "可以多加一點胡椒嗎？"],
+    ["I'd like this without onions.", "我想要這個，不加洋蔥。"],
+    ["Could I have extra cheese, please?", "可以多加一些起司嗎？"],
+    ["Can I substitute rice for bread?", "我可以把飯換成麵包嗎？"],
+    ["Could I change my order?", "我可以更改我的點餐嗎？"],
+    ["I'd like to cancel this dish, please.", "我想取消這道菜，謝謝。"],
+    ["Could we have the check, please?", "可以給我們帳單嗎？"],
+    ["Can we split the bill?", "我們可以分開結帳嗎？"],
+    ["We'd like separate checks.", "我們想要分開結帳。"],
+    ["What is the total?", "總金額是多少？"],
+    ["Is the service charge included?", "服務費有包含在內嗎？"],
+    ["Is gratuity included?", "小費有包含在內嗎？"],
+    ["How much tip should I leave?", "我應該留多少小費？"],
+    ["Do you accept cash?", "你們收現金嗎？"],
+    ["Do you accept credit cards?", "你們接受信用卡嗎？"],
+    ["Can I make a contactless payment?", "我可以使用感應支付嗎？"],
+    ["Do you accept mobile payments?", "你們接受行動支付嗎？"],
+    ["Could I get a receipt?", "可以給我收據嗎？"],
+    ["Keep the change.", "不用找零了。"],
+    ["I'd like this for takeaway.", "我想要外帶這個。"],
+    ["Is this for dine-in or takeaway?", "這是內用還是外帶？"],
+    ["Could I have a container?", "可以給我一個餐盒嗎？"],
+    ["Could I have a bag, please?", "可以給我一個袋子嗎？"],
+    ["Can I take the leftovers with me?", "我可以把剩菜打包帶走嗎？"],
+    ["Our waiter was very friendly.", "我們的服務生非常友善。"],
+    ["Can you call our server?", "你能叫我們的服務人員來嗎？"],
+    ["Can you put us on the waitlist?", "可以把我們加入候位名單嗎？"],
+    ["How long is the queue?", "排隊要多久？"],
+    ["What's the estimated wait time?", "預計等待時間是多久？"],
+    ["Do you have a table available?", "你們有空位嗎？"],
+    ["Is this seat occupied?", "這個座位有人坐嗎？"],
+    ["Is this table reserved?", "這張桌子被預訂了嗎？"],
+    ["Could we have a window seat?", "我們可以坐靠窗的位子嗎？"],
+    ["Do you have outdoor seating?", "你們有戶外座位嗎？"],
+    ["Could we have a high chair?", "可以給我們一張兒童高腳椅嗎？"],
+    ["Could we have a children's menu?", "可以給我們一份兒童菜單嗎？"],
+    ["Is this self-service?", "這是自助服務嗎？"],
+    ["We ordered at the counter.", "我們在櫃檯點餐了。"],
+    ["Where is the food court?", "美食街在哪裡？"],
+    ["I want to try some street food here.", "我想嘗嘗這裡的街頭小吃。"],
+    ["Can I scan the QR code to order?", "我可以掃描 QR 碼點餐嗎？"],
+    ["I think I was overcharged.", "我覺得我被多收錢了。"],
+    ["Excuse me, this is the wrong order.", "不好意思，這送錯了。"],
+    ["The food was delicious, thank you.", "食物非常美味，謝謝。"],
+    ["I'd like to compliment the chef.", "我想稱讚主廚。"],
+    ["Can we sit on the patio?", "我們可以坐在庭院嗎？"]
+  ];
+
+  const healthScens = [
+    ["Is there an emergency clinic near here?", "附近有急診診所嗎？"],
+    ["Please call the police immediately.", "請立刻打電話報警。"],
+    ["Please take me to the nearest hospital.", "請帶我到最近的醫院。"],
+    ["Call an ambulance immediately.", "請立刻叫救護車。"],
+    ["Call the fire station, there's a fire!", "請打給消防局，失火了！"],
+    ["I lost my passport, what should I do?", "我弄丟了護照，該怎麼辦？"],
+    ["My bag was stolen on the train.", "我的包包在火車上被偷了。"],
+    ["I think I lost my wallet.", "我想我弄丟了我的錢包。"],
+    ["Watch out for pickpockets in this area.", "小心這一帶的扒手。"],
+    ["I want to report a robbery.", "我要報案有人搶劫。"],
+    ["Someone stole my wallet from my bag.", "有人從我包包裡偷走我的錢包。"],
+    ["I need to block my credit card.", "我需要掛失我的信用卡。"],
+    ["All my cash was taken.", "我所有的現金都被拿走了。"],
+    ["Can you show me your ID?", "可以請你出示身分證件嗎？"],
+    ["I need to contact the Taiwan Embassy.", "我需要聯繫台灣大使館。"],
+    ["Where is the nearest consulate?", "最近的領事館在哪裡？"],
+    ["We should talk to a police officer about this.", "我們應該跟警察談談這件事。"],
+    ["I need to file a report for stolen property.", "我需要為失竊物品報案。"],
+    ["Do you have any proof of purchase?", "你有任何購買證明嗎？"],
+    ["I need to make an insurance claim.", "我需要申請保險理賠。"],
+    ["I bought travel insurance before my trip.", "我在旅行前買了旅遊保險。"],
+    ["Please sign these documents.", "請在這些文件上簽名。"],
+    ["The police are investigating the theft.", "警方正在調查這起竊盜案。"],
+    ["Did you see the suspect?", "你有看到嫌犯嗎？"],
+    ["Can you provide a description of the thief?", "你能描述一下小偷的特徵嗎？"],
+    ["I need to see a doctor immediately.", "我需要立刻看醫生。"],
+    ["The nurse will check your vital signs now.", "護理師現在會為您檢查生命徵象。"],
+    ["Is there an open clinic nearby?", "附近有營業的診所嗎？"],
+    ["Where is the 24-hour pharmacy?", "24小時營業的藥局在哪裡？"],
+    ["Do you take any regular medication?", "你有在服用任何慢性病藥物嗎？"],
+    ["I need a prescription for this medicine.", "我需要這個藥的處方箋。"],
+    ["I have a severe pain in my chest.", "我胸口劇烈疼痛。"],
+    ["The child has a high fever this morning.", "這孩子今天早上發高燒。"],
+    ["He sustained a serious head injury.", "他頭部受到了嚴重的傷害。"],
+    ["My leg is bleeding heavily after the fall.", "我摔倒後腿流了很多血。"],
+    ["I think I have a bone fracture in my arm.", "我想我的手臂可能骨折了。"],
+    ["I have a severe food allergy to peanuts.", "我對花生有嚴重的食物過敏。"],
+    ["She is having an allergic reaction right now.", "她現在正在出現過敏反應。"],
+    ["I have asthma, I need my inhaler.", "我有氣喘，我需要吸入器。"],
+    ["I feel dizziness and might faint.", "我感到頭暈，可能快暈倒了。"],
+    ["I feel strong nausea after dinner.", "晚餐後我感到強烈的噁心感。"],
+    ["He has been suffering from diarrhea.", "他一直受腹瀉之苦。"],
+    ["I got food poisoning from eating undercooked meat.", "我因為吃了沒熟的肉而食物中毒。"],
+    ["The doctor gave me antibiotics for the infection.", "醫生開了抗生素治療我的感染。"],
+    ["I got a severe burn from boiling water.", "我被滾水嚴重燙傷了。"],
+    ["Could you give me a bandage, please?", "可以給我一個 OK 繃嗎？"],
+    ["Apply this ointment to the wound twice a day.", "每天在傷口上塗抹這種藥膏兩次。"],
+    ["Can I get some painkillers without a prescription?", "我可以在沒有處方箋的情況下買些止痛藥嗎？"],
+    ["The ambulance fee is covered by my insurance.", "救護車費用由我的保險給付。"],
+    ["Is there anyone trained in first aid here?", "這裡有受過急救訓練的人嗎？"],
+    ["I missed my connecting flight due to the delay.", "因為班機延誤，我錯過了轉機。"],
+    ["My flight was canceled due to bad weather.", "我的航班因為天氣惡劣被取消了。"],
+    ["We have been delayed for three hours.", "我們已經被延誤了三個小時。"],
+    ["My lost luggage has not been found yet.", "我遺失的行李還沒找到。"],
+    ["My suitcase was damaged during the flight.", "我的行李箱在飛行途中受損了。"],
+    ["Can you rebook me on the next available flight?", "你可以幫我改訂下一班有空位的航班嗎？"],
+    ["Am I eligible for compensation for the delay?", "我有資格獲得延誤賠償嗎？"],
+    ["The gate change was announced just now.", "登機門變更剛剛才廣播。"],
+    ["I lost my boarding pass, can you print another one?", "我弄丟了登機證，能再印一張嗎？"],
+    ["My flight was overbooked, and I lost my seat.", "我的航班超額預訂，我失去了座位。"],
+    ["Our car had a breakdown on the highway.", "我們的車在高速公路上拋錨了。"],
+    ["We have a flat tire and need a spare.", "我們的車爆胎了，需要備胎。"],
+    ["I witnessed a collision at the intersection.", "我目睹了十字路口發生碰撞事故。"],
+    ["We need to call a tow truck for the broken car.", "我們需要叫拖吊車來拖這輛壞掉的車。"],
+    ["How much is the fare for a tow truck service?", "拖吊車服務的費用是多少？"],
+    ["We are running out of gasoline.", "我們的汽油快用完了。"],
+    ["There was a severe car accident on the main road.", "主要幹道上發生了嚴重的車禍。"],
+    ["Please show me your driver's license.", "請出示您的駕照。"],
+    ["I have a comprehensive insurance policy.", "我有一份綜合保險單。"],
+    ["I got a ticket for speeding.", "我因為超速吃了一張罰單。"],
+    ["What is the fine for parking here illegally?", "在這裡違規停車的罰款是多少？"],
+    ["Did you feel the earthquake just now?", "你剛剛有感覺到地震嗎？"],
+    ["A strong typhoon is approaching the coast.", "強烈颱風正在逼近海岸。"],
+    ["The heavy rain caused a severe flood in the city.", "大雨導致市區嚴重淹水。"],
+    ["The government ordered an evacuation of the area.", "政府下令撤離該地區。"],
+    ["Where is the nearest emergency shelter?", "最近的緊急避難所在哪裡？"],
+    ["Please follow the signs to the exit.", "請跟隨標示前往出口。"],
+    ["The fire alarm is ringing, we must leave.", "火警鈴響了，我們必須離開。"],
+    ["I smell smoke coming from the kitchen.", "我聞到廚房有煙味。"],
+    ["Where is the fire extinguisher?", "滅火器在哪裡？"],
+    ["A tsunami warning has been issued.", "海嘯警報已經發布。"],
+    ["I found a lost child crying in the park.", "我在公園發現一個迷路哭泣的小孩。"],
+    ["I got separated from my tour group.", "我和我的旅行團走散了。"],
+    ["Communication is difficult without internet access.", "沒有網路連線，溝通變得很困難。"],
+    ["We need a translator for this meeting.", "我們這次會議需要一位翻譯員。"],
+    ["The language barrier made it hard to order food.", "語言障礙讓點餐變得困難。"],
+    ["What is your emergency contact number?", "你的緊急聯絡電話號碼是多少？"],
+    ["Can you write down the address for me?", "你可以把地址寫下來給我嗎？"],
+    ["Is there a famous landmark near your hotel?", "你的飯店附近有著名的地標嗎？"],
+    ["Send me your GPS coordinates.", "把你的 GPS 座標定位傳給我。"],
+    ["My phone battery is completely dead.", "我的手機電池完全沒電了。"],
+    ["Do you have a charger for an iPhone?", "你有 iPhone 的充電器嗎？"],
+    ["I am locked out of my hotel room.", "我被鎖在飯店房間外面了。"],
+    ["I think that email is a scam.", "我覺得那封電子郵件是個詐騙。"],
+    ["There was credit card fraud on my account.", "我的帳戶發生了信用卡盜刷。"],
+    ["He made a serious threat against me.", "他對我發出了嚴重的威脅。"],
+    ["The victim survived the physical assault.", "受害者在肢體襲擊中倖存下來。"],
+    ["You can report harassment to the authorities.", "你可以向當局舉報騷擾行為。"],
+    ["Stay safe and avoid walking alone at night.", "保持安全，避免晚上獨自走動。"],
+    ["It's dangerous to swim here due to strong currents.", "這裡因為海流湍急，游泳很危險。"],
+    ["The rescue team arrived quickly.", "救援隊很快就到了。"]
+  ];
+
+  let vocabDataset = [];
+  let scenarioDataset = [];
+
+  function initializeDataset() {
+    let vId = 0, sId = 0;
+
+    function addVocab(themeKey, themeName, rawData) {
+      rawData.forEach(item => {
+        if(item.length >= 2) {
+          vocabDataset.push({
+            id: `v_${themeKey}_${vId++}`, theme: themeKey, themeName: themeName, word: item[0], zh: item[1]
+          });
         }
       });
+    }
 
-      for (let i = 0; i < descriptorList.length && items.length < 250; i++) {
-        for (let j = 0; j < baseList.length && items.length < 250; j++) {
-          const comboEn = `${descriptorList[i][0]} ${baseList[j][0]}`;
-          const comboZh = `${descriptorList[i][1]}${baseList[j][1]}`;
-          if (!set.has(comboEn)) {
-            set.add(comboEn);
-            items.push({ theme, themeName, word: comboEn, zh: comboZh });
-          }
+    function addScen(themeKey, themeName, rawData) {
+      rawData.forEach(item => {
+        if(item.length >= 2) {
+          scenarioDataset.push({
+            id: `s_${themeKey}_${sId++}`, theme: themeKey, themeName: themeName, ctx: "情境會話", en: item[0], zh: item[1]
+          });
         }
-      }
-      return items;
-    }
-
-    function generateScenarioCategory(theme, themeName, patternList) {
-      const items = [];
-      let count = 0;
-      patternList.forEach(p => {
-        p.targets.forEach(t => {
-          if (count < 150) {
-            items.push({
-              theme,
-              themeName,
-              word: t.word,
-              ctx: p.ctx,
-              en: p.enTpl.replace('{x}', t.en),
-              zh: p.zhTpl.replace('{x}', t.zh)
-            });
-            count++;
-          }
-        });
       });
-      return items;
     }
 
-    // 1. 生活日常單字 (v_daily) 50 Base
-    const vDailyBase = [
-      ["Water", "水"], ["Morning", "早晨"], ["Night", "夜晚"], ["Home", "家"], ["Family", "家人"],
-      ["Friend", "朋友"], ["Food", "食物"], ["Money", "金錢"], ["Phone", "電話"], ["Clock", "時鐘"],
-      ["Key", "鑰匙"], ["Door", "門"], ["Window", "窗戶"], ["Chair", "椅子"], ["Table", "桌子"],
-      ["Book", "書本"], ["Pen", "筆"], ["Paper", "紙張"], ["Name", "名字"], ["Time", "時間"],
-      ["Today", "今天"], ["Tomorrow", "明天"], ["Yesterday", "昨天"], ["Happy", "快樂"], ["Smile", "微笑"],
-      ["Market", "市場"], ["Rice", "米飯"], ["Milk", "牛奶"], ["Fruit", "水果"], ["Apple", "蘋果"],
-      ["Banana", "香蕉"], ["Bread", "麵包"], ["Egg", "雞蛋"], ["Salt", "鹽"], ["Sugar", "糖"],
-      ["Clothes", "衣服"], ["Shoe", "鞋子"], ["Hat", "帽子"], ["Sun", "太陽"], ["Moon", "月亮"],
-      ["Rain", "雨水"], ["Wind", "微風"], ["Light", "燈光"], ["Air", "空氣"], ["Bed", "床舖"],
-      ["Room", "房間"], ["Garden", "花園"], ["Tree", "樹木"], ["Flower", "花朵"], ["Dog", "小狗"]
-    ];
-    const vDailyDesc = [
-      ["Good", "好"], ["Fresh", "新鮮"], ["Hot", "熱"], ["Cold", "冰"], ["Warm", "溫暖"],
-      ["Clean", "乾淨"], ["Sweet", "甜"], ["Big", "大"], ["Small", "小"], ["New", "新"]
-    ];
-
-    // 2. 旅遊英文單字 (v_travel) 50 Base
-    const vTravelBase = [
-      ["Airport", "機場"], ["Hotel", "飯店"], ["Restroom", "廁所"], ["Ticket", "票券"], ["Station", "車站"],
-      ["Passport", "護照"], ["Taxi", "計程車"], ["Luggage", "行李"], ["Flight", "航班"], ["Map", "地圖"],
-      ["Subway", "捷運"], ["Train", "火車"], ["Bus", "公車"], ["Gate", "登機門"], ["Seat", "座位"],
-      ["Visa", "簽證"], ["Customs", "海關"], ["Currency", "貨幣"], ["Exchange", "外幣兌換"], ["Information", "服務台"],
-      ["Tour", "旅遊"], ["Guide", "導遊"], ["Beach", "海灘"], ["Mountain", "高山"], ["Park", "公園"],
-      ["Museum", "博物館"], ["Photo", "照片"], ["Camera", "相機"], ["Suitcase", "行李箱"], ["Reservation", "預訂"],
-      ["Arrival", "到達"], ["Departure", "出發"], ["Delay", "延誤"], ["Platform", "月台"], ["City", "城市"],
-      ["Country", "國家"], ["Airplane", "飛機"], ["Driver", "司機"], ["Keycard", "房卡"], ["Terminal", "航廈"],
-      ["Shuttle", "接駁車"], ["Ferry", "渡輪"], ["Rental", "租賃"], ["Lobby", "大廳"], ["Elevator", "電梯"],
-      ["Control", "管制口"], ["Route", "路線"], ["Window seat", "靠窗位"], ["Baggage", "托運行李"], ["Lost and found", "失物招領"]
-    ];
-    const vTravelDesc = [
-      ["Express", "快速"], ["Direct", "直達"], ["Local", "在地"], ["Public", "公共"], ["Private", "私人"],
-      ["Standard", "標準"], ["VIP", "貴賓"], ["Central", "中央"], ["Main", "主要"], ["Tourist", "觀光"]
-    ];
-
-    // 3. 餐廳飲食單字 (v_social) 50 Base
-    const vSocialBase = [
-      ["Restaurant", "餐廳"], ["Menu", "菜單"], ["Coffee", "咖啡"], ["Tea", "茶飲"], ["Soup", "湯品"],
-      ["Bread", "麵包"], ["Order", "點餐"], ["Drink", "飲料"], ["Breakfast", "早餐"], ["Lunch", "午餐"],
-      ["Dinner", "晚餐"], ["Waiter", "服務生"], ["Bill", "帳單"], ["Cash", "現金"], ["Card", "信用卡"],
-      ["Meat", "肉類"], ["Fish", "鮮魚"], ["Chicken", "雞肉"], ["Vegetable", "蔬菜"], ["Noodle", "麵條"],
-      ["Juice", "果汁"], ["Wine", "葡萄酒"], ["Beer", "啤酒"], ["Dessert", "甜點"], ["Cake", "蛋糕"],
-      ["Ice cream", "冰淇淋"], ["Fork", "叉子"], ["Spoon", "湯匙"], ["Knife", "餐刀"], ["Plate", "餐盤"],
-      ["Glass", "玻璃杯"], ["Pepper", "胡椒"], ["Beef", "牛肉"], ["Pork", "豬肉"], ["Rice", "米飯"],
-      ["Salad", "沙拉"], ["Pizza", "披薩"], ["Pasta", "義大利麵"], ["Cheese", "起司"], ["Butter", "奶油"],
-      ["Sauce", "醬汁"], ["Ice cube", "冰塊"], ["Refill", "續杯"], ["Takeout", "外帶"], ["Buffet", "自助餐"],
-      ["Seafood", "海鮮"], ["Receipt", "收據"], ["Water glass", "水杯"], ["Napkin", "紙巾"], ["Side dish", "附餐"]
-    ];
-    const vSocialDesc = [
-      ["Hot", "熱"], ["Iced", "冰"], ["Special", "特製"], ["Fresh", "新鮮"], ["Delicious", "美味"],
-      ["Spicy", "辣味"], ["Sweet", "甜味"], ["Grilled", "香烤"], ["Fried", "酥炸"], ["Steamed", "清蒸"]
-    ];
-
-    // 4. 醫療健康單字 (v_health) 50 Base
-    const vHealthBase = [
-      ["Hospital", "醫院"], ["Doctor", "醫生"], ["Medicine", "藥物"], ["Pharmacy", "藥局"], ["Fever", "發燒"],
-      ["Pain", "疼痛"], ["Nurse", "護理師"], ["Sick", "生病"], ["Cough", "咳嗽"], ["Headache", "頭痛"],
-      ["Stomachache", "胃痛"], ["Emergency", "緊急救援"], ["Ambulance", "救護車"], ["Clinic", "診所"], ["Prescription", "處方箋"],
-      ["Allergy", "過敏"], ["Cold", "感冒"], ["Flu", "流感"], ["Injection", "打針"], ["Dentist", "牙醫"],
-      ["Bandage", "繃帶"], ["Throat", "喉嚨"], ["Thermometer", "體溫計"], ["Patient", "病人"], ["Wheelchair", "輪椅"],
-      ["Ointment", "藥膏"], ["Pill", "藥丸"], ["Capsule", "膠囊"], ["Syrup", "藥水"], ["Vitamin", "維他命"],
-      ["Mask", "口罩"], ["Sanitizer", "消毒液"], ["Alcohol", "酒精"], ["Dizziness", "頭暈"], ["Nausea", "反胃"],
-      ["Diarrhea", "拉肚子"], ["Wound", "傷口"], ["Bleeding", "出血"], ["Burn", "燙傷"], ["Checkup", "體檢"],
-      ["Insurance", "保險"], ["Health card", "健保卡"], ["Vaccine", "疫苗"], ["Dose", "劑量"], ["Painkiller", "止痛藥"],
-      ["Blood pressure", "血壓"], ["Heart rate", "心跳"], ["Eye drops", "眼藥水"], ["First aid", "急救"], ["Appointment", "預約看診"]
-    ];
-    const vHealthDesc = [
-      ["Daily", "每日"], ["Oral", "口服"], ["Emergency", "急救"], ["Medical", "醫療"], ["Safe", "安全"],
-      ["Strong", "強效"], ["Gentle", "溫和"], ["Regular", "常規"], ["Essential", "必備"], ["Care", "照護"]
-    ];
-
-    // Generate 250 items per theme for Vocabulary
-    generateVocabCategory("v_daily", "生活日常", vDailyBase, vDailyDesc).forEach(i => rawVocab.push(i));
-    generateVocabCategory("v_travel", "旅遊英文", vTravelBase, vTravelDesc).forEach(i => rawVocab.push(i));
-    generateVocabCategory("v_social", "餐廳飲食", vSocialBase, vSocialDesc).forEach(i => rawVocab.push(i));
-    generateVocabCategory("v_health", "醫療健康", vHealthBase, vHealthDesc).forEach(i => rawVocab.push(i));
-
-    // Generate 150 items per theme for Scenario (50 targets * 3 patterns = 150 EXACTLY)
-    const createTargets = (baseArr) => baseArr.map(b => ({ word: b[0].toLowerCase(), en: b[0], zh: b[1] }));
-
-    const sDailyPatterns = [
-      { ctx: "日常對話", enTpl: "I need some {x}.", zhTpl: "我需要一些{x}。" , targets: createTargets(vDailyBase) },
-      { ctx: "生活溝通", enTpl: "Where is the {x}?", zhTpl: "{x}在哪裡？" , targets: createTargets(vDailyBase) },
-      { ctx: "日常好禮", enTpl: "Thank you for the {x}.", zhTpl: "謝謝你的{x}。" , targets: createTargets(vDailyBase) }
-    ];
-
-    const sTravelPatterns = [
-      { ctx: "旅遊詢問", enTpl: "Where is the {x}?", zhTpl: "請問{x}在哪裡？" , targets: createTargets(vTravelBase) },
-      { ctx: "交通飯店", enTpl: "Is this the {x}?", zhTpl: "請問這是{x}嗎？" , targets: createTargets(vTravelBase) },
-      { ctx: "出國必備", enTpl: "I need my {x}.", zhTpl: "我需要我的{x}。" , targets: createTargets(vTravelBase) }
-    ];
-
-    const sSocialPatterns = [
-      { ctx: "點餐用餐", enTpl: "I would like to order {x}.", zhTpl: "我想點一份{x}。" , targets: createTargets(vSocialBase) },
-      { ctx: "餐廳服務", enTpl: "Do you have {x}?", zhTpl: "請問你們有{x}嗎？" , targets: createTargets(vSocialBase) },
-      { ctx: "美食品嚐", enTpl: "The {x} is very delicious.", zhTpl: "這個{x}非常美味。" , targets: createTargets(vSocialBase) }
-    ];
-
-    const sHealthPatterns = [
-      { ctx: "醫療健康", enTpl: "I have a {x}.", zhTpl: "我感到身體{x}。" , targets: createTargets(vHealthBase) },
-      { ctx: "求助看診", enTpl: "I need to see a {x}.", zhTpl: "我需要看{x}。" , targets: createTargets(vHealthBase) },
-      { ctx: "藥局藥物", enTpl: "Please give me some {x}.", zhTpl: "請給我一些{x}。" , targets: createTargets(vHealthBase) }
-    ];
-
-    generateScenarioCategory("s_daily", "生活日常", sDailyPatterns).forEach(i => rawScenario.push(i));
-    generateScenarioCategory("s_travel", "旅遊英文", sTravelPatterns).forEach(i => rawScenario.push(i));
-    generateScenarioCategory("s_social", "餐廳飲食", sSocialPatterns).forEach(i => rawScenario.push(i));
-    generateScenarioCategory("s_health", "醫療健康", sHealthPatterns).forEach(i => rawScenario.push(i));
-
-    return { rawVocab, rawScenario };
+    addVocab('daily', '生活日常', dailyVocabs);
+    addScen('daily', '生活日常', dailyScens);
+    
+    addVocab('travel', '旅遊英文', travelVocabs);
+    addScen('travel', '旅遊英文', travelScens);
+    
+    addVocab('social', '餐廳飲食', socialVocabs);
+    addScen('social', '餐廳飲食', socialScens);
+    
+    addVocab('health', '醫療健康', healthVocabs);
+    addScen('health', '醫療健康', healthScens);
   }
 
-  const { rawVocab: defaultVocabRaw, rawScenario: defaultScenarioRaw } = buildMassiveDefaultDataset();
-
-  let vocabDataset = defaultVocabRaw.map((item, idx) => ({ ...item, id: `dv_${idx}` }));
-  let scenarioDataset = defaultScenarioRaw.map((item, idx) => ({ ...item, id: `ds_${idx}` }));
-
+  // ★ 調整英式發音語調 (pitch) 與語速，改善低沉感 ★
   function speak(text) {
-    if (!('speechSynthesis' in window)) {
-      showToast('您的裝置不支援語音功能');
-      return;
-    }
+    if (!('speechSynthesis' in window)) return showToast('您的裝置不支援語音功能');
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = appSettings.accent;
     utterance.rate = appSettings.speechRate;
-    utterance.pitch = 1.0;
-
+    
+    // 如果是英式發音 (en-GB)，將音調 (pitch) 稍微調高至 1.15，並讓語速稍微加強，避免聽起來過於低沉沙啞
+    if (appSettings.accent === 'en-GB') {
+      utterance.pitch = 1.15;
+    } else {
+      utterance.pitch = 1.0;
+    }
+    
     const voices = window.speechSynthesis.getVoices();
     const targetVoice = voices.find(v => {
-      if (appSettings.accent === 'en-GB') {
-        return v.lang === 'en-GB' || v.name.includes('UK') || v.name.includes('British') || v.name.includes('Daniel');
-      } else {
-        return v.lang === 'en-US' || v.name.includes('US') || v.name.includes('Samantha') || v.name.includes('Google');
-      }
+      if (appSettings.accent === 'en-GB') return v.lang === 'en-GB' || v.name.includes('UK') || v.name.includes('British') || v.name.includes('Daniel');
+      else return v.lang === 'en-US' || v.name.includes('US') || v.name.includes('Samantha') || v.name.includes('Google');
     });
-
     if (targetVoice) utterance.voice = targetVoice;
     window.speechSynthesis.speak(utterance);
-  }
-
-  async function fetchAllCloudData(showToastOnDone = false) {
-    if (showToastOnDone) showToast('☁️ 正在連線雲端試算表...');
-
-    let loadedNewVocab = [];
-    let loadedNewScen = [];
-
-    try {
-      const response = await fetch(CSV_PUBHTML_URL);
-      if (response.ok) {
-        const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-        const tables = doc.querySelectorAll("table.waffle, .sheets-viewport table");
-
-        tables.forEach((tbl, tIdx) => {
-          const rows = tbl.querySelectorAll("tr");
-          rows.forEach((r, rIdx) => {
-            if (rIdx < 1) return;
-            const cols = Array.from(r.querySelectorAll("td")).map(c => c.textContent.trim());
-            if (cols.length >= 2) {
-              const cat = cols[0] || '生活日常';
-              const en = cols[1] || '';
-              const zh = cols[2] || cols[1] || '';
-              const ctx = cols[3] || '日常應用';
-
-              if (en && en.length > 0) {
-                let themeV = 'v_daily', themeS = 's_daily';
-                if (cat.includes('旅') || cat.includes('Travel')) { themeV = 'v_travel'; themeS = 's_travel'; }
-                else if (cat.includes('餐') || cat.includes('食') || cat.includes('Social')) { themeV = 'v_social'; themeS = 's_social'; }
-                else if (cat.includes('醫') || cat.includes('健') || cat.includes('Health')) { themeV = 'v_health'; themeS = 's_health'; }
-
-                if (en.includes(' ') || en.length > 18) {
-                  loadedNewScen.push({ id: `cs_${tIdx}_${rIdx}`, theme: themeS, themeName: cat, ctx, word: en.split(' ')[0], en, zh });
-                } else {
-                  loadedNewVocab.push({ id: `cv_${tIdx}_${rIdx}`, theme: themeV, themeName: cat, word: en, zh });
-                }
-              }
-            }
-          });
-        });
-      }
-    } catch(e) {}
-
-    if (loadedNewVocab.length > 0) vocabDataset = loadedNewVocab;
-    if (loadedNewScen.length > 0) scenarioDataset = loadedNewScen;
-
-    updateGlobalProgressUI();
-    renderVocabList();
-    renderScenarioList();
-
-    if (showToastOnDone) {
-      showToast(`✅ 同步完成！共載入 ${vocabDataset.length + scenarioDataset.length} 項目`);
-    }
   }
 
   function loadLearnedState() {
@@ -1273,40 +1114,43 @@
   }
 
   function saveLearnedState() {
-    try {
-      localStorage.setItem('senior_eng_app_progress', JSON.stringify(learnedMap));
-    } catch(e) {}
+    try { localStorage.setItem('senior_eng_app_progress', JSON.stringify(learnedMap)); } catch(e) {}
     updateGlobalProgressUI();
   }
 
   function toggleLearned(id) {
     learnedMap[id] = !learnedMap[id];
     saveLearnedState();
-    renderVocabList();
-    renderScenarioList();
-    renderAnalytics();
+    if(currentNavTab === 'vocab') renderVocabList();
+    if(currentNavTab === 'scenario') renderScenarioList();
+    if(currentNavTab === 'analytics') renderAnalytics();
   }
 
   function updateGlobalProgressUI() {
     const allItems = [...vocabDataset, ...scenarioDataset];
     const total = allItems.length;
     let learnedCount = 0;
-    allItems.forEach(item => {
-      if (learnedMap[item.id]) learnedCount++;
-    });
-
+    allItems.forEach(item => { if (learnedMap[item.id]) learnedCount++; });
     const percent = total > 0 ? Math.round((learnedCount / total) * 100) : 0;
     document.getElementById('prog-text-summary').textContent = `${learnedCount} / ${total} (${percent}%)`;
     document.getElementById('prog-bar-fill').style.width = percent + '%';
   }
 
+  function getPractList() {
+    const scens = scenarioDataset.filter(i => i.theme === currentPractTheme);
+    const vocabs = vocabDataset.filter(i => i.theme === currentPractTheme);
+    const vMapped = vocabs.map(v => ({ id: v.id, themeName: v.themeName, ctx: "單字", en: v.word, zh: v.zh }));
+    return [...scens, ...vMapped];
+  }
+
   function enterThemePractice(themeKey) {
     currentPractTheme = themeKey;
     currentPractIndex = 0;
+    const list = getPractList();
+    if(list.length === 0) return showToast("此主題尚無資料");
 
     document.getElementById('theme-selection-grid').style.display = 'none';
     document.getElementById('theme-practice-panel').style.display = 'block';
-
     updatePractPanelUI();
   }
 
@@ -1315,21 +1159,17 @@
     document.getElementById('theme-practice-panel').style.display = 'none';
   }
 
-  function getPractList() {
-    return scenarioDataset.filter(i => i.theme === currentPractTheme);
-  }
-
   function updatePractPanelUI() {
     const list = getPractList();
-    if (!list || list.length === 0) return;
-
+    if (list.length === 0) return;
     if (currentPractIndex >= list.length) currentPractIndex = 0;
     const current = list[currentPractIndex];
 
-    const accentFlag = appSettings.accent === 'en-GB' ? '🇬🇧 英式' : '🇺🇸 美式';
-    document.getElementById('pract-speak-btn').textContent = `🔊 按我聆聽${accentFlag}發音`;
-    document.getElementById('pract-count-badge').textContent = `第 ${currentPractIndex + 1} / ${list.length} 頁`;
-    document.getElementById('pract-ctx-tag').textContent = `${current.themeName}（情境：${current.ctx}）`;
+    const accentFlag = appSettings.accent === 'en-GB' ? '🇬🇧' : '🇺🇸';
+    document.getElementById('pract-speak-btn').textContent = `🔊 按我聆聽發音 ${accentFlag}`;
+    document.getElementById('pract-count-badge').textContent = `第 ${currentPractIndex + 1} / ${list.length} 個`;
+    document.getElementById('pract-ctx-tag').textContent = `${current.themeName}（${current.ctx || '學習'}）`;
+    
     document.getElementById('pract-en-text').textContent = current.en;
     document.getElementById('pract-zh-text').textContent = current.zh;
 
@@ -1337,7 +1177,7 @@
     const btn = document.getElementById('pract-toggle-learned-btn');
     btn.textContent = isDone ? '⭐ 已學會' : '⭕ 標記學會';
     btn.classList.toggle('primary', isDone);
-
+    
     speak(current.en);
   }
 
@@ -1348,59 +1188,41 @@
 
   function toggleCurrentPractLearned() {
     const list = getPractList();
-    if (list && list[currentPractIndex]) {
-      toggleLearned(list[currentPractIndex].id);
-      updatePractPanelUI();
-    }
+    if (list && list[currentPractIndex]) { toggleLearned(list[currentPractIndex].id); updatePractPanelUI(); }
   }
 
   function nextPractCard() {
     const list = getPractList();
-    currentPractIndex = (currentPractIndex + 1) % list.length;
-    updatePractPanelUI();
+    if (list.length > 0) { currentPractIndex = (currentPractIndex + 1) % list.length; updatePractPanelUI(); }
   }
 
   function setVocabThemeFilter(themeKey, btnElem) {
-    vocabThemeFilter = themeKey;
-    vocabPage = 1;
-
+    vocabThemeFilter = themeKey; vocabPage = 1;
     const btns = btnElem.parentElement.querySelectorAll('.sub-filter-pill');
     btns.forEach(b => b.classList.remove('active'));
     btnElem.classList.add('active');
-
     renderVocabList();
   }
 
-  function onVocabSearch() {
-    vocabPage = 1;
-    renderVocabList();
-  }
-
-  function getFilteredVocab() {
-    const q = document.getElementById('vocab-search-input').value.trim().toLowerCase();
-    return vocabDataset.filter(item => {
-      const matchTheme = (item.theme === vocabThemeFilter);
-      const matchQ = !q || item.word.toLowerCase().includes(q) || item.zh.includes(q);
-      return matchTheme && matchQ;
-    });
-  }
+  function onVocabSearch() { vocabPage = 1; renderVocabList(); }
 
   function renderVocabList() {
-    const list = getFilteredVocab();
+    const q = document.getElementById('vocab-search-input').value.trim().toLowerCase();
+    const list = vocabDataset.filter(item => (item.theme === vocabThemeFilter) && (!q || item.word.toLowerCase().includes(q) || item.zh.includes(q)));
+
     const totalPages = Math.ceil(list.length / ITEMS_PER_PAGE) || 1;
     if (vocabPage > totalPages) vocabPage = totalPages;
-
     const startIdx = (vocabPage - 1) * ITEMS_PER_PAGE;
     const pageItems = list.slice(startIdx, startIdx + ITEMS_PER_PAGE);
-
     const container = document.getElementById('vocab-card-list');
+
     if (pageItems.length === 0) {
-      container.innerHTML = `<div style="text-align:center; padding:30px; color:#888;">無符合資料</div>`;
+      container.innerHTML = `<div style="text-align:center; padding:30px; color:#888;">此分類尚無資料</div>`;
     } else {
       let html = '';
       pageItems.forEach(item => {
         const isLearned = !!learnedMap[item.id];
-        const safeWord = item.word.replace(/'/g, "\\'");
+        const safeWord = item.word.replace(/'/g, "\\'").replace(/"/g, "&quot;");
         html += `
           <div class="item-card ${isLearned ? 'learned' : ''}">
             <div class="item-info">
@@ -1409,9 +1231,7 @@
               <div class="item-zh">${item.zh}</div>
             </div>
             <div class="item-btns">
-              <button class="btn-circle progress-toggle ${isLearned ? 'done' : ''}" onclick="toggleLearned('${item.id}')">
-                ${isLearned ? '⭐' : '⭕'}
-              </button>
+              <button class="btn-circle progress-toggle ${isLearned ? 'done' : ''}" onclick="toggleLearned('${item.id}')">${isLearned ? '⭐' : '⭕'}</button>
               <button class="btn-circle" onclick="speak('${safeWord}')">🔊</button>
             </div>
           </div>
@@ -1419,69 +1239,49 @@
       });
       container.innerHTML = html;
     }
-
     document.getElementById('vocab-page-info').textContent = `第 ${vocabPage} / ${totalPages} 頁`;
     document.getElementById('vocab-prev-btn').disabled = (vocabPage <= 1);
     document.getElementById('vocab-next-btn').disabled = (vocabPage >= totalPages);
   }
 
-  function changeVocabPage(delta) {
-    vocabPage += delta;
-    renderVocabList();
-  }
+  function changeVocabPage(delta) { vocabPage += delta; renderVocabList(); }
 
   function setScenarioThemeFilter(themeKey, btnElem) {
-    scenarioThemeFilter = themeKey;
-    scenarioPage = 1;
-
+    scenarioThemeFilter = themeKey; scenarioPage = 1;
     const btns = btnElem.parentElement.querySelectorAll('.sub-filter-pill');
     btns.forEach(b => b.classList.remove('active'));
     btnElem.classList.add('active');
-
     renderScenarioList();
   }
 
-  function onScenarioSearch() {
-    scenarioPage = 1;
-    renderScenarioList();
-  }
-
-  function getFilteredScenario() {
-    const q = document.getElementById('scenario-search-input').value.trim().toLowerCase();
-    return scenarioDataset.filter(item => {
-      const matchTheme = (item.theme === scenarioThemeFilter);
-      const matchQ = !q || item.en.toLowerCase().includes(q) || item.zh.includes(q) || (item.ctx && item.ctx.includes(q));
-      return matchTheme && matchQ;
-    });
-  }
+  function onScenarioSearch() { scenarioPage = 1; renderScenarioList(); }
 
   function renderScenarioList() {
-    const list = getFilteredScenario();
+    const q = document.getElementById('scenario-search-input').value.trim().toLowerCase();
+    const list = scenarioDataset.filter(item => (item.theme === scenarioThemeFilter) && (!q || item.en.toLowerCase().includes(q) || item.zh.includes(q) || (item.ctx && item.ctx.includes(q))));
+
     const totalPages = Math.ceil(list.length / ITEMS_PER_PAGE) || 1;
     if (scenarioPage > totalPages) scenarioPage = totalPages;
-
     const startIdx = (scenarioPage - 1) * ITEMS_PER_PAGE;
     const pageItems = list.slice(startIdx, startIdx + ITEMS_PER_PAGE);
-
     const container = document.getElementById('scenario-card-list');
+
     if (pageItems.length === 0) {
-      container.innerHTML = `<div style="text-align:center; padding:30px; color:#888;">無符合情境資料</div>`;
+      container.innerHTML = `<div style="text-align:center; padding:30px; color:#888;">此分類尚無情境資料</div>`;
     } else {
       let html = '';
       pageItems.forEach(item => {
         const isLearned = !!learnedMap[item.id];
-        const safeEn = item.en.replace(/'/g, "\\'");
+        const safeEn = item.en.replace(/'/g, "\\'").replace(/"/g, "&quot;");
         html += `
           <div class="item-card ${isLearned ? 'learned' : ''}">
             <div class="item-info">
-              <span class="item-tag">${item.themeName} (${item.ctx || '情境'})</span>
+              <span class="item-tag">${item.themeName}</span>
               <div class="item-en">${item.en}</div>
               <div class="item-zh">${item.zh}</div>
             </div>
             <div class="item-btns">
-              <button class="btn-circle progress-toggle ${isLearned ? 'done' : ''}" onclick="toggleLearned('${item.id}')">
-                ${isLearned ? '⭐' : '⭕'}
-              </button>
+              <button class="btn-circle progress-toggle ${isLearned ? 'done' : ''}" onclick="toggleLearned('${item.id}')">${isLearned ? '⭐' : '⭕'}</button>
               <button class="btn-circle" onclick="speak('${safeEn}')">🔊</button>
             </div>
           </div>
@@ -1489,111 +1289,69 @@
       });
       container.innerHTML = html;
     }
-
     document.getElementById('scen-page-info').textContent = `第 ${scenarioPage} / ${totalPages} 頁`;
     document.getElementById('scen-prev-btn').disabled = (scenarioPage <= 1);
     document.getElementById('scen-next-btn').disabled = (scenarioPage >= totalPages);
   }
-
-  function changeScenarioPage(delta) {
-    scenarioPage += delta;
-    renderScenarioList();
-  }
+  function changeScenarioPage(delta) { scenarioPage += delta; renderScenarioList(); }
 
   function renderAnalytics() {
     const all = [...vocabDataset, ...scenarioDataset];
-    let learned = 0;
-    all.forEach(i => { if (learnedMap[i.id]) learned++; });
-
+    let learned = 0; all.forEach(i => { if (learnedMap[i.id]) learned++; });
     const pct = all.length > 0 ? Math.round((learned / all.length) * 100) : 0;
-
+    
     document.getElementById('stat-total-items').textContent = `${all.length} 項`;
     document.getElementById('stat-learned-items').textContent = `${learned} 項`;
     document.getElementById('stat-rate-pct').textContent = `${pct}%`;
 
     const groups = [
-      { name: "🏠 生活日常單字", data: vocabDataset.filter(i => i.theme === 'v_daily') },
-      { name: "✈️ 旅遊英文單字", data: vocabDataset.filter(i => i.theme === 'v_travel') },
-      { name: "🍽️ 餐廳飲食單字", data: vocabDataset.filter(i => i.theme === 'v_social') },
-      { name: "🏥 醫療健康單字", data: vocabDataset.filter(i => i.theme === 'v_health') },
-      { name: "💬 生活日常情境", data: scenarioDataset.filter(i => i.theme === 's_daily') },
-      { name: "✈️ 旅遊英文情境", data: scenarioDataset.filter(i => i.theme === 's_travel') },
-      { name: "🍽️ 餐廳飲食情境", data: scenarioDataset.filter(i => i.theme === 's_social') },
-      { name: "🏥 醫療健康情境", data: scenarioDataset.filter(i => i.theme === 's_health') }
+      { name: "🏠 生活日常單字", data: vocabDataset.filter(i => i.theme === 'daily') },
+      { name: "✈️ 旅遊英文單字", data: vocabDataset.filter(i => i.theme === 'travel') },
+      { name: "🍽️ 餐廳飲食單字", data: vocabDataset.filter(i => i.theme === 'social') },
+      { name: "🏥 醫療健康單字", data: vocabDataset.filter(i => i.theme === 'health') },
+      { name: "💬 生活日常情境", data: scenarioDataset.filter(i => i.theme === 'daily') },
+      { name: "✈️ 旅遊英文情境", data: scenarioDataset.filter(i => i.theme === 'travel') },
+      { name: "🍽️ 餐廳飲食情境", data: scenarioDataset.filter(i => i.theme === 'social') },
+      { name: "🏥 醫療健康情境", data: scenarioDataset.filter(i => i.theme === 'health') }
     ];
 
     let html = '';
     groups.forEach(g => {
-      let gLearned = 0;
-      g.data.forEach(i => { if (learnedMap[i.id]) gLearned++; });
+      let gLearned = 0; g.data.forEach(i => { if (learnedMap[i.id]) gLearned++; });
       const gPct = g.data.length > 0 ? Math.round((gLearned / g.data.length) * 100) : 0;
-
-      html += `
-        <div style="background:#fff; padding:12px; border-radius:14px; margin-bottom:8px; border:1px solid #e5e7eb; display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-weight:bold;">${g.name}</span>
-          <span style="color:var(--primary-dark); font-weight:bold;">${gLearned} / ${g.data.length} (${gPct}%)</span>
-        </div>
-      `;
+      html += `<div style="background:#fff; padding:12px; border-radius:14px; margin-bottom:8px; border:1px solid #e5e7eb; display:flex; justify-content:space-between; align-items:center;"><span style="font-weight:bold;">${g.name}</span><span style="color:var(--primary-dark); font-weight:bold;">${gLearned} / ${g.data.length} (${gPct}%)</span></div>`;
     });
     document.getElementById('analytics-theme-breakdown').innerHTML = html;
   }
 
-  function openConfirmResetModal() {
-    document.getElementById('confirm-reset-modal').style.display = 'flex';
-  }
-
-  function closeConfirmResetModal() {
-    document.getElementById('confirm-reset-modal').style.display = 'none';
-  }
+  function openConfirmResetModal() { document.getElementById('confirm-reset-modal').style.display = 'flex'; }
+  function closeConfirmResetModal() { document.getElementById('confirm-reset-modal').style.display = 'none'; }
+  function openSettingsModal() { document.getElementById('settings-modal').style.display = 'flex'; }
+  function closeSettingsModal() { document.getElementById('settings-modal').style.display = 'none'; }
 
   function executeResetProgress() {
-    learnedMap = {};
-    saveLearnedState();
-    renderVocabList();
-    renderScenarioList();
-    renderAnalytics();
-    closeConfirmResetModal();
-    showToast('🔄 學習紀錄已歸零');
+    learnedMap = {}; saveLearnedState();
+    if(currentNavTab === 'vocab') renderVocabList();
+    if(currentNavTab === 'scenario') renderScenarioList();
+    renderAnalytics(); closeConfirmResetModal(); showToast('🔄 學習紀錄已歸零');
   }
 
   function switchNavTab(tabName) {
     currentNavTab = tabName;
-    const tabs = {
-      start: document.getElementById('tab-start'),
-      vocab: document.getElementById('tab-vocab'),
-      scenario: document.getElementById('tab-scenario'),
-      analytics: document.getElementById('tab-analytics')
-    };
-
-    Object.keys(tabs).forEach(k => {
-      if (tabs[k]) tabs[k].style.display = (k === tabName) ? 'block' : 'none';
-    });
-
-    document.querySelectorAll('.nav-tab').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.tab === tabName);
-    });
+    const tabs = ['start', 'vocab', 'scenario', 'analytics'];
+    tabs.forEach(k => document.getElementById('tab-' + k).style.display = (k === tabName) ? 'block' : 'none');
+    document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabName));
 
     if (tabName === 'vocab') renderVocabList();
     if (tabName === 'scenario') renderScenarioList();
     if (tabName === 'analytics') renderAnalytics();
   }
 
-  function openSettingsModal() {
-    document.getElementById('settings-modal').style.display = 'flex';
-  }
-
-  function closeSettingsModal() {
-    document.getElementById('settings-modal').style.display = 'none';
-  }
-
   function setAppAccent(accent) {
     appSettings.accent = accent;
     document.getElementById('accent-opt-us').classList.toggle('active', accent === 'en-US');
     document.getElementById('accent-opt-uk').classList.toggle('active', accent === 'en-GB');
-
-    if (document.getElementById('theme-practice-panel').style.display === 'block') {
-      updatePractPanelUI();
-    }
+    if (document.getElementById('theme-practice-panel').style.display === 'block') updatePractPanelUI();
   }
 
   function setAppFontSize(size) {
@@ -1601,7 +1359,6 @@
     document.body.classList.remove('font-lg', 'font-xl');
     if (size === 'lg') document.body.classList.add('font-lg');
     if (size === 'xl') document.body.classList.add('font-xl');
-
     document.getElementById('font-opt-md').classList.toggle('active', size === 'md');
     document.getElementById('font-opt-lg').classList.toggle('active', size === 'lg');
     document.getElementById('font-opt-xl').classList.toggle('active', size === 'xl');
@@ -1616,27 +1373,21 @@
 
   function showToast(msg) {
     const toast = document.getElementById('app-toast');
-    toast.textContent = msg;
-    toast.classList.add('show');
-    setTimeout(() => {
-      toast.classList.remove('show');
-    }, 2800);
+    toast.textContent = msg; toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2800);
   }
 
   window.onload = function() {
+    initializeDataset();
     loadLearnedState();
     updateGlobalProgressUI();
     setAppFontSize('lg');
     setAppSpeechRate(0.8);
     setAppAccent('en-US');
-
-    fetchAllCloudData(false);
-
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.onvoiceschanged = () => {
-        window.speechSynthesis.getVoices();
-      };
-    }
+    
+    switchNavTab('start');
+    
+    if ('speechSynthesis' in window) window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
   };
 </script>
 </body>
