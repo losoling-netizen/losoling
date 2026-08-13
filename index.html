@@ -576,30 +576,42 @@
   let currentPractIndex = 0;
   let learnedMap = {};
 
+  // Audio Control & Strict Anti-Overlap Session Variables
+  let currentSpeechSession = 0;
   let activeAudio = null;
   let speechTimer = null;
   let cachedVoices = [];
 
   function stopAllAudio() {
+    // 1. Increment session counter so any asynchronous callbacks from past requests are immediately invalidated
+    currentSpeechSession++;
+
+    // 2. Pause and completely release any HTML5 Audio element
     if (activeAudio) {
       try {
-        activeAudio.pause();
         activeAudio.onended = null;
         activeAudio.onerror = null;
+        activeAudio.pause();
         activeAudio.currentTime = 0;
-        activeAudio.src = "";
+        activeAudio.removeAttribute('src');
+        activeAudio.load();
       } catch(e){}
       activeAudio = null;
     }
+
+    // 3. Cancel any pending or speaking Web Speech API utterances
     if ('speechSynthesis' in window) {
       try {
         window.speechSynthesis.cancel();
       } catch(e){}
     }
+
+    // 4. Clear fallback timer
     if (speechTimer) {
       clearTimeout(speechTimer);
       speechTimer = null;
     }
+
     resetSpeakBtnState();
   }
 
@@ -612,16 +624,7 @@
   }
 
   function unlockMobileAudio() {
-    if ('speechSynthesis' in window) {
-      try {
-        if (window.speechSynthesis.paused) {
-          window.speechSynthesis.resume();
-        }
-        const dummy = new SpeechSynthesisUtterance('');
-        dummy.volume = 0.01;
-        window.speechSynthesis.speak(dummy);
-      } catch(e){}
-    }
+    // Silent WAV buffer to unlock HTML5 Audio permissions on mobile Safari / Chrome without queueing dummy Web Speech utterances
     try {
       const silentAudio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==');
       silentAudio.play().catch(() => {});
@@ -646,8 +649,9 @@
   function speak(text, reqAccent) {
     if (!text) return;
     
-    // 1. 立即中斷前一發音，解鎖手機音訊播放權限
+    // Stop all previous audio and start a new speech session
     stopAllAudio();
+    const session = currentSpeechSession;
     unlockMobileAudio();
 
     const targetAccent = reqAccent || 'en-US';
@@ -662,74 +666,94 @@
       if (titleSpan) titleSpan.textContent = '播放中...';
     }
 
-    // 2. 自動計時防卡死保護
+    // Safety timeout protection
     const safeTimeoutDuration = Math.max(6000, text.length * 120);
     speechTimer = setTimeout(() => {
-      stopAllAudio();
+      if (session === currentSpeechSession) {
+        stopAllAudio();
+      }
     }, safeTimeoutDuration);
 
-    // 3. 第一順位：優先使用 fixed 雲端高音質年輕女聲 MP3 (new Audio().play())
-    // 徹底避免手機系統內建 TTS (如 iOS 男音或 Android 沉悶低質音色)
-    playCloudMp3Voice(text, targetAccent, () => {
-      // 4. 斷線/網路失敗時的降級備援 (Web Speech API + 嚴格年輕女聲調校)
-      playWebSpeechFallback(text, targetAccent);
-    });
+    // Call Cloud MP3 voice with strict session validation
+    playCloudMp3Voice(text, targetAccent, (fallbackSession) => {
+      playWebSpeechFallback(text, targetAccent, fallbackSession);
+    }, session);
   }
 
-  function playCloudMp3Voice(text, accent, fallbackCallback) {
+  function playCloudMp3Voice(text, accent, fallbackCallback, session) {
+    if (session !== currentSpeechSession) return;
+
     const isUK = (accent === 'en-GB');
     const encodedText = encodeURIComponent(text);
     const langCode = isUK ? 'en-GB' : 'en-US';
     const youdaoType = isUK ? 1 : 2;
 
-    // Google Translate TTS (tw-ob) 與 有道 TTS 均提供清晰年輕女聲模型
     const primaryUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=${langCode}&client=tw-ob`;
     const secondaryUrl = `https://dict.youdao.com/dictvoice?audio=${encodedText}&type=${youdaoType}`;
+
+    let primaryFailed = false;
+
+    function trySecondary() {
+      if (session !== currentSpeechSession || primaryFailed) return;
+      primaryFailed = true;
+
+      let secondaryFailed = false;
+      let secAudio = new Audio();
+      activeAudio = secAudio;
+      secAudio.playbackRate = appSettings.speechRate || 0.8;
+
+      function triggerFallback() {
+        if (session !== currentSpeechSession || secondaryFailed) return;
+        secondaryFailed = true;
+        if (fallbackCallback) fallbackCallback(session);
+      }
+
+      secAudio.onended = function() {
+        if (session === currentSpeechSession) stopAllAudio();
+      };
+
+      secAudio.onerror = function() {
+        triggerFallback();
+      };
+
+      secAudio.src = secondaryUrl;
+      const p2 = secAudio.play();
+      if (p2 !== undefined) {
+        p2.catch(() => {
+          triggerFallback();
+        });
+      }
+    }
 
     let audio = new Audio();
     activeAudio = audio;
     audio.playbackRate = appSettings.speechRate || 0.8;
 
-    let hasTriedSecondary = false;
-
     audio.onended = function() {
-      stopAllAudio();
+      if (session === currentSpeechSession) stopAllAudio();
     };
 
     audio.onerror = function() {
-      if (!hasTriedSecondary) {
-        hasTriedSecondary = true;
-        audio.src = secondaryUrl;
-        audio.play().catch(() => {
-          if (fallbackCallback) fallbackCallback();
-        });
-      } else {
-        if (fallbackCallback) fallbackCallback();
-      }
+      trySecondary();
     };
 
     audio.src = primaryUrl;
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        if (!hasTriedSecondary) {
-          hasTriedSecondary = true;
-          audio.src = secondaryUrl;
-          audio.play().catch(() => {
-            if (fallbackCallback) fallbackCallback();
-          });
-        } else {
-          if (fallbackCallback) fallbackCallback();
-        }
+    const p1 = audio.play();
+    if (p1 !== undefined) {
+      p1.catch(() => {
+        trySecondary();
       });
     }
   }
 
-  function playWebSpeechFallback(text, targetAccent) {
+  function playWebSpeechFallback(text, targetAccent, session) {
+    if (session !== currentSpeechSession) return;
+
     if (!('speechSynthesis' in window)) {
-      stopAllAudio();
+      if (session === currentSpeechSession) stopAllAudio();
       return;
     }
+
     try {
       window.speechSynthesis.cancel();
       window.speechSynthesis.resume();
@@ -738,7 +762,6 @@
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = targetAccent;
       utterance.rate = appSettings.speechRate || 0.8;
-      // 提升音調，確保發音清晰明亮，無老氣重音
       utterance.pitch = isUK ? 1.2 : 1.15;
 
       let voices = window.speechSynthesis.getVoices();
@@ -748,7 +771,6 @@
         const targetLang = isUK ? 'en-gb' : 'en-us';
         const langVoices = voices.filter(v => v.lang && v.lang.replace('_', '-').toLowerCase().includes(targetLang));
         
-        // 嚴格女聲名稱過濾，防止選到男音 (Daniel, George 等)
         const femaleVoice = langVoices.find(v => {
           const name = v.name.toLowerCase();
           return (name.includes('female') || name.includes('samantha') || name.includes('zira') ||
@@ -760,15 +782,20 @@
         if (femaleVoice) utterance.voice = femaleVoice;
       }
 
-      utterance.onend = stopAllAudio;
-      utterance.onerror = stopAllAudio;
+      utterance.onend = function() {
+        if (session === currentSpeechSession) stopAllAudio();
+      };
+      utterance.onerror = function() {
+        if (session === currentSpeechSession) stopAllAudio();
+      };
 
       window.speechSynthesis.speak(utterance);
     } catch(e) {
-      stopAllAudio();
+      if (session === currentSpeechSession) stopAllAudio();
     }
   }
 
+  // --- Vocabulary Datasets ---
   const dailyVocabs = [
     ["House", "房子"], ["Home", "家"], ["Door", "門"], ["Window", "窗戶"], ["Kitchen", "廚房"],
     ["Bedroom", "臥室"], ["Bed", "床"], ["Table", "桌子"], ["Chair", "椅子"], ["Computer", "電腦"],
@@ -871,6 +898,7 @@
     ["Assault", "襲擊 / 攻擊"], ["Harassment", "騷擾"], ["Safe", "安全"], ["Dangerous", "危險"], ["Rescue", "救援"]
   ];
 
+  // --- Scenario Sentence Datasets ---
   const dailyScens = [
     ["We are looking for a house with a garden.", "我們正在找一間有花園的房子。"],
     ["I will stay at home all day today.", "我今天打算一整天都待在家裡。"],
