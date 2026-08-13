@@ -18,14 +18,30 @@
       --gold-color: #f59e0b;
       --gray-border: #d1d5db;
       --font-base-size: 18px;
+      --en-size: 1.5rem;
+      --practice-en-size: 2.2rem;
       --banner-bg: #f7f4ec;
       --banner-leaf: #7cb87f;
       --banner-title-dark: #3a3226;
       --banner-title-green: #3f8a4a;
     }
 
-    body.font-lg { --font-base-size: 21px; }
-    body.font-xl { --font-base-size: 24px; }
+    /* 大幅拉開三種字體大小差異，方便銀髮族閱讀 */
+    body.font-md { 
+      --font-base-size: 18px; 
+      --en-size: 1.4rem;
+      --practice-en-size: 2.0rem;
+    }
+    body.font-lg { 
+      --font-base-size: 24px; 
+      --en-size: 1.8rem;
+      --practice-en-size: 2.6rem;
+    }
+    body.font-xl { 
+      --font-base-size: 30px; 
+      --en-size: 2.2rem;
+      --practice-en-size: 3.1rem;
+    }
 
     * {
       box-sizing: border-box;
@@ -43,11 +59,12 @@
       display: flex;
       justify-content: center;
       min-height: 100vh;
+      transition: font-size 0.2s ease;
     }
 
     .app-shell {
       width: 100%;
-      max-width: 480px;
+      max-width: 520px;
       background-color: var(--bg-color);
       min-height: 100vh;
       display: flex;
@@ -75,57 +92,58 @@
     
     .banner-top-row { display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 1; }
     .banner-heading-block { display: flex; align-items: center; gap: 8px; }
-    .banner-leaf-icon { width: 26px; height: 26px; flex-shrink: 0; }
+    .banner-leaf-icon { width: 30px; height: 30px; flex-shrink: 0; }
     
     .banner-title { font-size: 1.5rem; font-weight: 800; color: var(--banner-title-dark); letter-spacing: 0.5px; line-height: 1.2; }
     .banner-title .accent { color: var(--banner-title-green); }
 
     .settings-btn {
       background: #ffffff; border: 2.5px solid var(--primary-dark); color: var(--primary-dark);
-      width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: transform 0.15s; flex-shrink: 0;
+      width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: transform 0.15s; flex-shrink: 0;
     }
     .settings-btn:active { transform: scale(0.9); }
 
-    .banner-subtitle { margin: 6px 0 14px 34px; font-size: 0.92rem; font-weight: 600; color: var(--text-sub); position: relative; z-index: 1; }
+    .banner-subtitle { margin: 6px 0 14px 38px; font-size: 0.95rem; font-weight: 600; color: var(--text-sub); position: relative; z-index: 1; }
 
     .banner-feature-row { display: flex; justify-content: space-between; gap: 8px; position: relative; z-index: 1; }
-    .banner-feature-item { flex: 1; display: flex; align-items: center; gap: 6px; background: #ffffff; border: 1px solid #ece6d4; border-radius: 16px; padding: 7px 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
-    .banner-feature-icon { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .banner-feature-item { flex: 1; display: flex; align-items: center; gap: 6px; background: #ffffff; border: 1px solid #ece6d4; border-radius: 16px; padding: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+    .banner-feature-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
     .banner-feature-icon.learn { background: #e5f3e5; color: #3f8a4a; }
     .banner-feature-icon.speak { background: #e4eefb; color: #2f6fb0; }
     .banner-feature-icon.grow { background: #fbe9e6; color: #d1685e; }
 
     .banner-feature-text { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
-    .banner-feature-title { font-size: 0.78rem; font-weight: 800; }
+    .banner-feature-title { font-size: 0.85rem; font-weight: 800; }
     .banner-feature-title.learn { color: #3f8a4a; }
     .banner-feature-title.speak { color: #2f6fb0; }
     .banner-feature-title.grow { color: #d1685e; }
-    .banner-feature-sub { font-size: 0.66rem; color: var(--text-sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .banner-feature-sub { font-size: 0.7rem; color: var(--text-sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* ===== Navigation Tabs (加高按鈕，確保長者輕鬆點擊) ===== */
+    /* ===== Navigation Tabs ===== */
     nav.app-nav {
       display: flex; background: #ffffff; padding: 12px 8px; gap: 8px; border-bottom: 1px solid var(--gray-border);
-      position: sticky; top: 143px; z-index: 90; overflow-x: auto; scrollbar-width: none;
+      position: sticky; top: 155px; z-index: 90; overflow-x: auto; scrollbar-width: none;
     }
     nav.app-nav::-webkit-scrollbar { display: none; }
     .nav-tab {
-      flex: 1; min-width: 95px; background-color: #f3f4f6; border: 2.5px solid #d1d5db; color: var(--text-sub);
+      flex: 1; min-width: 100px; background-color: #f3f4f6; border: 2.5px solid #d1d5db; color: var(--text-sub);
       font-size: 1.05rem; font-weight: 800; padding: 14px 10px; border-radius: 22px; cursor: pointer; text-align: center; white-space: nowrap;
-      min-height: 58px; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+      min-height: 60px; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
     }
     .nav-tab.active { background-color: var(--primary-color); border-color: var(--primary-dark); color: #1b4332; box-shadow: 0 4px 10px rgba(0,0,0,0.12); }
     
     .container { padding: 16px; flex: 1; }
 
-    .progress-card { background: #ffffff; border: 2.5px solid #c8e6c9; border-radius: 18px; padding: 14px 16px; margin-bottom: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.04); }
-    .progress-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: bold; font-size: 1.05rem; color: var(--primary-dark); }
-    .progress-bar-bg { width: 100%; height: 18px; background-color: var(--primary-light); border-radius: 10px; overflow: hidden; border: 1px solid #c8e6c9; }
+    .progress-card { background: #ffffff; border: 2.5px solid #c8e6c9; border-radius: 18px; padding: 16px 18px; margin-bottom: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.04); }
+    .progress-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: bold; font-size: 1.1rem; color: var(--primary-dark); }
+    .progress-bar-bg { width: 100%; height: 20px; background-color: var(--primary-light); border-radius: 10px; overflow: hidden; border: 1px solid #c8e6c9; }
     .progress-bar-val { height: 100%; width: 0%; background: linear-gradient(90deg, #88d49e, #2e7d32); border-radius: 10px; transition: width 0.4s ease; }
 
+    /* ===== Theme Cards ===== */
     .theme-cards-container { display: flex; flex-direction: column; gap: 18px; }
     .theme-big-card {
-      background-color: #ffffff; border-radius: 22px; padding: 20px 18px; border: 3px solid; box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+      background-color: #ffffff; border-radius: 22px; padding: 22px 18px; border: 3px solid; box-shadow: 0 6px 16px rgba(0,0,0,0.06);
       display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; transition: transform 0.15s;
     }
     .theme-big-card:active { transform: scale(0.98); }
@@ -134,7 +152,7 @@
     .theme-big-card.social { border-color: #ffcc80; background: linear-gradient(180deg, #ffffff 60%, #fff3e0 100%); }
     .theme-big-card.health { border-color: #ef9a9a; background: linear-gradient(180deg, #ffffff 60%, #ffebee 100%); }
 
-    .theme-card-title { font-size: 1.6rem; font-weight: 800; margin-bottom: 12px; }
+    .theme-card-title { font-size: 1.7rem; font-weight: 800; margin-bottom: 12px; }
     .theme-card-title.daily { color: #2e7d32; }
     .theme-card-title.travel { color: #1565c0; }
     .theme-card-title.social { color: #e65100; }
@@ -147,11 +165,10 @@
     .theme-icon-circle.travel { background-color: #e3f2fd; }
     .theme-icon-circle.social { background-color: #fff3e0; }
     .theme-icon-circle.health { background-color: #ffebee; }
-    .theme-desc { font-size: 1rem; color: var(--text-sub); margin-bottom: 18px; font-weight: 600; line-height: 1.4; }
+    .theme-desc { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 18px; font-weight: 600; line-height: 1.4; }
 
-    /* 開始學習主題按鈕加高加大 (min-height 68px) */
     .theme-start-btn {
-      width: 100%; padding: 18px 20px; border-radius: 25px; border: none; font-size: 1.35rem; font-weight: 800; color: #ffffff;
+      width: 100%; padding: 18px 20px; border-radius: 25px; border: none; font-size: 1.4rem; font-weight: 800; color: #ffffff;
       cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       min-height: 68px;
     }
@@ -160,75 +177,84 @@
     .theme-start-btn.social { background-color: #f57c00; }
     .theme-start-btn.health { background-color: #d32f2f; }
 
-    .practice-view-panel { display: none; background: #ffffff; border-radius: 20px; padding: 20px 16px; border: 3px solid var(--primary-color); box-shadow: 0 6px 18px rgba(0,0,0,0.08); text-align: center; }
+    /* ===== Practice View ===== */
+    .practice-view-panel { display: none; background: #ffffff; border-radius: 20px; padding: 22px 18px; border: 3px solid var(--primary-color); box-shadow: 0 6px 18px rgba(0,0,0,0.08); text-align: center; }
     .practice-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
     
-    /* 返回主題按鈕加高 (min-height 54px) */
-    .btn-back-theme { background: var(--primary-light); border: 2.5px solid var(--primary-dark); color: var(--primary-dark); padding: 12px 18px; border-radius: 18px; font-weight: bold; font-size: 1.1rem; cursor: pointer; min-height: 54px; }
-    .practice-word-badge { background: var(--primary-light); color: var(--primary-dark); padding: 6px 14px; border-radius: 14px; font-size: 1rem; font-weight: bold; }
+    .btn-back-theme { background: var(--primary-light); border: 2.5px solid var(--primary-dark); color: var(--primary-dark); padding: 12px 18px; border-radius: 18px; font-weight: bold; font-size: 1.1rem; cursor: pointer; min-height: 58px; display: flex; align-items: center; justify-content: center; }
+    .practice-word-badge { background: var(--primary-light); color: var(--primary-dark); padding: 8px 14px; border-radius: 14px; font-size: 1.1rem; font-weight: bold; }
 
-    .practice-en-box { font-size: 2.2rem; font-weight: 900; color: #1b4332; margin: 20px 0 10px 0; line-height: 1.25; min-height: 4.2rem; display: flex; align-items: center; justify-content: center; word-break: break-word; letter-spacing: 0.5px; }
-    .practice-zh-box { font-size: 1.3rem; font-weight: bold; color: #4b5563; margin-bottom: 24px; min-height: 2.2rem; background: #f8faf8; padding: 10px 14px; border-radius: 12px; display: inline-block; border: 1px dashed #a8e6cf; }
+    .practice-en-box { 
+      font-size: var(--practice-en-size); 
+      font-weight: 900; 
+      color: #1b4332; 
+      margin: 20px 0 12px 0; 
+      line-height: 1.3; 
+      min-height: 4.5rem; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      word-break: break-word; 
+      letter-spacing: 0.5px; 
+    }
+    .practice-zh-box { font-size: 1.35rem; font-weight: bold; color: #4b5563; margin-bottom: 24px; min-height: 2.4rem; background: #f8faf8; padding: 12px 16px; border-radius: 14px; display: inline-block; border: 1.5px dashed #a8e6cf; }
 
     .practice-actions { display: flex; flex-direction: column; gap: 14px; width: 100%; }
     
-    /* 聆聽發音按鈕加高 (min-height 72px) */
-    .btn-large-audio { background-color: var(--primary-light); border: 3px solid var(--primary-color); color: var(--primary-dark); padding: 20px; border-radius: 22px; font-size: 1.4rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); min-height: 72px; }
+    .btn-large-audio { background-color: var(--primary-light); border: 3px solid var(--primary-color); color: var(--primary-dark); padding: 20px; border-radius: 22px; font-size: 1.45rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); min-height: 76px; }
     .btn-large-audio:active { background-color: var(--accent-color); }
+    .btn-large-audio.playing { background-color: #fef08a; border-color: #f59e0b; color: #b45309; }
     
     .practice-controls-row { display: flex; gap: 12px; }
     
-    /* 下一張與標記學會按鈕加高 (min-height 64px) */
-    .btn-ctrl-action { flex: 1; padding: 18px; border-radius: 18px; border: 2.5px solid var(--primary-dark); background-color: #ffffff; color: var(--primary-dark); font-size: 1.2rem; font-weight: 800; cursor: pointer; min-height: 64px; display: flex; align-items: center; justify-content: center; }
+    .btn-ctrl-action { flex: 1; padding: 18px; border-radius: 18px; border: 2.5px solid var(--primary-dark); background-color: #ffffff; color: var(--primary-dark); font-size: 1.25rem; font-weight: 800; cursor: pointer; min-height: 68px; display: flex; align-items: center; justify-content: center; }
     .btn-ctrl-action.primary { background-color: var(--primary-dark); color: #ffffff; }
 
     .filter-pills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
     
-    /* 分類標籤按鈕加高 (min-height 58px) */
-    .sub-filter-pill { background: #ffffff; border: 2.5px solid #a8e6cf; color: var(--primary-dark); padding: 14px 10px; border-radius: 18px; font-size: 1.1rem; font-weight: 800; text-align: center; cursor: pointer; width: 100%; box-shadow: 0 2px 6px rgba(0,0,0,0.04); transition: all 0.2s; min-height: 58px; display: flex; align-items: center; justify-content: center; }
+    .sub-filter-pill { background: #ffffff; border: 2.5px solid #a8e6cf; color: var(--primary-dark); padding: 14px 10px; border-radius: 18px; font-size: 1.15rem; font-weight: 800; text-align: center; cursor: pointer; width: 100%; box-shadow: 0 2px 6px rgba(0,0,0,0.04); transition: all 0.2s; min-height: 62px; display: flex; align-items: center; justify-content: center; }
     .sub-filter-pill.active { background: var(--primary-dark); color: #ffffff; border-color: var(--primary-dark); box-shadow: 0 4px 10px rgba(0,0,0,0.12); }
 
     .card-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
-    .item-card { background: #ffffff; border: 2.5px solid #c8e6c9; border-radius: 18px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+    .item-card { background: #ffffff; border: 2.5px solid #c8e6c9; border-radius: 18px; padding: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.03); min-height: 90px; }
     .item-card.learned { border-color: var(--gold-color); background-color: #fffdf2; }
     .item-info { flex: 1; padding-right: 12px; }
-    .item-tag { font-size: 0.85rem; background: var(--primary-light); color: var(--primary-dark); padding: 4px 10px; border-radius: 10px; font-weight: bold; display: inline-block; margin-bottom: 6px; }
-    .item-en { font-size: 1.5rem; font-weight: 900; color: #1b4332; line-height: 1.3; word-break: break-word; }
-    .item-zh { font-size: 1.15rem; color: var(--text-sub); margin-top: 4px; font-weight: bold; }
-    .item-btns { display: flex; flex-direction: column; gap: 8px; }
+    .item-tag { font-size: 0.9rem; background: var(--primary-light); color: var(--primary-dark); padding: 4px 10px; border-radius: 10px; font-weight: bold; display: inline-block; margin-bottom: 6px; }
+    .item-en { font-size: var(--en-size); font-weight: 900; color: #1b4332; line-height: 1.3; word-break: break-word; }
+    .item-zh { font-size: 1.2rem; color: var(--text-sub); margin-top: 4px; font-weight: bold; }
+    .item-btns { display: flex; flex-direction: column; gap: 10px; }
 
-    /* 圓形按鈕放大 (60px x 60px) */
-    .btn-circle { width: 60px; height: 60px; border-radius: 50%; border: 2.5px solid var(--primary-color); background: #e8f5e9; font-size: 1.6rem; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .btn-circle { width: 66px; height: 66px; border-radius: 50%; border: 2.5px solid var(--primary-color); background: #e8f5e9; font-size: 1.7rem; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
     .btn-circle.progress-toggle { border-color: var(--gray-border); background: #f3f4f6; }
     .btn-circle.progress-toggle.done { border-color: var(--gold-color); background: #fff8e1; }
 
-    /* 分頁列按鈕加高 (min-height 56px) */
     .pagination-bar { display: flex; justify-content: space-between; align-items: center; background: #ffffff; padding: 14px 16px; border-radius: 18px; border: 2.5px solid var(--gray-border); margin-bottom: 20px; }
-    .page-btn { background: var(--primary-color); color: #1b4332; border: 2.5px solid var(--primary-dark); padding: 12px 20px; border-radius: 14px; font-weight: 800; font-size: 1.1rem; cursor: pointer; min-height: 56px; display: flex; align-items: center; justify-content: center; }
+    .page-btn { background: var(--primary-color); color: #1b4332; border: 2.5px solid var(--primary-dark); padding: 14px 22px; border-radius: 14px; font-weight: 800; font-size: 1.15rem; cursor: pointer; min-height: 60px; display: flex; align-items: center; justify-content: center; }
     .page-btn:disabled { background: #e5e5e5; color: #a0a0a0; border-color: #d1d5db; cursor: not-allowed; }
-    .page-info { font-weight: bold; color: var(--text-main); font-size: 1.1rem; }
+    .page-info { font-weight: bold; color: var(--text-main); font-size: 1.15rem; }
 
+    /* Modals */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
-    .modal-box { background: #ffffff; width: 100%; max-width: 420px; border-radius: 24px; padding: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border: 3px solid var(--primary-color); max-height: 90vh; overflow-y: auto; }
+    .modal-box { background: #ffffff; width: 100%; max-width: 440px; border-radius: 24px; padding: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border: 3px solid var(--primary-color); max-height: 90vh; overflow-y: auto; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 2px solid var(--primary-light); padding-bottom: 10px; }
-    .modal-title { font-size: 1.35rem; font-weight: 800; color: var(--primary-dark); }
+    .modal-title { font-size: 1.4rem; font-weight: 800; color: var(--primary-dark); }
     .modal-close { background: transparent; border: none; font-size: 1.8rem; cursor: pointer; color: #6b7280; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
 
-    .setting-group { margin-bottom: 20px; }
-    .setting-label { font-weight: bold; margin-bottom: 10px; display: block; color: var(--text-main); font-size: 1.1rem; }
-    .setting-options { display: flex; gap: 10px; }
+    .setting-group { margin-bottom: 22px; }
+    .setting-label { font-weight: bold; margin-bottom: 10px; display: block; color: var(--text-main); font-size: 1.15rem; }
+    .setting-options { display: flex; gap: 8px; }
     
-    /* 設定選項按鈕加高 (min-height 58px) */
-    .opt-btn { flex: 1; padding: 14px 10px; border: 2.5px solid var(--gray-border); background: #ffffff; border-radius: 14px; font-weight: bold; font-size: 1.05rem; cursor: pointer; text-align: center; min-height: 58px; display: flex; align-items: center; justify-content: center; }
-    .opt-btn.active { background: var(--primary-color); border-color: var(--primary-dark); color: #1b4332; }
+    .opt-btn { flex: 1; padding: 14px 8px; border: 2.5px solid var(--gray-border); background: #ffffff; border-radius: 14px; font-weight: bold; font-size: 1.1rem; cursor: pointer; text-align: center; min-height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.2; }
+    .opt-btn.active { background: var(--primary-color); border-color: var(--primary-dark); color: #1b4332; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .opt-btn .sub-desc { font-size: 0.75rem; font-weight: normal; opacity: 0.85; margin-top: 3px; }
 
-    .google-translate-link { position: fixed; bottom: 16px; left: 16px; background: #ffffff; border: 2.5px solid var(--primary-color); color: var(--primary-dark); padding: 14px 20px; border-radius: 25px; font-size: 1.05rem; font-weight: 800; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 500; display: flex; align-items: center; gap: 6px; min-height: 56px; }
-    .search-input { width: 100%; padding: 16px 18px; border: 2.5px solid #c8e6c9; border-radius: 18px; font-size: 1.1rem; margin-bottom: 14px; outline: none; }
-    .toast-msg { position: fixed; top: 85px; left: 50%; transform: translateX(-50%); background: #1b4332; color: #ffffff; padding: 14px 24px; border-radius: 20px; font-weight: bold; font-size: 1.05rem; z-index: 2000; opacity: 0; transition: opacity 0.3s; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .google-translate-link { position: fixed; bottom: 16px; left: 16px; background: #ffffff; border: 2.5px solid var(--primary-color); color: var(--primary-dark); padding: 14px 20px; border-radius: 25px; font-size: 1.05rem; font-weight: 800; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 500; display: flex; align-items: center; gap: 6px; min-height: 58px; }
+    .search-input { width: 100%; padding: 16px 18px; border: 2.5px solid #c8e6c9; border-radius: 18px; font-size: 1.15rem; margin-bottom: 14px; outline: none; }
+    .toast-msg { position: fixed; top: 85px; left: 50%; transform: translateX(-50%); background: #1b4332; color: #ffffff; padding: 14px 24px; border-radius: 20px; font-weight: bold; font-size: 1.1rem; z-index: 2000; opacity: 0; transition: opacity 0.3s; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); width: 85%; max-width: 380px; text-align: center; }
     .toast-msg.show { opacity: 1; }
   </style>
 </head>
-<body>
+<body class="font-lg">
 
 <div class="app-shell">
   <header>
@@ -266,7 +292,7 @@
         <div class="banner-feature-icon speak">🔊</div>
         <div class="banner-feature-text">
           <span class="banner-feature-title speak">輕鬆開口</span>
-          <span class="banner-feature-sub">勇敢說出每一句</span>
+          <span class="banner-feature-sub">真實女聲高清發音</span>
         </div>
       </div>
       <div class="banner-feature-item">
@@ -401,7 +427,7 @@
       <div id="analytics-theme-breakdown"></div>
 
       <div style="text-align:center; margin-top:24px; display:flex; flex-direction:column; gap:12px;">
-        <button class="btn-ctrl-action" style="border-color:#ef4444; color:#ef4444; width:100%; justify-content:center;" onclick="openConfirmResetModal()">🔄 重置學習紀錄</button>
+        <button class="btn-ctrl-action" style="border-color:#ef4444; color:#ef4444; width:100%; justify-content:center; min-height:64px;" onclick="openConfirmResetModal()">🔄 重置學習紀錄</button>
       </div>
     </div>
   </div>
@@ -421,30 +447,45 @@
       <button class="modal-close" onclick="closeSettingsModal()">✖</button>
     </div>
     <div class="setting-group">
-      <label class="setting-label">🗣️ 英語發音腔調 (Accent)</label>
+      <label class="setting-label">🗣️ 英語發音腔調（固定高品質女聲）</label>
       <div class="setting-options">
-        <button class="opt-btn" id="accent-opt-us" onclick="setAppAccent('en-US')">🇺🇸 美式發音</button>
-        <button class="opt-btn" id="accent-opt-uk" onclick="setAppAccent('en-GB')">🇬🇧 英式發音</button>
+        <button class="opt-btn" id="accent-opt-us" onclick="setAppAccent('en-US')">
+          🇺🇸 美式女聲
+          <span class="sub-desc">清晰自然</span>
+        </button>
+        <button class="opt-btn" id="accent-opt-uk" onclick="setAppAccent('en-GB')">
+          🇬🇧 英式女聲
+          <span class="sub-desc">優雅標準</span>
+        </button>
       </div>
     </div>
     <div class="setting-group">
-      <label class="setting-label">🔍 字體大小 (Font Size)</label>
+      <label class="setting-label">🔍 字體大小（顯著對比放大）</label>
       <div class="setting-options">
-        <button class="opt-btn" id="font-opt-md" onclick="setAppFontSize('md')">標準</button>
-        <button class="opt-btn" id="font-opt-lg" onclick="setAppFontSize('lg')">放大</button>
-        <button class="opt-btn" id="font-opt-xl" onclick="setAppFontSize('xl')">特大</button>
+        <button class="opt-btn" id="font-opt-md" onclick="setAppFontSize('md')">
+          標準
+          <span class="sub-desc">18px</span>
+        </button>
+        <button class="opt-btn" id="font-opt-lg" onclick="setAppFontSize('lg')">
+          放大
+          <span class="sub-desc">24px</span>
+        </button>
+        <button class="opt-btn" id="font-opt-xl" onclick="setAppFontSize('xl')">
+          特大
+          <span class="sub-desc">30px</span>
+        </button>
       </div>
     </div>
     <div class="setting-group">
       <label class="setting-label">🔊 發音速度 (Speech Speed)</label>
       <div class="setting-options">
-        <button class="opt-btn" id="rate-opt-slow" onclick="setAppSpeechRate(0.65)">🐢 慢速</button>
+        <button class="opt-btn" id="rate-opt-slow" onclick="setAppSpeechRate(0.6)">🐢 慢速</button>
         <button class="opt-btn" id="rate-opt-mid" onclick="setAppSpeechRate(0.8)">☕ 舒適</button>
         <button class="opt-btn" id="rate-opt-norm" onclick="setAppSpeechRate(1.0)">🐇 標準</button>
       </div>
     </div>
     <div style="margin-top:20px; text-align:center;">
-      <button class="btn-ctrl-action primary" style="width:100%; justify-content:center;" onclick="closeSettingsModal()">儲存並關閉</button>
+      <button class="btn-ctrl-action primary" style="width:100%; justify-content:center; min-height:64px;" onclick="closeSettingsModal()">儲存並關閉</button>
     </div>
   </div>
 </div>
@@ -456,8 +497,8 @@
     <div style="font-size:1.2rem; font-weight:bold; margin-bottom:12px;">確定要重置所有學習紀錄嗎？</div>
     <div style="color:var(--text-sub); margin-bottom:20px;">重置後標記學會的項目與進度將全部歸零。</div>
     <div style="display:flex; gap:10px;">
-      <button class="btn-ctrl-action" onclick="closeConfirmResetModal()">取消</button>
-      <button class="btn-ctrl-action" style="background:#ef4444; color:#fff; border-color:#dc2626; justify-content:center;" onclick="executeResetProgress()">確認歸零</button>
+      <button class="btn-ctrl-action" style="min-height:60px;" onclick="closeConfirmResetModal()">取消</button>
+      <button class="btn-ctrl-action" style="background:#ef4444; color:#fff; border-color:#dc2626; justify-content:center; min-height:60px;" onclick="executeResetProgress()">確認歸零</button>
     </div>
   </div>
 </div>
@@ -473,6 +514,9 @@
   let currentPractTheme = 'daily';
   let currentPractIndex = 0;
   let learnedMap = {};
+
+  // 全域 Audio 物件，確保全平台使用一致的高品質雲端 MP3 發音
+  let activeAudio = null;
 
   const dailyVocabs = [
     ["House", "房子"], ["Home", "家"], ["Door", "門"], ["Window", "窗戶"], ["Kitchen", "廚房"],
@@ -550,7 +594,7 @@
     ["Waitlist", "候位名單"], ["Queue", "排隊"], ["Wait time", "等待時間"], ["Available", "有空的；可用的"], ["Occupied", "有人使用的"],
     ["Reserved", "已預訂的"], ["Window seat", "靠窗座位"], ["Outdoor", "戶外的"], ["High chair", "兒童高腳椅"], ["Children's menu", "兒童菜單"],
     ["Self-service", "自動服務"], ["Counter", "櫃台"], ["Food court", "美食街"], ["Street food", "街頭小吃"], ["QR code", "掃碼"],
-    ["Overcharge", "多收費"], ["Wrong order", "送錯餐點"], ["Delicious", "美味的"], ["Compliment", "稱讚"], ["patio", "庭院座位"]
+    ["Overcharge", "多收費"], ["Wrong order", "送錯餐點"], ["Delicious", "美味的"], ["Compliment", "稱讚"], ["Patio", "庭院座位"]
   ];
 
   const healthVocabs = [
@@ -1078,37 +1122,91 @@
     addScen('health', '醫療健康', healthScens);
   }
 
-  // ★ 針對英式發音不清晰問題進行深度優化 ★
-  // 1. 優先尋找清晰的高質量語音包 (如 Google UK English Female/Male, en-GB 官方特選聲道)
-  // 2. 微調 pitch 與 rate，確保即使在手機或平板上播放依然立體、宏亮、無雜音
+  /* ===== 核心語音播放 logic (需求 1：固定女聲 MP3 TTS) ===== */
   function speak(text) {
-    if (!('speechSynthesis' in window)) return showToast('您的裝置不支援語音功能');
-    window.speechSynthesis.cancel();
+    if (!text) return;
+
+    // 停止先前的音訊與內建 TTS
+    if (activeAudio) {
+      activeAudio.pause();
+      activeAudio = null;
+    }
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+
+    // 更新發音按鈕視覺反饋
+    const practBtn = document.getElementById('pract-speak-btn');
+    if (practBtn) {
+      practBtn.classList.add('playing');
+      practBtn.textContent = '🔊 正在播放發音中...';
+    }
+
+    // 根據腔調選擇固定雲端高品質女聲類型 (type=2: 美音女聲, type=1: 英音女聲)
+    const voiceType = (appSettings.accent === 'en-GB') ? 1 : 2;
+    const mp3Url = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=${voiceType}`;
+
+    let playSuccess = false;
+
+    // 優先使用 HTML5 Audio 播放固定 MP3 發音
+    const audio = new Audio();
+    activeAudio = audio;
+    audio.playbackRate = appSettings.speechRate || 0.8;
+
+    const resetBtnState = () => {
+      if (practBtn) {
+        practBtn.classList.remove('playing');
+        const accentFlag = appSettings.accent === 'en-GB' ? '🇬🇧' : '🇺🇸';
+        practBtn.textContent = `🔊 按我聆聽發音 ${accentFlag}`;
+      }
+    };
+
+    audio.onended = resetBtnState;
+
+    audio.onerror = function() {
+      // 若雲端 MP3 網路請求失敗，自動無縫降級為原生瀏覽器 TTS（調校為高清晰度女聲）
+      if (!playSuccess) {
+        fallbackWebSpeech(text, resetBtnState);
+      }
+    };
+
+    audio.play().then(() => {
+      playSuccess = true;
+    }).catch(err => {
+      console.warn("Cloud MP3 play fallback:", err);
+      fallbackWebSpeech(text, resetBtnState);
+    });
+  }
+
+  // 備援的原生 Web Speech 引擎
+  function fallbackWebSpeech(text, callback) {
+    if (!('speechSynthesis' in window)) {
+      if (callback) callback();
+      return showToast('您的裝置暫不支援語音播放');
+    }
     
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = appSettings.accent; // 'en-US' 或 'en-GB'
+    utterance.lang = appSettings.accent;
     utterance.rate = appSettings.speechRate;
     
+    // 選取標準女聲聲線
     const voices = window.speechSynthesis.getVoices();
-    
-    let targetVoice = null;
+    let femaleVoice = null;
     if (appSettings.accent === 'en-GB') {
-      // 英式發音優化：尋找高品質的英式女聲或男聲（例如 Google UK English Female, Oliver, Kate, Daniel 等）
-      targetVoice = voices.find(v => v.lang === 'en-GB' && (v.name.includes('Google') || v.name.includes('Female') || v.name.includes('Oliver') || v.name.includes('Daniel') || v.name.includes('Natural'))) 
-                 || voices.find(v => v.lang === 'en-GB' || v.lang.toLowerCase() === 'en_gb');
-      // 將英式發音的 pitch 調高至 1.25，大幅消除低沉沙啞感，讓發音更清晰透亮
-      utterance.pitch = 1.25;
+      femaleVoice = voices.find(v => v.lang.includes('GB') && (v.name.includes('Female') || v.name.includes('Hazel') || v.name.includes('Google')))
+                 || voices.find(v => v.lang.includes('GB'));
+      utterance.pitch = 1.15;
     } else {
-      // 美式發音優化
-      targetVoice = voices.find(v => v.lang === 'en-US' && (v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Natural')))
-                 || voices.find(v => v.lang === 'en-US' || v.lang.toLowerCase() === 'en_us');
-      utterance.pitch = 1.0;
+      femaleVoice = voices.find(v => v.lang.includes('US') && (v.name.includes('Female') || v.name.includes('Samantha') || v.name.includes('Zira') || v.name.includes('Google')))
+                 || voices.find(v => v.lang.includes('US'));
+      utterance.pitch = 1.05;
     }
     
-    if (targetVoice) {
-      utterance.voice = targetVoice;
-    }
-    
+    if (femaleVoice) utterance.voice = femaleVoice;
+
+    utterance.onend = callback;
+    utterance.onerror = callback;
+
     window.speechSynthesis.speak(utterance);
   }
 
@@ -1163,6 +1261,7 @@
   function exitThemePractice() {
     document.getElementById('theme-selection-grid').style.display = 'flex';
     document.getElementById('theme-practice-panel').style.display = 'none';
+    if (activeAudio) activeAudio.pause();
   }
 
   function updatePractPanelUI() {
@@ -1172,7 +1271,10 @@
     const current = list[currentPractIndex];
 
     const accentFlag = appSettings.accent === 'en-GB' ? '🇬🇧' : '🇺🇸';
-    document.getElementById('pract-speak-btn').textContent = `🔊 按我聆聽發音 ${accentFlag}`;
+    const practBtn = document.getElementById('pract-speak-btn');
+    practBtn.classList.remove('playing');
+    practBtn.textContent = `🔊 按我聆聽發音 ${accentFlag}`;
+
     document.getElementById('pract-count-badge').textContent = `第 ${currentPractIndex + 1} / ${list.length} 個`;
     document.getElementById('pract-ctx-tag').textContent = `${current.themeName}（${current.ctx || '學習'}）`;
     
@@ -1357,23 +1459,28 @@
     appSettings.accent = accent;
     document.getElementById('accent-opt-us').classList.toggle('active', accent === 'en-US');
     document.getElementById('accent-opt-uk').classList.toggle('active', accent === 'en-GB');
+    showToast(`已切換為：${accent === 'en-US' ? '美式女聲' : '英式女聲'}`);
     if (document.getElementById('theme-practice-panel').style.display === 'block') updatePractPanelUI();
   }
 
+  /* 需求 2：拉大字體對比級距 */
   function setAppFontSize(size) {
     appSettings.fontSize = size;
-    document.body.classList.remove('font-lg', 'font-xl');
-    if (size === 'lg') document.body.classList.add('font-lg');
-    if (size === 'xl') document.body.classList.add('font-xl');
+    document.body.classList.remove('font-md', 'font-lg', 'font-xl');
+    document.body.classList.add('font-' + size);
+    
     document.getElementById('font-opt-md').classList.toggle('active', size === 'md');
     document.getElementById('font-opt-lg').classList.toggle('active', size === 'lg');
     document.getElementById('font-opt-xl').classList.toggle('active', size === 'xl');
+
+    const sizeName = size === 'md' ? '標準 (18px)' : size === 'lg' ? '放大 (24px)' : '特大 (30px)';
+    showToast(`字體大小已設定為：${sizeName}`);
   }
 
   function setAppSpeechRate(rate) {
     appSettings.speechRate = rate;
-    document.getElementById('rate-opt-slow').classList.toggle('active', rate <= 0.7);
-    document.getElementById('rate-opt-mid').classList.toggle('active', rate > 0.7 && rate < 0.9);
+    document.getElementById('rate-opt-slow').classList.toggle('active', rate <= 0.65);
+    document.getElementById('rate-opt-mid').classList.toggle('active', rate > 0.65 && rate < 0.9);
     document.getElementById('rate-opt-norm').classList.toggle('active', rate >= 0.9);
   }
 
@@ -1392,10 +1499,6 @@
     setAppAccent('en-US');
     
     switchNavTab('start');
-    
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
-    }
   };
 </script>
 </body>
