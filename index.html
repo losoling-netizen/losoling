@@ -18,15 +18,14 @@
       --gold-color: #f59e0b;
       --gray-border: #d1d5db;
       --font-base-size: 18px;
-      --en-size: 1.5rem;
-      --practice-en-size: 2.2rem;
+      --en-size: 1.4rem;
+      --practice-en-size: 2.0rem;
       --banner-bg: #f7f4ec;
       --banner-leaf: #7cb87f;
       --banner-title-dark: #3a3226;
       --banner-title-green: #3f8a4a;
     }
 
-    /* 大幅拉開三種字體大小差異，方便銀髮族閱讀 */
     body.font-md { 
       --font-base-size: 18px; 
       --en-size: 1.4rem;
@@ -74,7 +73,6 @@
       padding-bottom: 90px;
     }
 
-    /* ===== Header ===== */
     header {
       background: linear-gradient(180deg, #faf8f1 0%, var(--banner-bg) 100%);
       padding: 18px 18px 16px 18px;
@@ -120,7 +118,6 @@
     .banner-feature-title.grow { color: #d1685e; }
     .banner-feature-sub { font-size: 0.7rem; color: var(--text-sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* ===== Navigation Tabs ===== */
     nav.app-nav {
       display: flex; background: #ffffff; padding: 12px 8px; gap: 8px; border-bottom: 1px solid var(--gray-border);
       position: sticky; top: 155px; z-index: 90; overflow-x: auto; scrollbar-width: none;
@@ -140,7 +137,6 @@
     .progress-bar-bg { width: 100%; height: 20px; background-color: var(--primary-light); border-radius: 10px; overflow: hidden; border: 1px solid #c8e6c9; }
     .progress-bar-val { height: 100%; width: 0%; background: linear-gradient(90deg, #88d49e, #2e7d32); border-radius: 10px; transition: width 0.4s ease; }
 
-    /* ===== Theme Cards ===== */
     .theme-cards-container { display: flex; flex-direction: column; gap: 18px; }
     .theme-big-card {
       background-color: #ffffff; border-radius: 22px; padding: 22px 18px; border: 3px solid; box-shadow: 0 6px 16px rgba(0,0,0,0.06);
@@ -177,7 +173,6 @@
     .theme-start-btn.social { background-color: #f57c00; }
     .theme-start-btn.health { background-color: #d32f2f; }
 
-    /* ===== Practice View ===== */
     .practice-view-panel { display: none; background: #ffffff; border-radius: 20px; padding: 22px 18px; border: 3px solid var(--primary-color); box-shadow: 0 6px 18px rgba(0,0,0,0.08); text-align: center; }
     .practice-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
     
@@ -197,14 +192,54 @@
       word-break: break-word; 
       letter-spacing: 0.5px; 
     }
-    .practice-zh-box { font-size: 1.35rem; font-weight: bold; color: #4b5563; margin-bottom: 24px; min-height: 2.4rem; background: #f8faf8; padding: 12px 16px; border-radius: 14px; display: inline-block; border: 1.5px dashed #a8e6cf; }
+    .practice-zh-box { font-size: 1.35rem; font-weight: bold; color: #4b5563; margin-bottom: 20px; min-height: 2.4rem; background: #f8faf8; padding: 12px 16px; border-radius: 14px; display: inline-block; border: 1.5px dashed #a8e6cf; }
 
     .practice-actions { display: flex; flex-direction: column; gap: 14px; width: 100%; }
     
-    .btn-large-audio { background-color: var(--primary-light); border: 3px solid var(--primary-color); color: var(--primary-dark); padding: 20px; border-radius: 22px; font-size: 1.45rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); min-height: 76px; }
-    .btn-large-audio:active { background-color: var(--accent-color); }
-    .btn-large-audio.playing { background-color: #fef08a; border-color: #f59e0b; color: #b45309; }
-    
+    /* Dual Pronunciation Button Layout */
+    .dual-audio-row { display: flex; gap: 12px; width: 100%; }
+    .btn-audio-accent { 
+      flex: 1; 
+      background: #ffffff; 
+      border: 3px solid var(--primary-color); 
+      border-radius: 20px; 
+      padding: 14px 10px; 
+      cursor: pointer; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 10px; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06); 
+      min-height: 72px; 
+      transition: all 0.15s ease;
+    }
+    .btn-audio-accent.us-accent {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+      color: #1e40af;
+    }
+    .btn-audio-accent.uk-accent {
+      border-color: #8b5cf6;
+      background-color: #f5f3ff;
+      color: #5b21b6;
+    }
+    .btn-audio-accent:active { transform: scale(0.96); }
+    .btn-audio-accent.playing { 
+      background-color: #fef08a !important; 
+      border-color: #f59e0b !important; 
+      color: #92400e !important; 
+      animation: pulse-border 1s infinite alternate;
+    }
+    @keyframes pulse-border {
+      0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+      100% { box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); }
+    }
+
+    .accent-flag { font-size: 1.8rem; flex-shrink: 0; }
+    .accent-info { display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
+    .accent-title { font-size: 1.15rem; font-weight: 800; line-height: 1.2; }
+    .accent-sub { font-size: 0.75rem; font-weight: bold; opacity: 0.8; }
+
     .practice-controls-row { display: flex; gap: 12px; }
     
     .btn-ctrl-action { flex: 1; padding: 18px; border-radius: 18px; border: 2.5px solid var(--primary-dark); background-color: #ffffff; color: var(--primary-dark); font-size: 1.25rem; font-weight: 800; cursor: pointer; min-height: 68px; display: flex; align-items: center; justify-content: center; }
@@ -222,18 +257,45 @@
     .item-tag { font-size: 0.9rem; background: var(--primary-light); color: var(--primary-dark); padding: 4px 10px; border-radius: 10px; font-weight: bold; display: inline-block; margin-bottom: 6px; }
     .item-en { font-size: var(--en-size); font-weight: 900; color: #1b4332; line-height: 1.3; word-break: break-word; }
     .item-zh { font-size: 1.2rem; color: var(--text-sub); margin-top: 4px; font-weight: bold; }
-    .item-btns { display: flex; flex-direction: column; gap: 10px; }
+    
+    .item-btns { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; justify-content: center; flex-shrink: 0; }
 
-    .btn-circle { width: 66px; height: 66px; border-radius: 50%; border: 2.5px solid var(--primary-color); background: #e8f5e9; font-size: 1.7rem; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .btn-circle { width: 52px; height: 52px; border-radius: 50%; border: 2.5px solid var(--primary-color); background: #e8f5e9; font-size: 1.4rem; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
     .btn-circle.progress-toggle { border-color: var(--gray-border); background: #f3f4f6; }
     .btn-circle.progress-toggle.done { border-color: var(--gold-color); background: #fff8e1; }
+
+    .btn-speaker-pill {
+      padding: 8px 12px;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      border: 2px solid;
+      transition: transform 0.1s;
+      min-height: 44px;
+      white-space: nowrap;
+    }
+    .btn-speaker-pill.us {
+      background-color: #eff6ff;
+      border-color: #93c5fd;
+      color: #1d4ed8;
+    }
+    .btn-speaker-pill.uk {
+      background-color: #f5f3ff;
+      border-color: #c4b5fd;
+      color: #6d28d9;
+    }
+    .btn-speaker-pill:active { transform: scale(0.92); }
 
     .pagination-bar { display: flex; justify-content: space-between; align-items: center; background: #ffffff; padding: 14px 16px; border-radius: 18px; border: 2.5px solid var(--gray-border); margin-bottom: 20px; }
     .page-btn { background: var(--primary-color); color: #1b4332; border: 2.5px solid var(--primary-dark); padding: 14px 22px; border-radius: 14px; font-weight: 800; font-size: 1.15rem; cursor: pointer; min-height: 60px; display: flex; align-items: center; justify-content: center; }
     .page-btn:disabled { background: #e5e5e5; color: #a0a0a0; border-color: #d1d5db; cursor: not-allowed; }
     .page-info { font-weight: bold; color: var(--text-main); font-size: 1.15rem; }
 
-    /* Modals */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
     .modal-box { background: #ffffff; width: 100%; max-width: 440px; border-radius: 24px; padding: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border: 3px solid var(--primary-color); max-height: 90vh; overflow-y: auto; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 2px solid var(--primary-light); padding-bottom: 10px; }
@@ -291,8 +353,8 @@
       <div class="banner-feature-item">
         <div class="banner-feature-icon speak">🔊</div>
         <div class="banner-feature-text">
-          <span class="banner-feature-title speak">輕鬆開口</span>
-          <span class="banner-feature-sub">真實女聲高清發音</span>
+          <span class="banner-feature-title speak">雙音清晰</span>
+          <span class="banner-feature-sub">美音英音個別聽</span>
         </div>
       </div>
       <div class="banner-feature-item">
@@ -352,7 +414,6 @@
         </div>
       </div>
 
-      <!-- 練習面板 -->
       <div id="theme-practice-panel" class="practice-view-panel">
         <div class="practice-top-bar">
           <button class="btn-back-theme" onclick="exitThemePractice()">⬅️ 返回主題</button>
@@ -362,7 +423,25 @@
         <div class="practice-en-box" id="pract-en-text">English</div>
         <div class="practice-zh-box" id="pract-zh-text">中文</div>
         <div class="practice-actions">
-          <button class="btn-large-audio" id="pract-speak-btn" onclick="speakCurrentPractice()">🔊 按我聆聽發音</button>
+          
+          <!-- Dedicated US and UK Pronunciation Buttons -->
+          <div class="dual-audio-row">
+            <button class="btn-audio-accent us-accent" id="pract-speak-us-btn" onclick="speakCurrentPractice('en-US')">
+              <span class="accent-flag">🇺🇸</span>
+              <div class="accent-info">
+                <span class="accent-title">美式發音</span>
+                <span class="accent-sub">US Voice</span>
+              </div>
+            </button>
+            <button class="btn-audio-accent uk-accent" id="pract-speak-uk-btn" onclick="speakCurrentPractice('en-GB')">
+              <span class="accent-flag">🇬🇧</span>
+              <div class="accent-info">
+                <span class="accent-title">英式發音</span>
+                <span class="accent-sub">UK Voice</span>
+              </div>
+            </button>
+          </div>
+
           <div class="practice-controls-row">
             <button class="btn-ctrl-action" id="pract-toggle-learned-btn" onclick="toggleCurrentPractLearned()">⭕ 標記學會</button>
             <button class="btn-ctrl-action primary" onclick="nextPractCard()">下一張 ➔</button>
@@ -371,7 +450,6 @@
       </div>
     </div>
 
-    <!-- TAB 2: 單字練習 -->
     <div id="tab-vocab" style="display: none;">
       <input type="text" id="vocab-search-input" class="search-input" placeholder="🔍 搜尋英文或中文..." oninput="onVocabSearch()">
       <div class="filter-pills-grid">
@@ -388,7 +466,6 @@
       </div>
     </div>
 
-    <!-- TAB 3: 情境模式 -->
     <div id="tab-scenario" style="display: none;">
       <input type="text" id="scenario-search-input" class="search-input" placeholder="🔍 搜尋情境或句子..." oninput="onScenarioSearch()">
       <div class="filter-pills-grid">
@@ -405,7 +482,6 @@
       </div>
     </div>
 
-    <!-- TAB 4: 進度分析 -->
     <div id="tab-analytics" style="display: none;">
       <div class="progress-card" style="margin-top:10px;">
         <div style="font-weight:bold; margin-bottom:10px; font-size:1.2rem; color:var(--primary-dark);">📈 學習成果總計</div>
@@ -439,25 +515,11 @@
 
 <div class="toast-msg" id="app-toast"></div>
 
-<!-- 設定彈出視窗 -->
 <div class="modal-overlay" id="settings-modal">
   <div class="modal-box">
     <div class="modal-header">
       <div class="modal-title">⚙️ 偏好設定</div>
       <button class="modal-close" onclick="closeSettingsModal()">✖</button>
-    </div>
-    <div class="setting-group">
-      <label class="setting-label">🗣️ 英語發音腔調（固定高品質女聲）</label>
-      <div class="setting-options">
-        <button class="opt-btn" id="accent-opt-us" onclick="setAppAccent('en-US')">
-          🇺🇸 美式女聲
-          <span class="sub-desc">清晰自然</span>
-        </button>
-        <button class="opt-btn" id="accent-opt-uk" onclick="setAppAccent('en-GB')">
-          🇬🇧 英式女聲
-          <span class="sub-desc">優雅標準</span>
-        </button>
-      </div>
     </div>
     <div class="setting-group">
       <label class="setting-label">🔍 字體大小（顯著對比放大）</label>
@@ -490,7 +552,6 @@
   </div>
 </div>
 
-<!-- 確認重置彈出視窗 -->
 <div class="modal-overlay" id="confirm-reset-modal">
   <div class="modal-box" style="text-align:center;">
     <div style="font-size:2.5rem; margin-bottom:10px;">⚠️</div>
@@ -504,7 +565,7 @@
 </div>
 
 <script>
-  let appSettings = { fontSize: 'lg', speechRate: 0.8, accent: 'en-US' };
+  let appSettings = { fontSize: 'lg', speechRate: 0.8 };
   let currentNavTab = 'start';
   let vocabThemeFilter = 'daily';
   let scenarioThemeFilter = 'daily';
@@ -515,8 +576,198 @@
   let currentPractIndex = 0;
   let learnedMap = {};
 
-  // 全域 Audio 物件，確保全平台使用一致的高品質雲端 MP3 發音
   let activeAudio = null;
+  let speechTimer = null;
+  let cachedVoices = [];
+
+  function stopAllAudio() {
+    if (activeAudio) {
+      try {
+        activeAudio.pause();
+        activeAudio.onended = null;
+        activeAudio.onerror = null;
+        activeAudio.currentTime = 0;
+        activeAudio.src = "";
+      } catch(e){}
+      activeAudio = null;
+    }
+    if ('speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.cancel();
+      } catch(e){}
+    }
+    if (speechTimer) {
+      clearTimeout(speechTimer);
+      speechTimer = null;
+    }
+    resetSpeakBtnState();
+  }
+
+  function updateVoices() {
+    if ('speechSynthesis' in window) {
+      try {
+        cachedVoices = window.speechSynthesis.getVoices() || [];
+      } catch(e) {}
+    }
+  }
+
+  function unlockMobileAudio() {
+    if ('speechSynthesis' in window) {
+      try {
+        if (window.speechSynthesis.paused) {
+          window.speechSynthesis.resume();
+        }
+        const dummy = new SpeechSynthesisUtterance('');
+        dummy.volume = 0.01;
+        window.speechSynthesis.speak(dummy);
+      } catch(e){}
+    }
+    try {
+      const silentAudio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==');
+      silentAudio.play().catch(() => {});
+    } catch(e){}
+  }
+
+  function resetSpeakBtnState() {
+    const usBtn = document.getElementById('pract-speak-us-btn');
+    const ukBtn = document.getElementById('pract-speak-uk-btn');
+    if (usBtn) {
+      usBtn.classList.remove('playing');
+      const titleSpan = usBtn.querySelector('.accent-title');
+      if (titleSpan) titleSpan.textContent = '美式發音';
+    }
+    if (ukBtn) {
+      ukBtn.classList.remove('playing');
+      const titleSpan = ukBtn.querySelector('.accent-title');
+      if (titleSpan) titleSpan.textContent = '英式發音';
+    }
+  }
+
+  function speak(text, reqAccent) {
+    if (!text) return;
+    
+    // 1. 立即中斷前一發音，解鎖手機音訊播放權限
+    stopAllAudio();
+    unlockMobileAudio();
+
+    const targetAccent = reqAccent || 'en-US';
+    const isUK = (targetAccent === 'en-GB');
+
+    const btnId = isUK ? 'pract-speak-uk-btn' : 'pract-speak-us-btn';
+    const targetBtn = document.getElementById(btnId);
+    
+    if (targetBtn) {
+      targetBtn.classList.add('playing');
+      const titleSpan = targetBtn.querySelector('.accent-title');
+      if (titleSpan) titleSpan.textContent = '播放中...';
+    }
+
+    // 2. 自動計時防卡死保護
+    const safeTimeoutDuration = Math.max(6000, text.length * 120);
+    speechTimer = setTimeout(() => {
+      stopAllAudio();
+    }, safeTimeoutDuration);
+
+    // 3. 第一順位：優先使用 fixed 雲端高音質年輕女聲 MP3 (new Audio().play())
+    // 徹底避免手機系統內建 TTS (如 iOS 男音或 Android 沉悶低質音色)
+    playCloudMp3Voice(text, targetAccent, () => {
+      // 4. 斷線/網路失敗時的降級備援 (Web Speech API + 嚴格年輕女聲調校)
+      playWebSpeechFallback(text, targetAccent);
+    });
+  }
+
+  function playCloudMp3Voice(text, accent, fallbackCallback) {
+    const isUK = (accent === 'en-GB');
+    const encodedText = encodeURIComponent(text);
+    const langCode = isUK ? 'en-GB' : 'en-US';
+    const youdaoType = isUK ? 1 : 2;
+
+    // Google Translate TTS (tw-ob) 與 有道 TTS 均提供清晰年輕女聲模型
+    const primaryUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=${langCode}&client=tw-ob`;
+    const secondaryUrl = `https://dict.youdao.com/dictvoice?audio=${encodedText}&type=${youdaoType}`;
+
+    let audio = new Audio();
+    activeAudio = audio;
+    audio.playbackRate = appSettings.speechRate || 0.8;
+
+    let hasTriedSecondary = false;
+
+    audio.onended = function() {
+      stopAllAudio();
+    };
+
+    audio.onerror = function() {
+      if (!hasTriedSecondary) {
+        hasTriedSecondary = true;
+        audio.src = secondaryUrl;
+        audio.play().catch(() => {
+          if (fallbackCallback) fallbackCallback();
+        });
+      } else {
+        if (fallbackCallback) fallbackCallback();
+      }
+    };
+
+    audio.src = primaryUrl;
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        if (!hasTriedSecondary) {
+          hasTriedSecondary = true;
+          audio.src = secondaryUrl;
+          audio.play().catch(() => {
+            if (fallbackCallback) fallbackCallback();
+          });
+        } else {
+          if (fallbackCallback) fallbackCallback();
+        }
+      });
+    }
+  }
+
+  function playWebSpeechFallback(text, targetAccent) {
+    if (!('speechSynthesis' in window)) {
+      stopAllAudio();
+      return;
+    }
+    try {
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.resume();
+
+      const isUK = (targetAccent === 'en-GB');
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = targetAccent;
+      utterance.rate = appSettings.speechRate || 0.8;
+      // 提升音調，確保發音清晰明亮，無老氣重音
+      utterance.pitch = isUK ? 1.2 : 1.15;
+
+      let voices = window.speechSynthesis.getVoices();
+      if (!voices || voices.length === 0) voices = cachedVoices;
+
+      if (voices && voices.length > 0) {
+        const targetLang = isUK ? 'en-gb' : 'en-us';
+        const langVoices = voices.filter(v => v.lang && v.lang.replace('_', '-').toLowerCase().includes(targetLang));
+        
+        // 嚴格女聲名稱過濾，防止選到男音 (Daniel, George 等)
+        const femaleVoice = langVoices.find(v => {
+          const name = v.name.toLowerCase();
+          return (name.includes('female') || name.includes('samantha') || name.includes('zira') ||
+                 name.includes('victoria') || name.includes('hazel') || name.includes('serena') ||
+                 name.includes('ava') || name.includes('kate') || name.includes('susan') ||
+                 name.includes('google')) && !name.includes('male') && !name.includes('daniel') && !name.includes('george');
+        }) || langVoices[0];
+
+        if (femaleVoice) utterance.voice = femaleVoice;
+      }
+
+      utterance.onend = stopAllAudio;
+      utterance.onerror = stopAllAudio;
+
+      window.speechSynthesis.speak(utterance);
+    } catch(e) {
+      stopAllAudio();
+    }
+  }
 
   const dailyVocabs = [
     ["House", "房子"], ["Home", "家"], ["Door", "門"], ["Window", "窗戶"], ["Kitchen", "廚房"],
@@ -584,7 +835,7 @@
     ["Shellfish", "甲殼類海鮮"], ["Dairy", "乳製品"], ["Pork", "豬肉"], ["Beef", "牛肉"], ["Seafood", "海鮮"],
     ["Rare", "三分熟"], ["Medium", "五分熟"], ["Well-done", "全熟"], ["Spicy", "辣的"], ["Mild", "清淡的；不辣的"],
     ["Sweet", "甜的"], ["Sour", "酸的"], ["Salty", "鹹的"], ["Fresh", "新鮮的"], ["Grilled", "烤的"],
-    ["Fried", "炸的"], ["Steamed", "蒸的"], ["Baked", "烘烤的"], ["Raw", "生的"], ["Sauce", "醬汁"],
+    ["Fried", "炸的"], ["Steamed", "蒸的"], ["Baked", "烘烤的"], ["Raw", "生の"], ["Sauce", "醬汁"],
     ["Dressing", "沙拉醬"], ["Onion", "洋蔥"], ["Garlic", "大蒜"], ["Salt", "鹽"], ["Pepper", "胡椒"],
     ["Without", "不要；不加"], ["Extra", "額外的"], ["Substitute", "替代；更換"], ["Change", "更改"], ["Cancel", "取消"],
     ["Check / Bill", "帳單"], ["Split", "分開；分攤"], ["Separate", "分開的"], ["Total", "總額"], ["Service charge", "服務費"],
@@ -820,7 +1071,7 @@
     ["What platform does the train leave from?", "這班火車從哪個月台發車？"],
     ["Where can I find the ticket office?", "售票處在哪裡？"],
     ["I need a one-way ticket to the city.", "我需要一張到市區的單程票。"],
-    ["A round-trip ticket is cheaper.", "買來回票比較划算。"],
+    ["A round-trip ticket is cheaper.", "買來回票比較劃算。"],
     ["Where can I hail a taxi?", "我可以在哪裡招計程車？"],
     ["Please turn on the meter, please.", "請按計費表。"],
     ["Please take me to this destination.", "請載我到這個目的地。"],
@@ -1087,6 +1338,8 @@
   let scenarioDataset = [];
 
   function initializeDataset() {
+    vocabDataset = [];
+    scenarioDataset = [];
     let vId = 0, sId = 0;
 
     function addVocab(themeKey, themeName, rawData) {
@@ -1120,94 +1373,6 @@
     
     addVocab('health', '醫療健康', healthVocabs);
     addScen('health', '醫療健康', healthScens);
-  }
-
-  /* ===== 核心語音播放 logic (需求 1：固定女聲 MP3 TTS) ===== */
-  function speak(text) {
-    if (!text) return;
-
-    // 停止先前的音訊與內建 TTS
-    if (activeAudio) {
-      activeAudio.pause();
-      activeAudio = null;
-    }
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
-
-    // 更新發音按鈕視覺反饋
-    const practBtn = document.getElementById('pract-speak-btn');
-    if (practBtn) {
-      practBtn.classList.add('playing');
-      practBtn.textContent = '🔊 正在播放發音中...';
-    }
-
-    // 根據腔調選擇固定雲端高品質女聲類型 (type=2: 美音女聲, type=1: 英音女聲)
-    const voiceType = (appSettings.accent === 'en-GB') ? 1 : 2;
-    const mp3Url = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=${voiceType}`;
-
-    let playSuccess = false;
-
-    // 優先使用 HTML5 Audio 播放固定 MP3 發音
-    const audio = new Audio();
-    activeAudio = audio;
-    audio.playbackRate = appSettings.speechRate || 0.8;
-
-    const resetBtnState = () => {
-      if (practBtn) {
-        practBtn.classList.remove('playing');
-        const accentFlag = appSettings.accent === 'en-GB' ? '🇬🇧' : '🇺🇸';
-        practBtn.textContent = `🔊 按我聆聽發音 ${accentFlag}`;
-      }
-    };
-
-    audio.onended = resetBtnState;
-
-    audio.onerror = function() {
-      // 若雲端 MP3 網路請求失敗，自動無縫降級為原生瀏覽器 TTS（調校為高清晰度女聲）
-      if (!playSuccess) {
-        fallbackWebSpeech(text, resetBtnState);
-      }
-    };
-
-    audio.play().then(() => {
-      playSuccess = true;
-    }).catch(err => {
-      console.warn("Cloud MP3 play fallback:", err);
-      fallbackWebSpeech(text, resetBtnState);
-    });
-  }
-
-  // 備援的原生 Web Speech 引擎
-  function fallbackWebSpeech(text, callback) {
-    if (!('speechSynthesis' in window)) {
-      if (callback) callback();
-      return showToast('您的裝置暫不支援語音播放');
-    }
-    
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = appSettings.accent;
-    utterance.rate = appSettings.speechRate;
-    
-    // 選取標準女聲聲線
-    const voices = window.speechSynthesis.getVoices();
-    let femaleVoice = null;
-    if (appSettings.accent === 'en-GB') {
-      femaleVoice = voices.find(v => v.lang.includes('GB') && (v.name.includes('Female') || v.name.includes('Hazel') || v.name.includes('Google')))
-                 || voices.find(v => v.lang.includes('GB'));
-      utterance.pitch = 1.15;
-    } else {
-      femaleVoice = voices.find(v => v.lang.includes('US') && (v.name.includes('Female') || v.name.includes('Samantha') || v.name.includes('Zira') || v.name.includes('Google')))
-                 || voices.find(v => v.lang.includes('US'));
-      utterance.pitch = 1.05;
-    }
-    
-    if (femaleVoice) utterance.voice = femaleVoice;
-
-    utterance.onend = callback;
-    utterance.onerror = callback;
-
-    window.speechSynthesis.speak(utterance);
   }
 
   function loadLearnedState() {
@@ -1259,21 +1424,17 @@
   }
 
   function exitThemePractice() {
+    stopAllAudio();
     document.getElementById('theme-selection-grid').style.display = 'flex';
     document.getElementById('theme-practice-panel').style.display = 'none';
-    if (activeAudio) activeAudio.pause();
   }
 
   function updatePractPanelUI() {
+    stopAllAudio();
     const list = getPractList();
     if (list.length === 0) return;
     if (currentPractIndex >= list.length) currentPractIndex = 0;
     const current = list[currentPractIndex];
-
-    const accentFlag = appSettings.accent === 'en-GB' ? '🇬🇧' : '🇺🇸';
-    const practBtn = document.getElementById('pract-speak-btn');
-    practBtn.classList.remove('playing');
-    practBtn.textContent = `🔊 按我聆聽發音 ${accentFlag}`;
 
     document.getElementById('pract-count-badge').textContent = `第 ${currentPractIndex + 1} / ${list.length} 個`;
     document.getElementById('pract-ctx-tag').textContent = `${current.themeName}（${current.ctx || '學習'}）`;
@@ -1285,23 +1446,29 @@
     const btn = document.getElementById('pract-toggle-learned-btn');
     btn.textContent = isDone ? '⭐ 已學會' : '⭕ 標記學會';
     btn.classList.toggle('primary', isDone);
-    
-    speak(current.en);
   }
 
-  function speakCurrentPractice() {
+  function speakCurrentPractice(reqAccent) {
     const list = getPractList();
-    if (list && list[currentPractIndex]) speak(list[currentPractIndex].en);
+    if (list && list[currentPractIndex]) {
+      speak(list[currentPractIndex].en, reqAccent);
+    }
   }
 
   function toggleCurrentPractLearned() {
     const list = getPractList();
-    if (list && list[currentPractIndex]) { toggleLearned(list[currentPractIndex].id); updatePractPanelUI(); }
+    if (list && list[currentPractIndex]) { 
+      toggleLearned(list[currentPractIndex].id); 
+      updatePractPanelUI(); 
+    }
   }
 
   function nextPractCard() {
     const list = getPractList();
-    if (list.length > 0) { currentPractIndex = (currentPractIndex + 1) % list.length; updatePractPanelUI(); }
+    if (list.length > 0) { 
+      currentPractIndex = (currentPractIndex + 1) % list.length; 
+      updatePractPanelUI(); 
+    }
   }
 
   function setVocabThemeFilter(themeKey, btnElem) {
@@ -1340,7 +1507,12 @@
             </div>
             <div class="item-btns">
               <button class="btn-circle progress-toggle ${isLearned ? 'done' : ''}" onclick="toggleLearned('${item.id}')">${isLearned ? '⭐' : '⭕'}</button>
-              <button class="btn-circle" onclick="speak('${safeWord}')">🔊</button>
+              <button class="btn-speaker-pill us" onclick="speak('${safeWord}', 'en-US')">
+                <span>🇺🇸 美音</span>
+              </button>
+              <button class="btn-speaker-pill uk" onclick="speak('${safeWord}', 'en-GB')">
+                <span>🇬🇧 英音</span>
+              </button>
             </div>
           </div>
         `;
@@ -1352,7 +1524,7 @@
     document.getElementById('vocab-next-btn').disabled = (vocabPage >= totalPages);
   }
 
-  function changeVocabPage(delta) { vocabPage += delta; renderVocabList(); }
+  function changeVocabPage(delta) { stopAllAudio(); vocabPage += delta; renderVocabList(); }
 
   function setScenarioThemeFilter(themeKey, btnElem) {
     scenarioThemeFilter = themeKey; scenarioPage = 1;
@@ -1390,7 +1562,12 @@
             </div>
             <div class="item-btns">
               <button class="btn-circle progress-toggle ${isLearned ? 'done' : ''}" onclick="toggleLearned('${item.id}')">${isLearned ? '⭐' : '⭕'}</button>
-              <button class="btn-circle" onclick="speak('${safeEn}')">🔊</button>
+              <button class="btn-speaker-pill us" onclick="speak('${safeEn}', 'en-US')">
+                <span>🇺🇸 美音</span>
+              </button>
+              <button class="btn-speaker-pill uk" onclick="speak('${safeEn}', 'en-GB')">
+                <span>🇬🇧 英音</span>
+              </button>
             </div>
           </div>
         `;
@@ -1401,7 +1578,7 @@
     document.getElementById('scen-prev-btn').disabled = (scenarioPage <= 1);
     document.getElementById('scen-next-btn').disabled = (scenarioPage >= totalPages);
   }
-  function changeScenarioPage(delta) { scenarioPage += delta; renderScenarioList(); }
+  function changeScenarioPage(delta) { stopAllAudio(); scenarioPage += delta; renderScenarioList(); }
 
   function renderAnalytics() {
     const all = [...vocabDataset, ...scenarioDataset];
@@ -1427,7 +1604,7 @@
     groups.forEach(g => {
       let gLearned = 0; g.data.forEach(i => { if (learnedMap[i.id]) gLearned++; });
       const gPct = g.data.length > 0 ? Math.round((gLearned / g.data.length) * 100) : 0;
-      html += `<div style="background:#fff; padding:12px; border-radius:14px; margin-bottom:8px; border:1px solid #e5e7eb; display:flex; justify-content:space-between; align-items:center;"><span style="font-weight:bold;">${g.name}</span><span style="color:var(--primary-dark); font-weight:bold;">${gLearned} / ${g.data.length} (${gPct}%)</span></div>`;
+      html += `<div style="background:#fff; padding:12px 16px; border-radius:14px; margin-bottom:10px; border:1px solid #e5e7eb; display:flex; justify-content:space-between; align-items:center;"><span style="font-weight:bold;">${g.name}</span><span style="color:var(--primary-dark); font-weight:bold;">${gLearned} / ${g.data.length} (${gPct}%)</span></div>`;
     });
     document.getElementById('analytics-theme-breakdown').innerHTML = html;
   }
@@ -1445,6 +1622,7 @@
   }
 
   function switchNavTab(tabName) {
+    stopAllAudio();
     currentNavTab = tabName;
     const tabs = ['start', 'vocab', 'scenario', 'analytics'];
     tabs.forEach(k => document.getElementById('tab-' + k).style.display = (k === tabName) ? 'block' : 'none');
@@ -1455,15 +1633,6 @@
     if (tabName === 'analytics') renderAnalytics();
   }
 
-  function setAppAccent(accent) {
-    appSettings.accent = accent;
-    document.getElementById('accent-opt-us').classList.toggle('active', accent === 'en-US');
-    document.getElementById('accent-opt-uk').classList.toggle('active', accent === 'en-GB');
-    showToast(`已切換為：${accent === 'en-US' ? '美式女聲' : '英式女聲'}`);
-    if (document.getElementById('theme-practice-panel').style.display === 'block') updatePractPanelUI();
-  }
-
-  /* 需求 2：拉大字體對比級距 */
   function setAppFontSize(size) {
     appSettings.fontSize = size;
     document.body.classList.remove('font-md', 'font-lg', 'font-xl');
@@ -1472,9 +1641,6 @@
     document.getElementById('font-opt-md').classList.toggle('active', size === 'md');
     document.getElementById('font-opt-lg').classList.toggle('active', size === 'lg');
     document.getElementById('font-opt-xl').classList.toggle('active', size === 'xl');
-
-    const sizeName = size === 'md' ? '標準 (18px)' : size === 'lg' ? '放大 (24px)' : '特大 (30px)';
-    showToast(`字體大小已設定為：${sizeName}`);
   }
 
   function setAppSpeechRate(rate) {
@@ -1496,9 +1662,23 @@
     updateGlobalProgressUI();
     setAppFontSize('lg');
     setAppSpeechRate(0.8);
-    setAppAccent('en-US');
     
     switchNavTab('start');
+
+    if ('speechSynthesis' in window) {
+      updateVoices();
+      if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = updateVoices;
+      }
+    }
+
+    const unlockHandler = function() {
+      unlockMobileAudio();
+      document.body.removeEventListener('click', unlockHandler);
+      document.body.removeEventListener('touchstart', unlockHandler);
+    };
+    document.body.addEventListener('click', unlockHandler, { once: true });
+    document.body.addEventListener('touchstart', unlockHandler, { once: true });
   };
 </script>
 </body>
