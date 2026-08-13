@@ -196,7 +196,6 @@
 
     .practice-actions { display: flex; flex-direction: column; gap: 14px; width: 100%; }
     
-    /* Dual Pronunciation Button Layout */
     .dual-audio-row { display: flex; gap: 12px; width: 100%; }
     .btn-audio-accent { 
       flex: 1; 
@@ -424,7 +423,6 @@
         <div class="practice-zh-box" id="pract-zh-text">中文</div>
         <div class="practice-actions">
           
-          <!-- Dedicated US and UK Pronunciation Buttons -->
           <div class="dual-audio-row">
             <button class="btn-audio-accent us-accent" id="pract-speak-us-btn" onclick="speakCurrentPractice('en-US')">
               <span class="accent-flag">🇺🇸</span>
@@ -576,17 +574,15 @@
   let currentPractIndex = 0;
   let learnedMap = {};
 
-  // Audio Control & Strict Anti-Overlap Session Variables
+  // Strict Audio Session Management
   let currentSpeechSession = 0;
   let activeAudio = null;
   let speechTimer = null;
   let cachedVoices = [];
 
   function stopAllAudio() {
-    // 1. Increment session counter so any asynchronous callbacks from past requests are immediately invalidated
     currentSpeechSession++;
 
-    // 2. Pause and completely release any HTML5 Audio element
     if (activeAudio) {
       try {
         activeAudio.onended = null;
@@ -594,19 +590,16 @@
         activeAudio.pause();
         activeAudio.currentTime = 0;
         activeAudio.removeAttribute('src');
-        activeAudio.load();
       } catch(e){}
       activeAudio = null;
     }
 
-    // 3. Cancel any pending or speaking Web Speech API utterances
     if ('speechSynthesis' in window) {
       try {
         window.speechSynthesis.cancel();
       } catch(e){}
     }
 
-    // 4. Clear fallback timer
     if (speechTimer) {
       clearTimeout(speechTimer);
       speechTimer = null;
@@ -624,7 +617,6 @@
   }
 
   function unlockMobileAudio() {
-    // Silent WAV buffer to unlock HTML5 Audio permissions on mobile Safari / Chrome without queueing dummy Web Speech utterances
     try {
       const silentAudio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==');
       silentAudio.play().catch(() => {});
@@ -649,7 +641,6 @@
   function speak(text, reqAccent) {
     if (!text) return;
     
-    // Stop all previous audio and start a new speech session
     stopAllAudio();
     const session = currentSpeechSession;
     unlockMobileAudio();
@@ -666,64 +657,69 @@
       if (titleSpan) titleSpan.textContent = '播放中...';
     }
 
-    // Safety timeout protection
-    const safeTimeoutDuration = Math.max(6000, text.length * 120);
+    // Safety timeout (6 seconds) to prevent stuck "Playing" UI
+    const safeTimeoutDuration = Math.max(5000, text.length * 100);
     speechTimer = setTimeout(() => {
       if (session === currentSpeechSession) {
         stopAllAudio();
       }
     }, safeTimeoutDuration);
 
-    // Call Cloud MP3 voice with strict session validation
-    playCloudMp3Voice(text, targetAccent, (fallbackSession) => {
-      playWebSpeechFallback(text, targetAccent, fallbackSession);
-    }, session);
+    // Call WebSpeech synchronously in the user touch event (Mandatory for iOS/Android Safari & Chrome)
+    if ('speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.resume();
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = targetAccent;
+        utterance.rate = appSettings.speechRate || 0.8;
+        utterance.pitch = isUK ? 1.15 : 1.1;
+
+        let voices = window.speechSynthesis.getVoices();
+        if (!voices || voices.length === 0) voices = cachedVoices;
+
+        if (voices && voices.length > 0) {
+          const targetLang = isUK ? 'en-gb' : 'en-us';
+          const langVoices = voices.filter(v => v.lang && v.lang.replace('_', '-').toLowerCase().includes(targetLang));
+          
+          const femaleVoice = langVoices.find(v => {
+            const name = v.name.toLowerCase();
+            return (name.includes('female') || name.includes('samantha') || name.includes('zira') ||
+                   name.includes('victoria') || name.includes('hazel') || name.includes('serena') ||
+                   name.includes('ava') || name.includes('kate') || name.includes('susan') ||
+                   name.includes('google')) && !name.includes('male') && !name.includes('daniel') && !name.includes('george');
+          }) || langVoices[0];
+
+          if (femaleVoice) utterance.voice = femaleVoice;
+        }
+
+        utterance.onend = function() {
+          if (session === currentSpeechSession) stopAllAudio();
+        };
+        utterance.onerror = function() {
+          if (session === currentSpeechSession) {
+            tryPlayMp3Fallback(text, targetAccent, session);
+          }
+        };
+
+        window.speechSynthesis.speak(utterance);
+        return;
+      } catch(e) {
+        console.warn("WebSpeech sync invocation error, attempting fallback", e);
+      }
+    }
+
+    tryPlayMp3Fallback(text, targetAccent, session);
   }
 
-  function playCloudMp3Voice(text, accent, fallbackCallback, session) {
+  function tryPlayMp3Fallback(text, accent, session) {
     if (session !== currentSpeechSession) return;
 
     const isUK = (accent === 'en-GB');
     const encodedText = encodeURIComponent(text);
     const langCode = isUK ? 'en-GB' : 'en-US';
-    const youdaoType = isUK ? 1 : 2;
-
     const primaryUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=${langCode}&client=tw-ob`;
-    const secondaryUrl = `https://dict.youdao.com/dictvoice?audio=${encodedText}&type=${youdaoType}`;
-
-    let primaryFailed = false;
-
-    function trySecondary() {
-      if (session !== currentSpeechSession || primaryFailed) return;
-      primaryFailed = true;
-
-      let secondaryFailed = false;
-      let secAudio = new Audio();
-      activeAudio = secAudio;
-      secAudio.playbackRate = appSettings.speechRate || 0.8;
-
-      function triggerFallback() {
-        if (session !== currentSpeechSession || secondaryFailed) return;
-        secondaryFailed = true;
-        if (fallbackCallback) fallbackCallback(session);
-      }
-
-      secAudio.onended = function() {
-        if (session === currentSpeechSession) stopAllAudio();
-      };
-
-      secAudio.onerror = function() {
-        triggerFallback();
-      };
-
-      secAudio.src = secondaryUrl;
-      const p2 = secAudio.play();
-      if (p2 !== undefined) {
-        p2.catch(() => {
-          triggerFallback();
-        });
-      }
-    }
 
     let audio = new Audio();
     activeAudio = audio;
@@ -734,68 +730,18 @@
     };
 
     audio.onerror = function() {
-      trySecondary();
+      if (session === currentSpeechSession) stopAllAudio();
     };
 
     audio.src = primaryUrl;
-    const p1 = audio.play();
-    if (p1 !== undefined) {
-      p1.catch(() => {
-        trySecondary();
+    const promise = audio.play();
+    if (promise !== undefined) {
+      promise.catch(() => {
+        if (session === currentSpeechSession) stopAllAudio();
       });
     }
   }
 
-  function playWebSpeechFallback(text, targetAccent, session) {
-    if (session !== currentSpeechSession) return;
-
-    if (!('speechSynthesis' in window)) {
-      if (session === currentSpeechSession) stopAllAudio();
-      return;
-    }
-
-    try {
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.resume();
-
-      const isUK = (targetAccent === 'en-GB');
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = targetAccent;
-      utterance.rate = appSettings.speechRate || 0.8;
-      utterance.pitch = isUK ? 1.2 : 1.15;
-
-      let voices = window.speechSynthesis.getVoices();
-      if (!voices || voices.length === 0) voices = cachedVoices;
-
-      if (voices && voices.length > 0) {
-        const targetLang = isUK ? 'en-gb' : 'en-us';
-        const langVoices = voices.filter(v => v.lang && v.lang.replace('_', '-').toLowerCase().includes(targetLang));
-        
-        const femaleVoice = langVoices.find(v => {
-          const name = v.name.toLowerCase();
-          return (name.includes('female') || name.includes('samantha') || name.includes('zira') ||
-                 name.includes('victoria') || name.includes('hazel') || name.includes('serena') ||
-                 name.includes('ava') || name.includes('kate') || name.includes('susan') ||
-                 name.includes('google')) && !name.includes('male') && !name.includes('daniel') && !name.includes('george');
-        }) || langVoices[0];
-
-        if (femaleVoice) utterance.voice = femaleVoice;
-      }
-
-      utterance.onend = function() {
-        if (session === currentSpeechSession) stopAllAudio();
-      };
-      utterance.onerror = function() {
-        if (session === currentSpeechSession) stopAllAudio();
-      };
-
-      window.speechSynthesis.speak(utterance);
-    } catch(e) {
-      if (session === currentSpeechSession) stopAllAudio();
-    }
-  }
-
-  // --- Vocabulary Datasets ---
   const dailyVocabs = [
     ["House", "房子"], ["Home", "家"], ["Door", "門"], ["Window", "窗戶"], ["Kitchen", "廚房"],
     ["Bedroom", "臥室"], ["Bed", "床"], ["Table", "桌子"], ["Chair", "椅子"], ["Computer", "電腦"],
@@ -898,7 +844,6 @@
     ["Assault", "襲擊 / 攻擊"], ["Harassment", "騷擾"], ["Safe", "安全"], ["Dangerous", "危險"], ["Rescue", "救援"]
   ];
 
-  // --- Scenario Sentence Datasets ---
   const dailyScens = [
     ["We are looking for a house with a garden.", "我們正在找一間有花園的房子。"],
     ["I will stay at home all day today.", "我今天打算一整天都待在家裡。"],
