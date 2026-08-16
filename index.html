@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>輕鬆開口說英文 - 網頁測試版 v5</title>
+<title>輕鬆開口說英文 - 網頁測試版 v6</title>
 <style>
 :root{
   --scale:1;
@@ -65,7 +65,8 @@ body{background:#E5E7EB;display:flex;justify-content:center;min-height:100vh}
 
 .unit-complete-banner{background:#E8F5E9;border:1.5px solid #C8E6C9;border-radius:16px;padding:12px;text-align:center;font-weight:800;color:#2E7D32;font-size:calc(13px*var(--scale));margin:0 16px 10px}
 
-.unit-nav-bar{display:flex;gap:10px;padding:10px 16px;background:#FBF8F2;border-top:1px solid #EFEAE0}
+.unit-nav-bar{display:flex;gap:8px;padding:10px 16px;background:#FBF8F2;border-top:1px solid #EFEAE0;align-items:center}
+.unit-nav-counter{font-size:calc(13px*var(--scale));font-weight:800;color:#5F544D;flex-shrink:0;padding:0 4px}
 .unit-nav-btn{flex:1;min-height:50px;border-radius:14px;font-weight:800;font-size:calc(15px*var(--scale));border:2px solid #D8D2C4;background:#fff;color:#4A4038;cursor:pointer}
 .unit-nav-btn.primary{background:#2E7D32;border-color:#2E7D32;color:#fff}
 .unit-nav-btn:disabled{opacity:.4;cursor:not-allowed}
@@ -106,9 +107,9 @@ body{background:#E5E7EB;display:flex;justify-content:center;min-height:100vh}
 
 /* ---- bottom tab ---- */
 .bottom-tab{background:#FBF8F2;border-top:1px solid #EFEAE0;display:flex;max-width:420px;margin:0 auto;width:100%}
-.tab-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0 10px;background:none;border:none;cursor:pointer;color:#9A9184;font-size:calc(10px*var(--scale));font-weight:700}
+.tab-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 0 14px;background:none;border:none;cursor:pointer;color:#9A9184;font-size:calc(13px*var(--scale));font-weight:800}
 .tab-item.active{color:#3F8A4A}
-.tab-item .icon{font-size:19px}
+.tab-item .icon{font-size:28px}
 
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1000;align-items:flex-end;justify-content:center}
 .modal-overlay.show{display:flex}
@@ -119,11 +120,30 @@ body{background:#E5E7EB;display:flex;justify-content:center;min-height:100vh}
 .save-btn{width:100%;min-height:48px;border-radius:13px;background:#2E7D32;color:#fff;font-weight:800;font-size:15px;border:none;margin-top:6px;cursor:pointer}
 .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#1B4332;color:#fff;padding:11px 20px;border-radius:18px;font-weight:700;font-size:12px;z-index:2000;opacity:0;transition:opacity .3s;pointer-events:none}
 .toast.show{opacity:1}
+
+/* ---- 我的分頁：放大版總進度＋四大主題進度（含圖示） ---- */
+.total-card-lg{background:#fff;border-radius:22px;border:2px solid #C8E6C9;padding:22px;margin-bottom:18px;text-align:center}
+.total-label-lg{font-size:calc(17px*var(--scale));font-weight:800;color:#2E7D32;margin-bottom:6px}
+.total-value-lg{font-size:calc(28px*var(--scale));font-weight:800;color:#1B4332}
+.total-pct-lg{font-size:calc(16px*var(--scale));font-weight:800;color:#4CAF50;margin:2px 0 14px}
+.total-track-lg{height:18px;border-radius:9px;background:#E8F5E9;border:1px solid #C8E6C9;overflow:hidden}
+.total-fill-lg{height:100%;background:#4CAF50}
+.theme-stack-lg{display:flex;flex-direction:column;gap:14px;margin-bottom:20px}
+.theme-card-lg{border-radius:20px;padding:16px}
+.theme-card-lg .head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.theme-card-lg .icon-box{width:44px;height:44px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.theme-card-lg .name{flex:1;font-size:calc(19px*var(--scale));font-weight:800}
+.theme-card-lg .val{font-size:calc(15px*var(--scale));font-weight:800}
+.theme-track-lg{height:12px;border-radius:6px;background:#FFFFFF99;overflow:hidden}
+.theme-fill-lg{height:100%;border-radius:6px}
+.reset-btn-lg{width:100%;min-height:52px;border-radius:15px;background:#FCEBEB;border:1.5px solid #F09595;color:#A32D2D;font-weight:800;font-size:calc(15px*var(--scale));cursor:pointer;margin-bottom:20px}
+
+.icon-btn-lg{min-height:52px;padding:0 18px;font-size:calc(17px*var(--scale));border-radius:26px}
 </style>
 </head>
 <body>
 <div class="app-shell">
-  <div class="notice">📱 v5・已移除喇叭圖示・改英式/美式雙按鈕・單字+2情境句同頁</div>
+  <div class="notice">📱 v6・頁碼移到翻頁按鈕中間・我的分頁重做・底部導覽列放大</div>
 
   <!-- ================= 首頁（版面已定案，未更動） ================= -->
   <div class="tabpage active" id="tab-home">
@@ -132,8 +152,8 @@ body{background:#E5E7EB;display:flex;justify-content:center;min-height:100vh}
 
       <div style="padding:0 18px">
         <div class="section-header" style="margin-top:20px">
-          <span class="section-title">情境模式</span>
-          <button class="icon-btn" onclick="openSettings()" aria-label="設定">⚙️ 設定</button>
+          <span class="section-title" style="font-size:calc(21px*var(--scale))">開啟學習的旅程</span>
+          <button class="icon-btn icon-btn-lg" onclick="openSettings()" aria-label="設定">⚙️ 設定</button>
         </div>
 
         <div class="v3-card-stack" id="scenario-scroll"></div>
@@ -208,6 +228,7 @@ body{background:#E5E7EB;display:flex;justify-content:center;min-height:100vh}
     <!-- ⑨ 頁面導航 -->
     <div class="unit-nav-bar">
       <button class="unit-nav-btn" id="prev-btn" onclick="prevUnit()">〈 上一頁</button>
+      <div class="unit-nav-counter" id="unit-nav-counter">第 1/100 頁</div>
       <button class="unit-nav-btn primary" id="next-btn" onclick="nextUnit()">下一頁 〉</button>
     </div>
   </div>
@@ -224,35 +245,17 @@ body{background:#E5E7EB;display:flex;justify-content:center;min-height:100vh}
   <div class="tabpage" id="tab-profile">
     <div class="scroll">
       <div class="section-header"><span class="section-title">📊 學習進度</span></div>
-      <div class="stat-card">
-        <div class="stat-head"><span>學習總進度</span><span id="profile-total-label">0 / 1050 (0%)</span></div>
-        <div class="stat-track"><div class="stat-fill" id="profile-total-fill" style="width:0%"></div></div>
-      </div>
-      <div id="profile-breakdown"></div>
 
-      <div class="section-header" style="margin-top:16px"><span class="section-title">⚙️ 偏好設定</span></div>
-      <div class="stat-card">
-        <div class="setting-group">
-          <span class="setting-label">字體大小（顯著對比放大）</span>
-          <div class="opt-row">
-            <button class="opt-btn" id="font-md" onclick="setFontScale(1,this)">標準<br>18px</button>
-            <button class="opt-btn active" id="font-lg" onclick="setFontScale(1.3,this)">放大<br>24px</button>
-            <button class="opt-btn" id="font-xl" onclick="setFontScale(1.6,this)">特大<br>30px</button>
-          </div>
-        </div>
-        <div class="setting-group">
-          <span class="setting-label">發音速度 (Speech Speed)</span>
-          <div class="opt-row">
-            <button class="opt-btn" id="rate-slow" onclick="setRate(0.78,this)">🐢<br>慢速</button>
-            <button class="opt-btn active" id="rate-mid" onclick="setRate(0.90,this)">☕<br>舒適</button>
-            <button class="opt-btn" id="rate-norm" onclick="setRate(1.0,this)">🐇<br>標準</button>
-          </div>
-        </div>
-        <div class="setting-group">
-          <span class="setting-label">學習紀錄</span>
-          <button class="reset-btn" onclick="resetProgress()">重置學習紀錄</button>
-        </div>
+      <div class="total-card-lg">
+        <div class="total-label-lg">學習總進度</div>
+        <div class="total-value-lg" id="profile-total-value">0 / 1050</div>
+        <div class="total-pct-lg" id="profile-total-pct">0%</div>
+        <div class="total-track-lg"><div class="total-fill-lg" id="profile-total-fill" style="width:0%"></div></div>
       </div>
+
+      <div id="profile-breakdown" class="theme-stack-lg"></div>
+
+      <button class="reset-btn-lg" onclick="resetProgress()">重置學習紀錄</button>
     </div>
   </div>
 
@@ -395,6 +398,7 @@ function renderUnit() {
 
   document.getElementById("unit-topic").textContent = LESSON_DATA[currentScenario].title;
   document.getElementById("unit-counter").textContent = `第 ${idx+1} / ${units.length}`;
+  document.getElementById("unit-nav-counter").textContent = `第 ${idx+1}/${units.length} 頁`;
 
   document.getElementById("unit-word").textContent = unit.word.en;
   document.getElementById("unit-word-zh").textContent = unit.word.zh;
@@ -499,17 +503,23 @@ function renderProfile() {
     blocks.push({ sid, title: LESSON_DATA[sid].title, learned: sLearned, total: sTotal });
   });
   const pct = total > 0 ? Math.round(learned/total*100) : 0;
-  document.getElementById("profile-total-label").textContent = `${learned} / ${total} (${pct}%)`;
+  document.getElementById("profile-total-value").textContent = `${learned} / ${total}`;
+  document.getElementById("profile-total-pct").textContent = `${pct}%`;
   document.getElementById("profile-total-fill").style.width = pct + "%";
 
+  const tintMap = { daily:"green", travel:"blue", restaurant:"orange", emergency:"pink" };
   document.getElementById("profile-breakdown").innerHTML = blocks.map(b => {
     const p = b.total>0 ? Math.round(b.learned/b.total*100) : 0;
+    const meta = SCENARIO_META[b.sid];
+    const tintVar = "var(--" + tintMap[b.sid] + "-tint)";
     return `
-      <div class="breakdown-block">
-        <div class="breakdown-head" onclick="toggleDetail('${b.sid}')">
-          <span class="name">${b.title}</span>
-          <span class="val">${b.learned} / ${b.total} (${p}%) ▾</span>
+      <div class="theme-card-lg" style="background:${tintVar}">
+        <div class="head" onclick="toggleDetail('${b.sid}')" style="cursor:pointer">
+          <div class="icon-box">${meta.icon}</div>
+          <span class="name" style="color:${meta.color}">${b.title}</span>
+          <span class="val" style="color:${meta.color}">${b.learned}/${b.total}（${p}%）▾</span>
         </div>
+        <div class="theme-track-lg"><div class="theme-fill-lg" style="width:${p}%;background:${meta.color}"></div></div>
         <div class="breakdown-detail" id="detail-${b.sid}"></div>
       </div>
     `;
@@ -552,10 +562,10 @@ function resetProgress() {
 let cachedVoices = [];
 function refreshVoices() { cachedVoices = window.speechSynthesis.getVoices(); }
 const FEMALE_HINTS = {
-  "en-US": ["google us english","samantha","ava","allison","susan","zira","aria","jenny","female"],
-  "en-GB": ["google uk english female","serena","hazel","kate","libby","sonia","female"]
+  "en-US": ["google us english","samantha","ava","allison","susan","victoria","nicky","zira","aria","jenny","female"],
+  "en-GB": ["google uk english female","serena","hazel","kate","libby","sonia","amy","emma","olivia","female"]
 };
-const MALE_BLOCKLIST = ["daniel","fred","alex","google uk english male","ryan","guy","david","male"];
+const MALE_BLOCKLIST = ["daniel","fred","alex","aaron","arthur","google uk english male","ryan","guy","david","male"];
 
 function pickVoice(accent) {
   if (!cachedVoices.length) refreshVoices();
@@ -568,7 +578,7 @@ function pickVoice(accent) {
   (candidates.length ? candidates : langVoices).forEach(v => {
     let score = 0;
     hints.forEach((hint, idx) => { if (v.name.toLowerCase().includes(hint)) score += (hints.length - idx); });
-    if (!v.localService) score += 3;
+    if (!v.localService) score += 10; // 網路合成語音通常比裝置內建語音清晰自然，加重權重優先挑選
     if (score > bestScore) { bestScore = score; best = v; }
   });
   return best;
