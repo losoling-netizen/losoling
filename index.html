@@ -584,18 +584,41 @@ function resetProgress() {
 /* ---------------- speech：英式/美式必須是真正不同語系的語音，不是同一顆換名字 ---------------- */
 let cachedVoices = [];
 function refreshVoices() { cachedVoices = window.speechSynthesis.getVoices(); }
+
+// 修正：手機瀏覽器（尤其 Safari）載入語音清單常常需要一點時間，
+// 頁面剛打開就馬上按發音，清單很可能還是空的，會誤判成「沒有偵測到語音」。
+// 這裡改成主動重試等待，最多等 1.5 秒，清單準備好了再判斷。
+function waitForVoices(maxAttempts) {
+  maxAttempts = maxAttempts || 15;
+  return new Promise(resolve => {
+    function attempt(n) {
+      const list = window.speechSynthesis.getVoices();
+      if (list.length > 0) { cachedVoices = list; resolve(list); return; }
+      if (n >= maxAttempts) { resolve(list); return; }
+      setTimeout(() => attempt(n + 1), 100);
+    }
+    attempt(0);
+  });
+}
 const FEMALE_HINTS = {
   "en-US": ["google us english","samantha","ava","allison","susan","victoria","nicky","zira","aria","jenny","female"],
   "en-GB": ["google uk english female","serena","hazel","kate","libby","sonia","amy","emma","olivia","female"]
 };
 const MALE_BLOCKLIST = ["daniel","fred","alex","aaron","arthur","google uk english male","ryan","guy","david","male","oliver","thomas","george","james","gordon","stuart","rishi","neel","eddy"];
 
+function isBlockedMaleVoice(text) {
+  // 關鍵修正：不能用 text.includes("male") 這種子字串比對！
+  // "female" 這個字本身就包含 "male"（fe-male），子字串比對會把女聲也一起誤刪掉。
+  // 改成「完整單字」比對，"female" 就不會再被誤判成男聲了。
+  return MALE_BLOCKLIST.some(bad => new RegExp("\\b"+bad+"\\b").test(text));
+}
+
 function pickVoice(accent) {
   if (!cachedVoices.length) refreshVoices();
   // 嚴格只挑語系完全對應 en-GB / en-US 的語音，兩者絕不共用同一顆
   const langVoices = cachedVoices.filter(v => v.lang === accent || v.lang.toLowerCase() === accent.toLowerCase());
   if (langVoices.length === 0) return null;
-  const candidates = langVoices.filter(v => !MALE_BLOCKLIST.some(bad => v.name.toLowerCase().includes(bad)));
+  const candidates = langVoices.filter(v => !isBlockedMaleVoice(v.name.toLowerCase()));
   const hints = FEMALE_HINTS[accent] || [];
   let best = null, bestScore = -1;
   (candidates.length ? candidates : langVoices).forEach(v => {
@@ -607,12 +630,19 @@ function pickVoice(accent) {
   return best;
 }
 
-function speak(text, accent) {
+async function speak(text, accent) {
   if (!("speechSynthesis" in window)) { showToast("此瀏覽器不支援語音功能"); return; }
   window.speechSynthesis.cancel();
+
+  // 先確實等待語音清單載入完成（最多 1.5 秒），避免頁面剛打開語音清單還沒準備好，
+  // 就被誤判成「這支手機沒有這個語言的語音」。
+  if (cachedVoices.length === 0) {
+    await waitForVoices();
+  }
+
   // 關鍵修正：手機瀏覽器上 cancel() 之後語音引擎不一定「立刻」釋放播放通道，
   // 緊接著馬上 speak() 容易讓上一段語音跟新的一段疊在一起播放，聽起來就會混濁、像連音。
-  // 用極短的延遲確保上一段確實停止乾淨後，再開始播放新的一段。
+  // 用短暫的延遲確保上一段確實停止乾淨後，再開始播放新的一段。
   setTimeout(() => {
     const utter = new SpeechSynthesisUtterance(text);
     utter.lang = accent;
@@ -627,7 +657,7 @@ function speak(text, accent) {
       showToast((accent==="en-GB" ? "此裝置沒有偵測到英式語音" : "此裝置沒有偵測到美式語音") + "（將使用系統預設）");
     }
     window.speechSynthesis.speak(utter);
-  }, 60);
+  }, 150);
 }
 
 /* 暫時性診斷工具：列出這支手機目前所有可用的英式語音，方便一次看到全部選項 */
@@ -665,6 +695,8 @@ document.getElementById("settings-modal").addEventListener("click", (e) => {
 if ("speechSynthesis" in window) {
   refreshVoices();
   window.speechSynthesis.onvoiceschanged = refreshVoices;
+  // 頁面一開始載入就主動預熱一次，減少使用者第一次點擊發音時要等待的機率
+  waitForVoices();
 }
 
 try {
