@@ -599,7 +599,7 @@ function pickVoice(accent) {
   (candidates.length ? candidates : langVoices).forEach(v => {
     let score = 0;
     hints.forEach((hint, idx) => { if (v.name.toLowerCase().includes(hint)) score += (hints.length - idx); });
-    if (!v.localService) score += 10; // 網路合成語音通常比裝置內建語音清晰自然，加重權重優先挑選
+    if (!v.localService) score += 20; // 網路合成語音通常比裝置內建語音清晰自然，這次再加重權重優先挑選
     if (score > bestScore) { bestScore = score; best = v; }
   });
   return best;
@@ -608,13 +608,18 @@ function pickVoice(accent) {
 function speak(text, accent) {
   if (!("speechSynthesis" in window)) { showToast("此瀏覽器不支援語音功能"); return; }
   window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = accent;
-  utter.rate = appSettings.rate;
-  utter.pitch = 1.0;
-  const voice = pickVoice(accent);
-  if (voice) { utter.voice = voice; } else { showToast(accent==="en-GB" ? "此裝置沒有偵測到英式語音" : "此裝置沒有偵測到美式語音"); }
-  window.speechSynthesis.speak(utter);
+  // 關鍵修正：手機瀏覽器上 cancel() 之後語音引擎不一定「立刻」釋放播放通道，
+  // 緊接著馬上 speak() 容易讓上一段語音跟新的一段疊在一起播放，聽起來就會混濁、像連音。
+  // 用極短的延遲確保上一段確實停止乾淨後，再開始播放新的一段。
+  setTimeout(() => {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = accent;
+    utter.rate = appSettings.rate;
+    utter.pitch = 1.0;
+    const voice = pickVoice(accent);
+    if (voice) { utter.voice = voice; } else { showToast(accent==="en-GB" ? "此裝置沒有偵測到英式語音" : "此裝置沒有偵測到美式語音"); }
+    window.speechSynthesis.speak(utter);
+  }, 60);
 }
 
 /* ---------------- settings ---------------- */
