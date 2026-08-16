@@ -146,7 +146,6 @@ body{background:#E5E7EB;display:flex;justify-content:center;min-height:100vh}
 </head>
 <body>
 <div class="app-shell">
-  <div class="notice">📱 v7・學習頁主題標題左邊加上主題圖示</div>
 
   <!-- ================= 首頁（版面已定案，未更動） ================= -->
   <div class="tabpage active" id="tab-home">
@@ -183,7 +182,10 @@ body{background:#E5E7EB;display:flex;justify-content:center;min-height:100vh}
         </div>
         <button class="unit-switch-btn" onclick="switchTab('home')">🔄 切換主題</button>
       </div>
-      <div class="unit-counter" id="unit-counter">第 1 / 100</div>
+      <div class="unit-counter" id="unit-counter" style="display:flex;justify-content:space-between;align-items:center">
+        <span>第 1 / 100</span>
+        <span onclick="debugListGbVoices()" style="font-size:11px;color:#B0A489;text-decoration:underline;cursor:pointer">🔍 查看手機英式語音清單</span>
+      </div>
       <div class="unit-progress-wrap">
         <div class="unit-track"><div class="unit-fill" id="unit-fill" style="width:0%"></div></div>
       </div>
@@ -409,7 +411,7 @@ function renderUnit() {
   iconEl.textContent = SCENARIO_META[currentScenario].icon;
   iconEl.style.background = topicIconBg[currentScenario];
   iconEl.style.color = topicIconColor[currentScenario];
-  document.getElementById("unit-counter").textContent = `第 ${idx+1} / ${units.length}`;
+  document.getElementById("unit-counter").querySelector("span").textContent = `第 ${idx+1} / ${units.length}`;
   document.getElementById("unit-nav-counter").textContent = `第 ${idx+1}/${units.length} 頁`;
 
   document.getElementById("unit-word").textContent = unit.word.en;
@@ -617,9 +619,23 @@ function speak(text, accent) {
     utter.rate = appSettings.rate;
     utter.pitch = 1.0;
     const voice = pickVoice(accent);
-    if (voice) { utter.voice = voice; } else { showToast(accent==="en-GB" ? "此裝置沒有偵測到英式語音" : "此裝置沒有偵測到美式語音"); }
+    if (voice) {
+      utter.voice = voice;
+      // 暫時性診斷提示：顯示這支手機實際選到的語音名稱，方便精準定位問題語音是哪一顆
+      showToast("使用語音：" + voice.name);
+    } else {
+      showToast((accent==="en-GB" ? "此裝置沒有偵測到英式語音" : "此裝置沒有偵測到美式語音") + "（將使用系統預設）");
+    }
     window.speechSynthesis.speak(utter);
   }, 60);
+}
+
+/* 暫時性診斷工具：列出這支手機目前所有可用的英式語音，方便一次看到全部選項 */
+function debugListGbVoices() {
+  const voices = window.speechSynthesis.getVoices().filter(v => v.lang === "en-GB" || v.lang.toLowerCase() === "en-gb");
+  if (voices.length === 0) { showToast("這支手機完全沒有偵測到 en-GB 語音"); return; }
+  alert("這支手機目前偵測到的英式語音（共 " + voices.length + " 顆）：\n\n" +
+    voices.map((v, i) => (i+1) + ". " + v.name + (v.localService ? "（本機）" : "（網路）")).join("\n"));
 }
 
 /* ---------------- settings ---------------- */
