@@ -142,13 +142,6 @@ body{background:#E5E7EB;display:flex;justify-content:center;min-height:100vh}
 
 .unit-topic-row{display:flex;align-items:center;gap:9px;flex:1;min-width:0}
 .unit-topic-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.api-key-hint{font-size:11px;color:#8A8072;font-weight:600;line-height:1.6;margin:0 0 10px}
-.api-key-input{width:100%;min-height:46px;border-radius:12px;border:1.5px solid #D8D2C4;background:#fff;padding:0 14px;font-size:14px;color:#2E251F;margin-bottom:10px}
-.api-key-btn-row{display:flex;gap:10px;margin-bottom:8px}
-.api-key-btn{flex:1;min-height:44px;border-radius:12px;font-weight:800;font-size:14px;cursor:pointer;border:1.5px solid}
-.api-key-save-btn{background:#2E7D32;border-color:#2E7D32;color:#fff}
-.api-key-clear-btn{background:#fff;border-color:#D8D2C4;color:#4A4038}
-.api-key-status{font-size:12px;color:#5F544D;font-weight:700}
 </style>
 </head>
 <body>
@@ -303,16 +296,6 @@ body{background:#E5E7EB;display:flex;justify-content:center;min-height:100vh}
           <button class="opt-btn active" id="m-rate-mid" onclick="setRate(0.90,this)">☕<br>舒適</button>
           <button class="opt-btn" id="m-rate-norm" onclick="setRate(1.0,this)">🐇<br>標準</button>
         </div>
-      </div>
-      <div class="setting-group">
-        <span class="setting-label">雲端語音金鑰（選填，進階功能）</span>
-        <p class="api-key-hint">填入 Google Cloud Text-to-Speech 的 API 金鑰後，發音會改用固定清晰的雲端女聲。金鑰只存在這支手機的瀏覽器本機（localStorage），不會出現在程式碼或網頁原始碼裡。留空則維持使用裝置內建語音。</p>
-        <input type="password" id="api-key-input" class="api-key-input" placeholder="貼上 API 金鑰（留空 = 使用裝置內建語音）" autocapitalize="off" autocorrect="off" spellcheck="false">
-        <div class="api-key-btn-row">
-          <button class="api-key-btn api-key-save-btn" onclick="saveApiKey()">儲存金鑰</button>
-          <button class="api-key-btn api-key-clear-btn" onclick="clearApiKey()">清除金鑰</button>
-        </div>
-        <div class="api-key-status" id="api-key-status">目前未設定，使用裝置內建語音</div>
       </div>
       <button class="save-btn" onclick="closeSettings()">儲存並關閉</button>
     </div>
@@ -647,76 +630,8 @@ function pickVoice(accent) {
   return best;
 }
 
-/* ---------------- 新增功能：雲端語音金鑰管理（只存在瀏覽器本機，不寫進程式碼） ---------------- */
-const CLOUD_TTS_STORAGE_KEY = "senior_eng_cloud_tts_key_v1";
-const CLOUD_VOICE_NAME = { "en-US": "en-US-Neural2-F", "en-GB": "en-GB-Neural2-A" };
-
-function loadApiKeyIntoUI() {
-  const saved = localStorage.getItem(CLOUD_TTS_STORAGE_KEY) || "";
-  const input = document.getElementById("api-key-input");
-  if (input) input.value = saved;
-  updateApiKeyStatus(saved);
-}
-
-function updateApiKeyStatus(key) {
-  const el = document.getElementById("api-key-status");
-  if (!el) return;
-  el.textContent = key ? "✅ 目前已設定雲端語音金鑰" : "目前未設定，使用裝置內建語音";
-}
-
-function saveApiKey() {
-  const input = document.getElementById("api-key-input");
-  const key = (input ? input.value : "").trim();
-  try {
-    if (key) localStorage.setItem(CLOUD_TTS_STORAGE_KEY, key);
-    else localStorage.removeItem(CLOUD_TTS_STORAGE_KEY);
-  } catch (e) {}
-  updateApiKeyStatus(key);
-  showToast(key ? "已儲存雲端語音金鑰" : "已清除，改用裝置內建語音");
-}
-
-function clearApiKey() {
-  const input = document.getElementById("api-key-input");
-  if (input) input.value = "";
-  try { localStorage.removeItem(CLOUD_TTS_STORAGE_KEY); } catch (e) {}
-  updateApiKeyStatus("");
-  showToast("已清除雲端語音金鑰");
-}
-
-/* 呼叫 Google Cloud TTS，成功回傳 true 並直接播放；任何一步失敗都回傳 false，交給呼叫端退回裝置語音 */
-async function tryPlayCloudSpeech(text, accent, apiKey) {
-  try {
-    const res = await fetch("https://texttospeech.googleapis.com/v1/text:synthesize?key=" + encodeURIComponent(apiKey), {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        input: { text },
-        voice: { languageCode: accent, name: CLOUD_VOICE_NAME[accent] },
-        audioConfig: { audioEncoding: "MP3", speakingRate: appSettings.rate },
-      }),
-    });
-    if (!res.ok) return false;
-    const data = await res.json();
-    if (!data.audioContent) return false;
-    const audio = new Audio("data:audio/mp3;base64," + data.audioContent);
-    await audio.play();
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
 async function speak(text, accent) {
   if (!("speechSynthesis" in window)) { showToast("此瀏覽器不支援語音功能"); return; }
-
-  // 新增功能：有填雲端語音金鑰時，優先嘗試雲端 TTS；成功就直接播放並結束。
-  // 金鑰沒填、呼叫失敗、沒有網路，都會安靜地繼續往下走，執行原本的裝置語音邏輯（完全不受影響）。
-  const cloudKey = (localStorage.getItem("senior_eng_cloud_tts_key_v1") || "").trim();
-  if (cloudKey) {
-    const played = await tryPlayCloudSpeech(text, accent, cloudKey);
-    if (played) return;
-  }
-
   window.speechSynthesis.cancel();
 
   // 先確實等待語音清單載入完成（最多 1.5 秒），避免頁面剛打開語音清單還沒準備好，
@@ -798,7 +713,6 @@ try {
   }
 } catch(e) {}
 
-loadApiKeyIntoUI();
 renderHome();
 </script>
 </body>
