@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>樂齡輕鬆開口說英文 - 網頁測試版 v7</title>
+<style>
+:root{
+  --scale:1;
+  --green:#4F9957; --green-tint:#EAF5E1; --green-btn:#59A54D;
+  --blue:#4D94C7; --blue-tint:#E6F2FA; --blue-btn:#4E9BCB;
+  --orange:#CA7456; --orange-tint:#FCEEE3; --orange-btn:#E4784E;
+  --pink:#B45D67; --pink-tint:#FBEAEC; --pink-btn:#C86F6F;
+  --topic-blue:#1565C0;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Microsoft JhengHei","PingFang TC",sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:#E5E7EB;display:flex;justify-content:center;min-height:100vh}
+.app-shell{width:100%;max-width:420px;background:#FBF8F2;min-height:100vh;display:flex;flex-direction:column;box-shadow:0 10px 30px rgba(0,0,0,.15);position:relative}
+.notice{background:#FFF3D0;color:#8A6D00;font-size:11px;font-weight:700;padding:7px 16px;text-align:center;border-bottom:1px solid #F2C94C}
+.tabpage{display:none;flex:1;flex-direction:column;min-height:0}
+.tabpage.active{display:flex}
+.scroll{flex:1;overflow-y:auto;padding:14px 16px 90px}
+
+/* ---- hero banner (首頁，未更動) ---- */
+.hero-banner{width:100%;display:block;aspect-ratio:1717/916;object-fit:cover}
+.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.section-title{font-size:calc(20px*var(--scale));font-weight:800;color:#2E251F}
+.icon-btn{min-height:40px;border-radius:20px;background:#fff;border:1.5px solid #E8DFC8;display:flex;align-items:center;justify-content:center;font-size:calc(15px*var(--scale));font-weight:800;color:#4A4038;cursor:pointer;padding:0 14px;gap:5px}
+
+.v3-card-stack{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+.v3-card{min-height:86px;border-radius:20px;padding:10px 12px;display:flex;align-items:center;text-decoration:none;border:none;cursor:pointer;width:100%;text-align:left}
+.v3-icon-box{width:56px;height:56px;border-radius:15px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;margin-right:12px;flex-shrink:0}
+.v3-card-copy{flex:1;min-width:0}
+.v3-card-title{font-size:calc(21px*var(--scale));font-weight:800;line-height:1.3}
+.v3-card-sub{font-size:calc(15px*var(--scale));font-weight:700;color:#5F544D;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v3-start-btn{min-height:46px;border-radius:14px;color:#fff;display:flex;align-items:center;justify-content:center;gap:4px;padding:0 14px;font-size:calc(15px*var(--scale));font-weight:800;flex-shrink:0}
+.v3-translate-card{min-height:86px;margin-top:18px;margin-bottom:10px;border-radius:20px;background:#fff;border:1px solid #E5E2D8;padding:10px 12px;display:flex;align-items:center;text-decoration:none}
+.v3-translate-icon{width:52px;height:52px;border-radius:26px;background:#E7EEF2;display:flex;align-items:center;justify-content:center;font-size:22px;margin-right:12px;flex-shrink:0}
+.v3-translate-title{font-size:calc(18px*var(--scale));font-weight:800;color:#3E332C}
+.v3-translate-btn{min-height:46px;border-radius:14px;background:#E5F2DF;padding:0 14px;display:flex;align-items:center;justify-content:center;font-size:calc(15px*var(--scale));font-weight:800;color:#5F8F61;flex-shrink:0}
+
+/* ---- 單字學習流程（一頁一單元：1單字+2情境句，緊湊排版） ---- */
+.unit-topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 2px}
+.unit-topic{font-size:calc(32px*var(--scale));font-weight:800;color:var(--topic-blue)}
+.unit-switch-btn{font-size:calc(15px*var(--scale));font-weight:700;color:#8A8072;background:#fff;border:1.5px solid #E8DFC8;border-radius:22px;padding:11px 16px;cursor:pointer;flex-shrink:0;min-height:44px}
+.unit-counter{font-size:calc(12px*var(--scale));font-weight:700;color:#5F544D;padding:0 16px;margin-bottom:6px}
+.unit-progress-wrap{padding:0 16px 10px}
+.unit-track{height:8px;border-radius:4px;background:#EFEAE0;overflow:hidden}
+.unit-fill{height:100%;background:#4CAF50;border-radius:4px}
+
+.unit-body{padding:0 16px}
+.unit-card{background:#fff;border-radius:20px;border:1.5px solid #E5E2D8;padding:16px}
+.unit-section{padding:10px 0}
+.unit-section + .unit-section{border-top:1px solid #F0EAD9;margin-top:2px}
+.unit-section-label{font-size:calc(11px*var(--scale));font-weight:800;color:#8A8072;margin-bottom:6px}
+.unit-en{font-size:calc(20px*var(--scale));font-weight:800;color:#1B4332;line-height:1.35;word-break:break-word}
+.unit-en.word-size{font-size:calc(26px*var(--scale))}
+.unit-zh{font-size:calc(14px*var(--scale));font-weight:700;color:#4A4038;margin-top:4px}
+.unit-ctrl-row{display:flex;gap:8px;margin-top:10px}
+.accent-btn{flex:1;min-height:44px;border-radius:12px;font-weight:800;font-size:calc(13px*var(--scale));cursor:pointer;border:2px solid;display:flex;align-items:center;justify-content:center;gap:3px}
+.accent-btn.gb{background:#F4F0FC;border-color:#B7A6E8;color:#5A4A9E}
+.accent-btn.us{background:#EAF2FB;border-color:#8DB9E0;color:#2E6E97}
+.star-toggle{width:44px;height:44px;border-radius:12px;border:2px solid #D8D2C4;background:#fff;font-size:19px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.star-toggle.done{background:#FFF3D0;border-color:#F2C94C}
+
+.unit-complete-banner{background:#E8F5E9;border:1.5px solid #C8E6C9;border-radius:16px;padding:12px;text-align:center;font-weight:800;color:#2E7D32;font-size:calc(13px*var(--scale));margin:0 16px 10px}
+
+.unit-nav-bar{display:flex;gap:8px;padding:10px 16px;background:#FBF8F2;border-top:1px solid #EFEAE0;align-items:center}
+.unit-nav-counter{font-size:calc(13px*var(--scale));font-weight:800;color:#5F544D;flex-shrink:0;padding:0 4px}
+.unit-nav-btn{flex:1;min-height:50px;border-radius:14px;font-weight:800;font-size:calc(15px*var(--scale));border:2px solid #D8D2C4;background:#fff;color:#4A4038;cursor:pointer}
+.unit-nav-btn.primary{background:#2E7D32;border-color:#2E7D32;color:#fff}
+.unit-nav-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* ---- 收藏 ---- */
+.list{display:flex;flex-direction:column;gap:10px}
+.item-card{background:#fff;border-radius:16px;border:1.5px solid #E5E2D8;padding:12px;display:flex;align-items:flex-start;gap:10px}
+.item-text{flex:1;min-width:0}
+.item-tag{display:inline-block;font-size:calc(10px*var(--scale));font-weight:800;color:#2E7D32;background:#E8F5E9;padding:2px 8px;border-radius:8px;margin-bottom:5px;margin-right:5px}
+.item-tag.stype{color:#2E6E97;background:#E6F2FA}
+.item-en{font-size:calc(16px*var(--scale));font-weight:800;color:#1B4332}
+.item-zh{font-size:calc(12px*var(--scale));font-weight:700;color:#4A4038;margin-top:2px}
+.circle-btn{width:32px;height:32px;border-radius:16px;background:#FFF3D0;border:1.5px solid #F2C94C;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.empty{text-align:center;color:#9A9184;padding:40px 0;font-weight:600;font-size:calc(13px*var(--scale))}
+
+/* ---- 我的 / 進度 ---- */
+.stat-card{background:#fff;border-radius:16px;border:1.5px solid #C8E6C9;padding:14px;margin-bottom:14px}
+.stat-head{display:flex;justify-content:space-between;font-size:calc(13px*var(--scale));font-weight:800;color:#2E7D32;margin-bottom:8px}
+.stat-track{height:12px;border-radius:6px;background:#E8F5E9;border:1px solid #C8E6C9;overflow:hidden}
+.stat-fill{height:100%;background:#4CAF50}
+.breakdown-block{background:#fff;border:1px solid #E5E2D8;border-radius:14px;margin-bottom:10px;overflow:hidden}
+.breakdown-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;cursor:pointer}
+.breakdown-head .name{font-size:calc(14px*var(--scale));font-weight:800;color:#2E251F}
+.breakdown-head .val{font-size:calc(12px*var(--scale));font-weight:800;color:#2E7D32}
+.breakdown-detail{display:none;border-top:1px solid #EFEAE0;max-height:280px;overflow-y:auto}
+.breakdown-detail.show{display:block}
+.detail-row{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #F5F2EA;font-size:calc(12px*var(--scale));cursor:pointer}
+.detail-row .en{font-weight:800;color:#2E251F}
+.detail-row .status{display:flex;gap:5px}
+.detail-row .dot{font-size:10px;font-weight:800;padding:2px 5px;border-radius:7px;background:#F5F2EA;color:#9A9184}
+.detail-row .dot.done{background:#FFF3D0;color:#8A6D00}
+.setting-group{margin-bottom:16px}
+.setting-label{font-size:calc(12px*var(--scale));font-weight:800;color:#4A4038;margin-bottom:8px;display:block}
+.opt-row{display:flex;gap:8px}
+.opt-btn{flex:1;min-height:46px;border-radius:12px;border:1.5px solid #D8D2C4;background:#fff;font-size:calc(12px*var(--scale));font-weight:800;color:#4A4038;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+.opt-btn.active{background:#88D49E;border-color:#2E7D32;color:#1B4332}
+.reset-btn{width:100%;min-height:46px;border-radius:12px;background:#FCEBEB;border:1.5px solid #F09595;color:#A32D2D;font-weight:800;font-size:13px;cursor:pointer}
+
+/* ---- bottom tab ---- */
+.bottom-tab{background:#FBF8F2;border-top:1px solid #EFEAE0;display:flex;max-width:420px;margin:0 auto;width:100%}
+.tab-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 0 14px;background:none;border:none;cursor:pointer;color:#9A9184;font-size:calc(13px*var(--scale));font-weight:800}
+.tab-item.active{color:#3F8A4A}
+.tab-item .icon{font-size:28px}
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1000;align-items:flex-end;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal-sheet{width:100%;max-width:420px;background:#fff;border-radius:22px 22px 0 0;padding:18px;max-height:82vh;overflow-y:auto}
+.modal-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #EFEAE0;padding-bottom:10px;margin-bottom:14px}
+.modal-title{font-size:calc(17px*var(--scale));font-weight:800;color:#2E251F}
+.close-btn{width:34px;height:34px;border-radius:17px;background:#F5F2EA;border:none;font-size:15px;cursor:pointer}
+.save-btn{width:100%;min-height:48px;border-radius:13px;background:#2E7D32;color:#fff;font-weight:800;font-size:15px;border:none;margin-top:6px;cursor:pointer}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#1B4332;color:#fff;padding:11px 20px;border-radius:18px;font-weight:700;font-size:12px;z-index:2000;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+
+/* ---- 我的分頁：放大版總進度＋四大主題進度（含圖示） ---- */
+.total-card-lg{background:#fff;border-radius:22px;border:2px solid #C8E6C9;padding:22px;margin-bottom:18px;text-align:center}
+.total-label-lg{font-size:calc(17px*var(--scale));font-weight:800;color:#2E7D32;margin-bottom:6px}
+.total-value-lg{font-size:calc(28px*var(--scale));font-weight:800;color:#1B4332}
+.total-pct-lg{font-size:calc(16px*var(--scale));font-weight:800;color:#4CAF50;margin:2px 0 14px}
+.total-track-lg{height:18px;border-radius:9px;background:#E8F5E9;border:1px solid #C8E6C9;overflow:hidden}
+.total-fill-lg{height:100%;background:#4CAF50}
+.theme-stack-lg{display:flex;flex-direction:column;gap:14px;margin-bottom:20px}
+.theme-card-lg{border-radius:20px;padding:16px}
+.theme-card-lg .head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.theme-card-lg .icon-box{width:44px;height:44px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.theme-card-lg .name{flex:1;font-size:calc(19px*var(--scale));font-weight:800}
+.theme-card-lg .val{font-size:calc(15px*var(--scale));font-weight:800}
+.theme-track-lg{height:12px;border-radius:6px;background:#FFFFFF99;overflow:hidden}
+.theme-fill-lg{height:100%;border-radius:6px}
+.reset-btn-lg{width:100%;min-height:52px;border-radius:15px;background:#FCEBEB;border:1.5px solid #F09595;color:#A32D2D;font-weight:800;font-size:calc(15px*var(--scale));cursor:pointer;margin-bottom:20px}
+
+.icon-btn-lg{min-height:52px;padding:0 18px;font-size:calc(17px*var(--scale));border-radius:26px}
+
+.unit-topic-row{display:flex;align-items:center;gap:9px;flex:1;min-width:0}
+.unit-topic-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+</style>
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- ================= 首頁 ================= -->
+  <div class="tabpage active" id="tab-home">
+    <div class="scroll" style="padding:0 0 90px">
+      <img src="https://duk.tw/WLxPL5.png" class="hero-banner" alt="樂齡輕鬆開口說英文首頁圖片" />
+
+      <div style="padding:0 18px">
+        <div class="section-header" style="margin-top:20px">
+          <span class="section-title" style="font-size:calc(21px*var(--scale))">開啟學習的旅程</span>
+          <button class="icon-btn icon-btn-lg" onclick="openSettings()" aria-label="設定">⚙️ 設定</button>
+        </div>
+
+        <div class="v3-card-stack" id="scenario-scroll"></div>
+
+        <a class="v3-translate-card" href="https://translate.google.com/?sl=auto&tl=zh-TW&op=translate" target="_blank" rel="noopener">
+          <div class="v3-translate-icon">🌐</div>
+          <div class="v3-card-copy">
+            <div class="v3-translate-title">Google 翻譯</div>
+            <div class="v3-card-sub">查單字、聽發音、看例句</div>
+          </div>
+          <div class="v3-translate-btn">前往翻譯 ↗</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 單字 ================= -->
+  <div class="tabpage" id="tab-vocab">
+    <div class="scroll" style="padding-bottom:14px">
+      <div class="unit-topbar">
+        <div class="unit-topic-row">
+          <div class="unit-topic-icon" id="unit-topic-icon">👜</div>
+          <span class="unit-topic" id="unit-topic">生活日常</span>
+        </div>
+        <button class="unit-switch-btn" onclick="switchTab('home')">🔄 切換主題</button>
+      </div>
+      <div class="unit-counter" id="unit-counter" style="display:flex;justify-content:space-between;align-items:center">
+        <span>第 1 / 100</span>
+        <span onclick="debugListGbVoices()" style="font-size:11px;color:#B0A489;text-decoration:underline;cursor:pointer">🔍 查看手機英式語音清單</span>
+      </div>
+      <div class="unit-progress-wrap">
+        <div class="unit-track"><div class="unit-fill" id="unit-fill" style="width:0%"></div></div>
+      </div>
+
+      <div id="unit-complete-banner" class="unit-complete-banner" style="display:none">🎉 這個主題全部學完了！</div>
+
+      <div class="unit-body">
+        <div class="unit-card">
+          <!-- 英文單字 -->
+          <div class="unit-section">
+            <div class="unit-section-label">英文單字</div>
+            <div class="unit-en word-size" id="unit-word">Water</div>
+            <div class="unit-zh" id="unit-word-zh">水</div>
+            <div class="unit-ctrl-row">
+              <button class="accent-btn gb" onclick="speakItem('word','en-GB')">🇬🇧 英式發音</button>
+              <button class="accent-btn us" onclick="speakItem('word','en-US')">🇺🇸 美式發音</button>
+              <button class="star-toggle" id="star-word" onclick="toggleStar('word')" aria-label="單字學習完成">☆</button>
+            </div>
+          </div>
+
+          <!-- 情境句1 -->
+          <div class="unit-section">
+            <div class="unit-section-label">情境句 1</div>
+            <div class="unit-en" id="unit-s1-en">...</div>
+            <div class="unit-zh" id="unit-s1-zh">...</div>
+            <div class="unit-ctrl-row">
+              <button class="accent-btn gb" onclick="speakItem('s1','en-GB')">🇬🇧 英式發音</button>
+              <button class="accent-btn us" onclick="speakItem('s1','en-US')">🇺🇸 美式發音</button>
+              <button class="star-toggle" id="star-s1" onclick="toggleStar('s1')" aria-label="情境句1學習完成">☆</button>
+            </div>
+          </div>
+
+          <!-- 情境句2 -->
+          <div class="unit-section">
+            <div class="unit-section-label">情境句 2</div>
+            <div class="unit-en" id="unit-s2-en">...</div>
+            <div class="unit-zh" id="unit-s2-zh">...</div>
+            <div class="unit-ctrl-row">
+              <button class="accent-btn gb" onclick="speakItem('s2','en-GB')">🇬🇧 英式發音</button>
+              <button class="accent-btn us" onclick="speakItem('s2','en-US')">🇺🇸 美式發音</button>
+              <button class="star-toggle" id="star-s2" onclick="toggleStar('s2')" aria-label="情境句2學習完成">☆</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 頁面導航 -->
+    <div class="unit-nav-bar">
+      <button class="unit-nav-btn" id="prev-btn" onclick="prevUnit()">〈 上一頁</button>
+      <div class="unit-nav-counter" id="unit-nav-counter">第 1/100 頁</div>
+      <button class="unit-nav-btn primary" id="next-btn" onclick="nextUnit()">下一頁 〉</button>
+    </div>
+  </div>
+
+  <!-- ================= 收藏 ================= -->
+  <div class="tabpage" id="tab-favorites">
+    <div class="scroll">
+      <div class="section-header"><span class="section-title" style="font-size:calc(24px*var(--scale))">⭐ 已標記學會</span></div>
+      <div class="list" id="favorites-list"></div>
+    </div>
+  </div>
+
+  <!-- ================= 我的 ================= -->
+  <div class="tabpage" id="tab-profile">
+    <div class="scroll">
+      <div class="section-header"><span class="section-title" style="font-size:calc(24px*var(--scale))">📊 學習進度</span></div>
+
+      <div class="total-card-lg">
+        <div class="total-label-lg">學習總進度</div>
+        <div class="total-value-lg" id="profile-total-value">0 / 480</div>
+        <div class="total-pct-lg" id="profile-total-pct">0%</div>
+        <div class="total-track-lg"><div class="total-fill-lg" id="profile-total-fill" style="width:0%"></div></div>
+      </div>
+
+      <div id="profile-breakdown" class="theme-stack-lg"></div>
+
+      <button class="reset-btn-lg" onclick="resetProgress()">重置學習紀錄</button>
+    </div>
+  </div>
+
+  <div class="bottom-tab">
+    <button class="tab-item active" id="navtab-home" onclick="switchTab('home')"><span class="icon">🏠</span><span>首頁</span></button>
+    <button class="tab-item" id="navtab-vocab" onclick="switchTab('vocab')"><span class="icon">📖</span><span>單字</span></button>
+    <button class="tab-item" id="navtab-favorites" onclick="switchTab('favorites')"><span class="icon">⭐</span><span>收藏</span></button>
+    <button class="tab-item" id="navtab-profile" onclick="switchTab('profile')"><span class="icon">👤</span><span>我的</span></button>
+  </div>
+
+  <!-- ================= 設定 Modal ================= -->
+  <div class="modal-overlay" id="settings-modal">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <span class="modal-title">⚙️ 偏好設定</span>
+        <button class="close-btn" onclick="closeSettings()">✕</button>
+      </div>
+      <div class="setting-group">
+        <span class="setting-label">字體大小（顯著對比放大）</span>
+        <div class="opt-row">
+          <button class="opt-btn" id="m-font-md" onclick="setFontScale(1,this)">標準<br>18px</button>
+          <button class="opt-btn active" id="m-font-lg" onclick="setFontScale(1.3,this)">放大<br>24px</button>
+          <button class="opt-btn" id="m-font-xl" onclick="setFontScale(1.6,this)">特大<br>30px</button>
+        </div>
+      </div>
+      <div class="setting-group">
+        <span class="setting-label">發音速度 (Speech Speed)</span>
+        <div class="opt-row">
+          <button class="opt-btn" id="m-rate-slow" onclick="setRate(0.78,this)">🐢<br>慢速</button>
+          <button class="opt-btn active" id="m-rate-mid" onclick="setRate(0.90,this)">☕<br>舒適</button>
+          <button class="opt-btn" id="m-rate-norm" onclick="setRate(1.0,this)">🐇<br>標準</button>
+        </div>
+      </div>
+      <button class="save-btn" onclick="closeSettings()">儲存並關閉</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+const LESSON_DATA = {
+  "daily": {
+    "title": "生活日常",
+    "subcats": ["生活日常"],
+    "vocab": [
+      {"id": "daily_001", "subcat": "生活日常", "en": "Apple", "zh": "蘋果"},
+      {"id": "daily_002", "subcat": "生活日常", "en": "Banana", "zh": "香蕉"},
+      {"id": "daily_003", "subcat": "生活日常", "en": "Cat", "zh": "貓咪"},
+      {"id": "daily_004", "subcat": "生活日常", "en": "Dog", "zh": "狗狗"},
+      {"id": "daily_005", "subcat": "生活日常", "en": "Book", "zh": "書本"},
+      {"id": "daily_006", "subcat": "生活日常", "en": "Pencil", "zh": "鉛筆"},
+      {"id": "daily_007", "subcat": "生活日常", "en": "Eraser", "zh": "橡皮擦"},
+      {"id": "daily_008", "subcat": "生活日常", "en": "Bag", "zh": "書包"},
+      {"id": "daily_009", "subcat": "生活日常", "en": "Desk", "zh": "書桌"},
+      {"id": "daily_010", "subcat": "生活日常", "en": "Bed", "zh": "床鋪"},
+      {"id": "daily_011", "subcat": "生活日常", "en": "Milk", "zh": "牛奶"},
+      {"id": "daily_012", "subcat": "生活日常", "en": "Box", "zh": "盒子"},
+      {"id": "daily_013", "subcat": "生活日常", "en": "Clock", "zh": "時鐘"},
+      {"id": "daily_014", "subcat": "生活日常", "en": "Door", "zh": "門"},
+      {"id": "daily_015", "subcat": "生活日常", "en": "Window", "zh": "窗戶"},
+      {"id": "daily_016", "subcat": "生活日常", "en": "Sun", "zh": "太陽"},
+      {"id": "daily_017", "subcat": "生活日常", "en": "Moon", "zh": "月亮"},
+      {"id": "daily_018", "subcat": "生活日常", "en": "Star", "zh": "星星"},
+      {"id": "daily_019", "subcat": "生活日常", "en": "Tree", "zh": "大樹"},
+      {"id": "daily_020", "subcat": "生活日常", "en": "Flower", "zh": "花朵"},
+      {"id": "daily_021", "subcat": "生活日常", "en": "Rain", "zh": "雨水"},
+      {"id": "daily_022", "subcat": "生活日常", "en": "Wind", "zh": "風"},
+      {"id": "daily_023", "subcat": "生活日常", "en": "Shirt", "zh": "襯衫"},
+      {"id": "daily_024", "subcat": "生活日常", "en": "Pants", "zh": "褲子"},
+      {"id": "daily_025", "subcat": "生活日常", "en": "Hat", "zh": "帽子"},
+      {"id": "daily_026", "subcat": "生活日常", "en": "Shoe", "zh": "鞋子"},
+      {"id": "daily_027", "subcat": "生活日常", "en": "Sock", "zh": "襪子"},
+      {"id": "daily_028", "subcat": "生活日常", "en": "Hand", "zh": "手"},
+      {"id": "daily_029", "subcat": "生活日常", "en": "Foot", "zh": "腳"},
+      {"id": "daily_030", "subcat": "生活日常", "en": "Head", "zh": "頭"},
+      {"id": "daily_031", "subcat": "生活日常", "en": "Eye", "zh": "眼睛"},
+      {"id": "daily_032", "subcat": "生活日常", "en": "Ear", "zh": "耳朵"},
+      {"id": "daily_033", "subcat": "生活日常", "en": "Mouth", "zh": "嘴巴"},
+      {"id": "daily_034", "subcat": "生活日常", "en": "Face", "zh": "臉"},
+      {"id": "daily_035", "subcat": "生活日常", "en": "Hair", "zh": "頭髮"},
+      {"id": "daily_036", "subcat": "生活日常", "en": "Home", "zh": "家"},
+      {"id": "daily_037", "subcat": "生活日常", "en": "Room", "zh": "房間"},
+      {"id": "daily_038", "subcat": "生活日常", "en": "Park", "zh": "公園"},
+      {"id": "daily_039", "subcat": "生活日常", "en": "School", "zh": "學校"},
+      {"id": "daily_040", "subcat": "生活日常", "en": "Class", "zh": "班級"},
+      {"id": "daily_041", "subcat": "生活日常", "en": "Friend", "zh": "朋友"},
+      {"id": "daily_042", "subcat": "生活日常", "en": "Brother", "zh": "兄弟"},
+      {"id": "daily_043", "subcat": "生活日常", "en": "Sister", "zh": "姐妹"},
+      {"id": "daily_044", "subcat": "生活日常", "en": "Baby", "zh": "寶寶"},
+      {"id": "daily_045", "subcat": "生活日常", "en": "Song", "zh": "歌曲"},
+      {"id": "daily_046", "subcat": "生活日常", "en": "Toy", "zh": "玩具"},
+      {"id": "daily_047", "subcat": "生活日常", "en": "Ball", "zh": "球"},
+      {"id": "daily_048", "subcat": "生活日常", "en": "Game", "zh": "遊戲"},
+      {"id": "daily_049", "subcat": "生活日常", "en": "Smile", "zh": "微笑"},
+      {"id": "daily_050", "subcat": "生活日常", "en": "Sleep", "zh": "睡覺"}
+    ],
+    "sentences": [
+      {"id": "daily_001_s1", "subcat": "生活日常", "rel": "Apple", "en": "I like to eat an apple.", "zh": "我喜歡吃蘋果。"},
+      {"id": "daily_001_s2", "subcat": "生活日常", "rel": "Apple", "en": "An apple is red and round.", "zh": "蘋果是紅色又圓圓的。"},
+      {"id": "daily_002_s1", "subcat": "生活日常", "rel": "Banana", "en": "Monkeys love yellow bananas.", "zh": "猴子喜歡黃色的香蕉。"},
+      {"id": "daily_002_s2", "subcat": "生活日常", "rel": "Banana", "en": "I eat a banana for breakfast.", "zh": "我早餐吃一根香蕉。"},
+      {"id": "daily_003_s1", "subcat": "生活日常", "rel": "Cat", "en": "The cute cat is sleeping.", "zh": "可愛的小貓在睡覺。"},
+      {"id": "daily_003_s2", "subcat": "生活日常", "rel": "Cat", "en": "My cat can jump very high.", "zh": "我的貓咪可以跳很高。"},
+      {"id": "daily_004_s1", "subcat": "生活日常", "rel": "Dog", "en": "The friendly dog wags its tail.", "zh": "親切的狗狗搖著尾巴。"},
+      {"id": "daily_004_s2", "subcat": "生活日常", "rel": "Dog", "en": "I play ball with my dog.", "zh": "我和我的狗狗一起玩球。"},
+      {"id": "daily_005_s1", "subcat": "生活日常", "rel": "Book", "en": "Open your story book, please.", "zh": "請打開你的故事書。"},
+      {"id": "daily_005_s2", "subcat": "生活日常", "rel": "Book", "en": "This book has many pictures.", "zh": "這本書有很多圖片。"},
+      {"id": "daily_006_s1", "subcat": "生活日常", "rel": "Pencil", "en": "I draw a sun with my pencil.", "zh": "我用鉛筆畫了一顆太陽。"},
+      {"id": "daily_006_s2", "subcat": "生活日常", "rel": "Pencil", "en": "Pick up your pencil, please.", "zh": "請撿起你的鉛筆。"},
+      {"id": "daily_007_s1", "subcat": "生活日常", "rel": "Eraser", "en": "Use an eraser to fix mistake.", "zh": "用橡皮擦修正錯誤。"},
+      {"id": "daily_007_s2", "subcat": "生活日常", "rel": "Eraser", "en": "My eraser is pink and small.", "zh": "我的橡皮擦是粉紅色而且小小的。"},
+      {"id": "daily_008_s1", "subcat": "生活日常", "rel": "Bag", "en": "Put the book in your bag.", "zh": "把書本放進你的書包裡。"},
+      {"id": "daily_008_s2", "subcat": "生活日常", "rel": "Bag", "en": "My school bag is bright blue.", "zh": "我的書包是亮藍色的。"},
+      {"id": "daily_009_s1", "subcat": "生活日常", "rel": "Desk", "en": "Clean your desk every day.", "zh": "每天要把你的書桌整理乾淨。"},
+      {"id": "daily_009_s2", "subcat": "生活日常", "rel": "Desk", "en": "Sit nicely at your desk.", "zh": "在你的書桌前坐好。"},
+      {"id": "daily_010_s1", "subcat": "生活日常", "rel": "Bed", "en": "I sleep on my soft bed.", "zh": "我睡在軟軟的床上。"},
+      {"id": "daily_010_s2", "subcat": "生活日常", "rel": "Bed", "en": "Make your bed in the morning.", "zh": "早上要整理你的床鋪。"},
+      {"id": "daily_011_s1", "subcat": "生活日常", "rel": "Milk", "en": "I drink warm milk every morning.", "zh": "我每天早上喝溫牛奶。"},
+      {"id": "daily_011_s2", "subcat": "生活日常", "rel": "Milk", "en": "Milk helps you grow strong.", "zh": "牛奶能幫你長得強壯。"},
+      {"id": "daily_012_s1", "subcat": "生活日常", "rel": "Box", "en": "Open the big toy box.", "zh": "打開那個大玩具箱。"},
+      {"id": "daily_012_s2", "subcat": "生活日常", "rel": "Box", "en": "What is inside this box?", "zh": "這個盒子裡面有什麼？"},
+      {"id": "daily_013_s1", "subcat": "生活日常", "rel": "Clock", "en": "The clock says eight o'clock.", "zh": "時鐘顯示八點鐘。"},
+      {"id": "daily_013_s2", "subcat": "生活日常", "rel": "Clock", "en": "Look at the clock on the wall.", "zh": "看牆上的時鐘。"},
+      {"id": "daily_014_s1", "subcat": "生活日常", "rel": "Door", "en": "Please close the room door.", "zh": "請把房間門關上。"},
+      {"id": "daily_014_s2", "subcat": "生活日常", "rel": "Door", "en": "Knock on the door first.", "zh": "請先敲敲門。"},
+      {"id": "daily_015_s1", "subcat": "生活日常", "rel": "Window", "en": "Open the window for fresh air.", "zh": "打開窗戶呼吸新鮮空氣。"},
+      {"id": "daily_015_s2", "subcat": "生活日常", "rel": "Window", "en": "I can see rain outside the window.", "zh": "我看到窗外在下雨。"},
+      {"id": "daily_016_s1", "subcat": "生活日常", "rel": "Sun", "en": "The sun shines in the sky.", "zh": "太陽在天空閃耀。"},
+      {"id": "daily_016_s2", "subcat": "生活日常", "rel": "Sun", "en": "We play in the warm sun.", "zh": "我們在溫暖的陽光下玩耍。"},
+      {"id": "daily_017_s1", "subcat": "生活日常", "rel": "Moon", "en": "The bright moon shines at night.", "zh": "明亮的月亮在夜晚閃耀。"},
+      {"id": "daily_017_s2", "subcat": "生活日常", "rel": "Moon", "en": "Look at the golden moon.", "zh": "看那顆金黃色的月亮。"},
+      {"id": "daily_018_s1", "subcat": "生活日常", "rel": "Star", "en": "I see many stars at night.", "zh": "我晚上看到許多星星。"},
+      {"id": "daily_018_s2", "subcat": "生活日常", "rel": "Star", "en": "Little star, twinkle bright.", "zh": "小星星，閃閃發亮。"},
+      {"id": "daily_019_s1", "subcat": "生活日常", "rel": "Tree", "en": "Birds build homes in the tree.", "zh": "小鳥在大樹上築巢。"},
+      {"id": "daily_019_s2", "subcat": "生活日常", "rel": "Tree", "en": "The big tree gives us shade.", "zh": "這棵大樹為我們遮蔭。"},
+      {"id": "daily_020_s1", "subcat": "生活日常", "rel": "Flower", "en": "This pink flower smells sweet.", "zh": "這朵粉紅色的花聞起來很香。"},
+      {"id": "daily_020_s2", "subcat": "生活日常", "rel": "Flower", "en": "Water the flower every day.", "zh": "每天給花朵澆水。"},
+      {"id": "daily_021_s1", "subcat": "生活日常", "rel": "Rain", "en": "Put on a raincoat for the rain.", "zh": "下雨天請穿上雨衣。"},
+      {"id": "daily_021_s2", "subcat": "生活日常", "rel": "Rain", "en": "The rain waters the green grass.", "zh": "雨水滋潤了綠草。"},
+      {"id": "daily_022_s1", "subcat": "生活日常", "rel": "Wind", "en": "The cool wind blows softly.", "zh": "涼爽的風吹過。"},
+      {"id": "daily_022_s2", "subcat": "生活日常", "rel": "Wind", "en": "The wind moves the kites high.", "zh": "風把風箏吹得高高的。"},
+      {"id": "daily_023_s1", "subcat": "生活日常", "rel": "Shirt", "en": "Wear a clean shirt today.", "zh": "今天穿乾淨的襯衫。"},
+      {"id": "daily_023_s2", "subcat": "生活日常", "rel": "Shirt", "en": "My white shirt has a red pocket.", "zh": "我的白襯衫有個紅口袋。"},
+      {"id": "daily_024_s1", "subcat": "生活日常", "rel": "Pants", "en": "Put on your comfortable pants.", "zh": "穿上你舒適的長褲。"},
+      {"id": "daily_024_s2", "subcat": "生活日常", "rel": "Pants", "en": "Blue pants look great on you.", "zh": "藍色長褲穿在你身上真好看。"},
+      {"id": "daily_025_s1", "subcat": "生活日常", "rel": "Hat", "en": "Wear a hat in the sun.", "zh": "大太陽下要戴帽子。"},
+      {"id": "daily_025_s2", "subcat": "生活日常", "rel": "Hat", "en": "My red hat is cute.", "zh": "我的紅帽子很可愛。"},
+      {"id": "daily_026_s1", "subcat": "生活日常", "rel": "Shoe", "en": "Tie your shoe laces well.", "zh": "把你的鞋帶綁好。"},
+      {"id": "daily_026_s2", "subcat": "生活日常", "rel": "Shoe", "en": "Put your shoes on the rack.", "zh": "把鞋子放在鞋架上。"},
+      {"id": "daily_027_s1", "subcat": "生活日常", "rel": "Sock", "en": "Wear soft socks in winter.", "zh": "冬天穿上軟軟的襪子。"},
+      {"id": "daily_027_s2", "subcat": "生活日常", "rel": "Sock", "en": "I have yellow socks.", "zh": "我有黃色的襪子。"},
+      {"id": "daily_028_s1", "subcat": "生活日常", "rel": "Hand", "en": "Wash your hands with soap.", "zh": "用肥皂洗你的雙手。"},
+      {"id": "daily_028_s2", "subcat": "生活日常", "rel": "Hand", "en": "Raise your hand to speak.", "zh": "發言前請舉手。"},
+      {"id": "daily_029_s1", "subcat": "生活日常", "rel": "Foot", "en": "Stand on your right foot.", "zh": "用你的右腳站立。"},
+      {"id": "daily_029_s2", "subcat": "生活日常", "rel": "Foot", "en": "Tap your feet to the music.", "zh": "隨著音樂拍拍腳。"},
+      {"id": "daily_030_s1", "subcat": "生活日常", "rel": "Head", "en": "Touch your head with your hand.", "zh": "用手摸摸你的頭。"},
+      {"id": "daily_030_s2", "subcat": "生活日常", "rel": "Head", "en": "Nod your head to say yes.", "zh": "點點頭表示同意。"},
+      {"id": "daily_031_s1", "subcat": "生活日常", "rel": "Eye", "en": "Close your eyes and sleep.", "zh": "閉上眼睛睡覺。"},
+      {"id": "daily_031_s2", "subcat": "生活日常", "rel": "Eye", "en": "Look at me with bright eyes.", "zh": "用明亮雙眼看著我。"},
+      {"id": "daily_032_s1", "subcat": "生活日常", "rel": "Ear", "en": "Rabbits have two long ears.", "zh": "兔子有兩隻長耳朵。"},
+      {"id": "daily_032_s2", "subcat": "生活日常", "rel": "Ear", "en": "Listen carefully with your ears.", "zh": "用你的耳朵仔細聽。"},
+      {"id": "daily_033_s1", "subcat": "生活日常", "rel": "Mouth", "en": "Open your mouth and say Ah.", "zh": "張開嘴巴說「啊」。"},
+      {"id": "daily_033_s2", "subcat": "生活日常", "rel": "Mouth", "en": "Keep your mouth clean after eating.", "zh": "吃完東西後保持嘴巴乾淨。"},
+      {"id": "daily_034_s1", "subcat": "生活日常", "rel": "Face", "en": "Wash your face every morning.", "zh": "每天早上洗洗臉。"},
+      {"id": "daily_034_s2", "subcat": "生活日常", "rel": "Face", "en": "She has a big smile on her face.", "zh": "她臉上帶著燦爛的笑容。"},
+      {"id": "daily_035_s1", "subcat": "生活日常", "rel": "Hair", "en": "Brush your hair nicely.", "zh": "把你的頭髮梳理好。"},
+      {"id": "daily_035_s2", "subcat": "生活日常", "rel": "Hair", "en": "My hair is black and short.", "zh": "我的頭髮是黑色的短髮。"},
+      {"id": "daily_036_s1", "subcat": "生活日常", "rel": "Home", "en": "Welcome to my sweet home.", "zh": "歡迎來到我溫馨的家。"},
+      {"id": "daily_036_s2", "subcat": "生活日常", "rel": "Home", "en": "I stay home on rainy days.", "zh": "下雨天我待在家裡。"},
+      {"id": "daily_037_s1", "subcat": "生活日常", "rel": "Room", "en": "Keep your room neat and tidy.", "zh": "保持你的房間乾淨整齊。"},
+      {"id": "daily_037_s2", "subcat": "生活日常", "rel": "Room", "en": "My room has a small window.", "zh": "我的房間有一扇小窗戶。"},
+      {"id": "daily_038_s1", "subcat": "生活日常", "rel": "Park", "en": "Let us go play at the park.", "zh": "我們去公園玩吧。"},
+      {"id": "daily_038_s2", "subcat": "生活日常", "rel": "Park", "en": "The park has a green lawn.", "zh": "公園有一片綠色的草坪。"},
+      {"id": "daily_039_s1", "subcat": "生活日常", "rel": "School", "en": "I walk to school with friends.", "zh": "我和朋友一起走路去學校。"},
+      {"id": "daily_039_s2", "subcat": "生活日常", "rel": "School", "en": "My school is big and beautiful.", "zh": "我的學校又大又漂亮。"},
+      {"id": "daily_040_s1", "subcat": "生活日常", "rel": "Class", "en": "Welcome to our English class.", "zh": "歡迎來到我們的英文課。"},
+      {"id": "daily_040_s2", "subcat": "生活日常", "rel": "Class", "en": "Everyone listens in class.", "zh": "大家在課堂上認真聽講。"},
+      {"id": "daily_041_s1", "subcat": "生活日常", "rel": "Friend", "en": "You are my best friend.", "zh": "你是我最好的朋友。"},
+      {"id": "daily_041_s2", "subcat": "生活日常", "rel": "Friend", "en": "Make new friends at school.", "zh": "在學校交新朋友。"},
+      {"id": "daily_042_s1", "subcat": "生活日常", "rel": "Brother", "en": "My brother likes to play soccer.", "zh": "我的兄弟喜歡踢足球。"},
+      {"id": "daily_042_s2", "subcat": "生活日常", "rel": "Brother", "en": "I share toys with my brother.", "zh": "我和我的兄弟分享玩具。"},
+      {"id": "daily_043_s1", "subcat": "生活日常", "rel": "Sister", "en": "My sister sings very well.", "zh": "我姊姊/妹妹唱歌很好聽。"},
+      {"id": "daily_043_s2", "subcat": "生活日常", "rel": "Sister", "en": "Help your sister with her bag.", "zh": "幫你的姊姊/妹妹拿書包。"},
+      {"id": "daily_044_s1", "subcat": "生活日常", "rel": "Baby", "en": "The cute baby is sleeping soundly.", "zh": "可愛的寶寶睡得很香甜。"},
+      {"id": "daily_044_s2", "subcat": "生活日常", "rel": "Baby", "en": "Give the baby a soft rattle.", "zh": "給寶寶一個軟軟的搖鈴。"},
+      {"id": "daily_045_s1", "subcat": "生活日常", "rel": "Song", "en": "Let us sing an English song.", "zh": "我們來唱一首英文歌吧。"},
+      {"id": "daily_045_s2", "subcat": "生活日常", "rel": "Song", "en": "This song makes me happy.", "zh": "這首歌讓我很快樂。"},
+      {"id": "daily_046_s1", "subcat": "生活日常", "rel": "Toy", "en": "Share your toys with friends.", "zh": "和朋友分享你的玩具。"},
+      {"id": "daily_046_s2", "subcat": "生活日常", "rel": "Toy", "en": "Put the toys in the basket.", "zh": "把玩具放到籃子裡。"},
+      {"id": "daily_047_s1", "subcat": "生活日常", "rel": "Ball", "en": "Kick the red ball to me.", "zh": "把紅色的球踢給我。"},
+      {"id": "daily_047_s2", "subcat": "生活日常", "rel": "Ball", "en": "Catch the bouncing ball!", "zh": "接住這個彈跳的球！"},
+      {"id": "daily_048_s1", "subcat": "生活日常", "rel": "Game", "en": "Let us play a fun game.", "zh": "我們來玩一個有趣的遊戲吧。"},
+      {"id": "daily_048_s2", "subcat": "生活日常", "rel": "Game", "en": "Playing games with friends is cool.", "zh": "和朋友一起玩遊戲真棒。"},
+      {"id": "daily_049_s1", "subcat": "生活日常", "rel": "Smile", "en": "Put a big smile on your face.", "zh": "臉上帶著燦爛的微笑。"},
+      {"id": "daily_049_s2", "subcat": "生活日常", "rel": "Smile", "en": "Your smile lights up the room.", "zh": "你的微笑照亮了房間。"},
+      {"id": "daily_050_s1", "subcat": "生活日常", "rel": "Sleep", "en": "Good night, time to sleep.", "zh": "晚安，該睡覺了。"},
+      {"id": "daily_050_s2", "subcat": "生活日常", "rel": "Sleep", "en": "I sleep eight hours every night.", "zh": "我每天晚上睡八個小時。"}
+    ]
+  },
+  "restaurant": {
+    "title": "外出用餐",
+    "subcats": ["外出用餐"],
+    "vocab": [
+      {"id": "restaurant_001", "subcat": "外出用餐", "en": "Menu", "zh": "菜單"},
+      {"id": "restaurant_002", "subcat": "外出用餐", "en": "Table", "zh": "餐桌"},
+      {"id": "restaurant_003", "subcat": "外出用餐", "en": "Seat", "zh": "座位"},
+      {"id": "restaurant_004", "subcat": "外出用餐", "en": "Water", "zh": "水"},
+      {"id": "restaurant_005", "subcat": "外出用餐", "en": "Glass", "zh": "玻璃杯"},
+      {"id": "restaurant_006", "subcat": "外出用餐", "en": "Cup", "zh": "杯子"},
+      {"id": "restaurant_007", "subcat": "外出用餐", "en": "Plate", "zh": "盤子"},
+      {"id": "restaurant_008", "subcat": "外出用餐", "en": "Bowl", "zh": "碗"},
+      {"id": "restaurant_009", "subcat": "外出用餐", "en": "Spoon", "zh": "湯匙"},
+      {"id": "restaurant_010", "subcat": "外出用餐", "en": "Fork", "zh": "叉子"},
+      {"id": "restaurant_011", "subcat": "外出用餐", "en": "Knife", "zh": "餐刀"},
+      {"id": "restaurant_012", "subcat": "外出用餐", "en": "Napkin", "zh": "餐巾紙"},
+      {"id": "restaurant_013", "subcat": "外出用餐", "en": "Waiter", "zh": "服務生"},
+      {"id": "restaurant_014", "subcat": "外出用餐", "en": "Order", "zh": "點餐"},
+      {"id": "restaurant_015", "subcat": "外出用餐", "en": "Food", "zh": "食物"},
+      {"id": "restaurant_016", "subcat": "外出用餐", "en": "Drink", "zh": "飲料"},
+      {"id": "restaurant_017", "subcat": "外出用餐", "en": "Coffee", "zh": "咖啡"},
+      {"id": "restaurant_018", "subcat": "外出用餐", "en": "Tea", "zh": "茶品"},
+      {"id": "restaurant_019", "subcat": "外出用餐", "en": "Juice", "zh": "果汁"},
+      {"id": "restaurant_020", "subcat": "外出用餐", "en": "Soup", "zh": "湯品"},
+      {"id": "restaurant_021", "subcat": "外出用餐", "en": "Salad", "zh": "沙拉"},
+      {"id": "restaurant_022", "subcat": "外出用餐", "en": "Pizza", "zh": "披薩"},
+      {"id": "restaurant_023", "subcat": "外出用餐", "en": "Burger", "zh": "漢堡"},
+      {"id": "restaurant_024", "subcat": "外出用餐", "en": "Fries", "zh": "薯條"},
+      {"id": "restaurant_025", "subcat": "外出用餐", "en": "Ice cream", "zh": "冰淇淋"},
+      {"id": "restaurant_026", "subcat": "外出用餐", "en": "Cake", "zh": "蛋糕"},
+      {"id": "restaurant_027", "subcat": "外出用餐", "en": "Cookie", "zh": "餅乾"},
+      {"id": "restaurant_028", "subcat": "外出用餐", "en": "Candy", "zh": "糖果"},
+      {"id": "restaurant_029", "subcat": "外出用餐", "en": "Chocolate", "zh": "巧克力"},
+      {"id": "restaurant_030", "subcat": "外出用餐", "en": "Fruit", "zh": "水果"},
+      {"id": "restaurant_031", "subcat": "外出用餐", "en": "Pie", "zh": "派"},
+      {"id": "restaurant_032", "subcat": "外出用餐", "en": "Pancake", "zh": "鬆餅"},
+      {"id": "restaurant_033", "subcat": "外出用餐", "en": "Toast", "zh": "吐司"},
+      {"id": "restaurant_034", "subcat": "外出用餐", "en": "Butter", "zh": "奶油"},
+      {"id": "restaurant_035", "subcat": "外出用餐", "en": "Sugar", "zh": "糖"},
+      {"id": "restaurant_036", "subcat": "外出用餐", "en": "Salt", "zh": "鹽"},
+      {"id": "restaurant_037", "subcat": "外出用餐", "en": "Bill", "zh": "帳單"},
+      {"id": "restaurant_038", "subcat": "外出用餐", "en": "Cash", "zh": "現金"},
+      {"id": "restaurant_039", "subcat": "外出用餐", "en": "Card", "zh": "刷卡"},
+      {"id": "restaurant_040", "subcat": "外出用餐", "en": "Money", "zh": "金錢"},
+      {"id": "restaurant_041", "subcat": "外出用餐", "en": "Change", "zh": "找零"},
+      {"id": "restaurant_042", "subcat": "外出用餐", "en": "Receipt", "zh": "收據"},
+      {"id": "restaurant_043", "subcat": "外出用餐", "en": "Eat", "zh": "吃"},
+      {"id": "restaurant_044", "subcat": "外出用餐", "en": "Taste", "zh": "品嚐"},
+      {"id": "restaurant_045", "subcat": "外出用餐", "en": "Yummy", "zh": "好吃的"},
+      {"id": "restaurant_046", "subcat": "外出用餐", "en": "Hungry", "zh": "肚子餓的"},
+      {"id": "restaurant_047", "subcat": "外出用餐", "en": "Thirsty", "zh": "口渴的"},
+      {"id": "restaurant_048", "subcat": "外出用餐", "en": "Full", "zh": "飽的"},
+      {"id": "restaurant_049", "subcat": "外出用餐", "en": "Bread", "zh": "麵包"},
+      {"id": "restaurant_050", "subcat": "外出用餐", "en": "Straw", "zh": "吸管"}
+    ],
+    "sentences": [
+      {"id": "restaurant_001_s1", "subcat": "外出用餐", "rel": "Menu", "en": "May I see the menu, please?", "zh": "請給我看菜單好嗎？"},
+      {"id": "restaurant_001_s2", "subcat": "外出用餐", "rel": "Menu", "en": "The menu has pizza and juice.", "zh": "菜單上有披薩和果汁。"},
+      {"id": "restaurant_002_s1", "subcat": "外出用餐", "rel": "Table", "en": "A table for three, please.", "zh": "請給我們三個人的座位。"},
+      {"id": "restaurant_002_s2", "subcat": "外出用餐", "rel": "Table", "en": "Sit at the clean table.", "zh": "坐在這張乾淨的餐桌旁。"},
+      {"id": "restaurant_003_s1", "subcat": "外出用餐", "rel": "Seat", "en": "Please take a comfortable seat.", "zh": "請入座找個舒適的位置。"},
+      {"id": "restaurant_003_s2", "subcat": "外出用餐", "rel": "Seat", "en": "This seat is near the window.", "zh": "這個座位靠近窗戶。"},
+      {"id": "restaurant_004_s1", "subcat": "外出用餐", "rel": "Water", "en": "Can I have some water, please?", "zh": "請給我一些開水好嗎？"},
+      {"id": "restaurant_004_s2", "subcat": "外出用餐", "rel": "Water", "en": "Cold water is refreshing.", "zh": "冷水令人感到清涼。"},
+      {"id": "restaurant_005_s1", "subcat": "外出用餐", "rel": "Glass", "en": "A glass of apple juice, please.", "zh": "請給我一杯蘋果汁。"},
+      {"id": "restaurant_005_s2", "subcat": "外出用餐", "rel": "Glass", "en": "Be careful with the glass.", "zh": "拿玻璃杯要小心。"},
+      {"id": "restaurant_006_s1", "subcat": "外出用餐", "rel": "Cup", "en": "I want hot milk in a red cup.", "zh": "我想要紅杯子裝的熱牛奶。"},
+      {"id": "restaurant_006_s2", "subcat": "外出用餐", "rel": "Cup", "en": "Hold the cup with both hands.", "zh": "用雙手拿著杯子。"},
+      {"id": "restaurant_007_s1", "subcat": "外出用餐", "rel": "Plate", "en": "Put the toast on the small plate.", "zh": "把吐司放到小盤子上。"},
+      {"id": "restaurant_007_s2", "subcat": "外出用餐", "rel": "Plate", "en": "The white plate is clean.", "zh": "這個白色盤子很乾淨。"},
+      {"id": "restaurant_008_s1", "subcat": "外出用餐", "rel": "Bowl", "en": "I need a small bowl for soup.", "zh": "我需要一個喝湯的小碗。"},
+      {"id": "restaurant_008_s2", "subcat": "外出用餐", "rel": "Bowl", "en": "The yellow bowl is full of rice.", "zh": "這個黃色碗裡裝滿了米飯。"},
+      {"id": "restaurant_009_s1", "subcat": "外出用餐", "rel": "Spoon", "en": "Use a spoon to eat soup.", "zh": "用湯匙喝湯。"},
+      {"id": "restaurant_009_s2", "subcat": "外出用餐", "rel": "Spoon", "en": "Scoop ice cream with a spoon.", "zh": "用湯匙舀冰淇淋。"},
+      {"id": "restaurant_010_s1", "subcat": "外出用餐", "rel": "Fork", "en": "I use a fork for my cake.", "zh": "我用叉子吃蛋糕。"},
+      {"id": "restaurant_010_s2", "subcat": "外出用餐", "rel": "Fork", "en": "Pick up noodles with a fork.", "zh": "用叉子吃麵條。"},
+      {"id": "restaurant_011_s1", "subcat": "外出用餐", "rel": "Knife", "en": "Pass me the butter knife, please.", "zh": "請把奶油刀遞給我。"},
+      {"id": "restaurant_011_s2", "subcat": "外出用餐", "rel": "Knife", "en": "Cut the pancake with a knife.", "zh": "用餐刀切鬆餅。"},
+      {"id": "restaurant_012_s1", "subcat": "外出用餐", "rel": "Napkin", "en": "Here is a napkin for your hands.", "zh": "這有一張餐巾紙擦手。"},
+      {"id": "restaurant_012_s2", "subcat": "外出用餐", "rel": "Napkin", "en": "Wipe your mouth with a napkin.", "zh": "用餐巾紙擦拭嘴巴。"},
+      {"id": "restaurant_013_s1", "subcat": "外出用餐", "rel": "Waiter", "en": "The friendly waiter takes our order.", "zh": "親切的服務生幫我們點餐。"},
+      {"id": "restaurant_013_s2", "subcat": "外出用餐", "rel": "Waiter", "en": "Say thank you to the waiter.", "zh": "對服務生說謝謝。"},
+      {"id": "restaurant_014_s1", "subcat": "外出用餐", "rel": "Order", "en": "We are ready to order now.", "zh": "我們現在準備好點餐了。"},
+      {"id": "restaurant_014_s2", "subcat": "外出用餐", "rel": "Order", "en": "Can I order a cup of tea?", "zh": "我可以點一杯茶嗎？"},
+      {"id": "restaurant_015_s1", "subcat": "外出用餐", "rel": "Food", "en": "The food smells very tasty.", "zh": "這食物聞起來真好吃。"},
+      {"id": "restaurant_015_s2", "subcat": "外出用餐", "rel": "Food", "en": "Good food makes me happy.", "zh": "美味的食物讓我開心。"},
+      {"id": "restaurant_016_s1", "subcat": "外出用餐", "rel": "Drink", "en": "What drink would you like?", "zh": "你想要什麼飲料？"},
+      {"id": "restaurant_016_s2", "subcat": "外出用餐", "rel": "Drink", "en": "Drink your juice slowly.", "zh": "慢慢喝你的果汁。"},
+      {"id": "restaurant_017_s1", "subcat": "外出用餐", "rel": "Coffee", "en": "One cup of hot coffee, please.", "zh": "請給我一杯熱咖啡。"},
+      {"id": "restaurant_017_s2", "subcat": "外出用餐", "rel": "Coffee", "en": "Coffee is for grown-ups.", "zh": "咖啡是大人喝的。"},
+      {"id": "restaurant_018_s1", "subcat": "外出用餐", "rel": "Tea", "en": "I want a cup of sweet iced tea.", "zh": "我想要一杯甜甜的冰紅茶。"},
+      {"id": "restaurant_018_s2", "subcat": "外出用餐", "rel": "Tea", "en": "Hot tea keeps you warm.", "zh": "熱茶讓你保持溫暖。"},
+      {"id": "restaurant_019_s1", "subcat": "外出用餐", "rel": "Juice", "en": "Fresh orange juice is sweet.", "zh": "新鮮的柳橙汁很甜。"},
+      {"id": "restaurant_019_s2", "subcat": "外出用餐", "rel": "Juice", "en": "I like apple juice best.", "zh": "我最喜歡蘋果汁。"},
+      {"id": "restaurant_020_s1", "subcat": "外出用餐", "rel": "Soup", "en": "The hot chicken soup is delicious.", "zh": "熱雞湯非常美味。"},
+      {"id": "restaurant_020_s2", "subcat": "外出用餐", "rel": "Soup", "en": "Drink warm soup on cold days.", "zh": "冷天喝溫熱的湯。"},
+      {"id": "restaurant_021_s1", "subcat": "外出用餐", "rel": "Salad", "en": "A green salad, please.", "zh": "請給我一份蔬菜沙拉。"},
+      {"id": "restaurant_021_s2", "subcat": "外出用餐", "rel": "Salad", "en": "Veggie salad is very healthy.", "zh": "蔬菜沙拉非常健康。"},
+      {"id": "restaurant_022_s1", "subcat": "外出用餐", "rel": "Pizza", "en": "Can we order a cheese pizza?", "zh": "我們可以點一份起司披薩嗎？"},
+      {"id": "restaurant_022_s2", "subcat": "外出用餐", "rel": "Pizza", "en": "I share pizza with friends.", "zh": "我和朋友分享披薩。"},
+      {"id": "restaurant_023_s1", "subcat": "外出用餐", "rel": "Burger", "en": "I would like a small chicken burger.", "zh": "我想要一個小雞肉漢堡。"},
+      {"id": "restaurant_023_s2", "subcat": "外出用餐", "rel": "Burger", "en": "The big burger has cheese inside.", "zh": "這個大漢堡裡面有起司。"},
+      {"id": "restaurant_024_s1", "subcat": "外出用餐", "rel": "Fries", "en": "Yummy french fries are crispy.", "zh": "好吃的薯條很酥脆。"},
+      {"id": "restaurant_024_s2", "subcat": "外出用餐", "rel": "Fries", "en": "Dip the fries in tomato sauce.", "zh": "將薯條沾點番茄醬。"},
+      {"id": "restaurant_025_s1", "subcat": "外出用餐", "rel": "Ice cream", "en": "I love vanilla ice cream.", "zh": "我喜歡香草冰淇淋。"},
+      {"id": "restaurant_025_s2", "subcat": "外出用餐", "rel": "Ice cream", "en": "Eat ice cream before it melts.", "zh": "在冰淇淋融化前吃掉它。"},
+      {"id": "restaurant_026_s1", "subcat": "外出用餐", "rel": "Cake", "en": "A slice of chocolate cake, please.", "zh": "請給我一片巧克力蛋糕。"},
+      {"id": "restaurant_026_s2", "subcat": "外出用餐", "rel": "Cake", "en": "Birthday cake tastes sweet.", "zh": "生日蛋糕嚐起來很甜。"},
+      {"id": "restaurant_027_s1", "subcat": "外出用餐", "rel": "Cookie", "en": "Can I have one chocolate cookie?", "zh": "我可以吃一片巧克力餅乾嗎？"},
+      {"id": "restaurant_027_s2", "subcat": "外出用餐", "rel": "Cookie", "en": "The cookie is sweet and crunchy.", "zh": "餅乾又甜又脆。"},
+      {"id": "restaurant_028_s1", "subcat": "外出用餐", "rel": "Candy", "en": "This strawberry candy tastes sweet.", "zh": "這個草莓糖果嚐起來甜甜的。"},
+      {"id": "restaurant_028_s2", "subcat": "外出用餐", "rel": "Candy", "en": "Do not eat too much candy.", "zh": "不要吃太多糖果。"},
+      {"id": "restaurant_029_s1", "subcat": "外出用餐", "rel": "Chocolate", "en": "Dark chocolate is my favorite.", "zh": "黑巧克力是我的最愛。"},
+      {"id": "restaurant_029_s2", "subcat": "外出用餐", "rel": "Chocolate", "en": "Chocolate melts in your hand.", "zh": "巧克力會在你的手上融化。"},
+      {"id": "restaurant_030_s1", "subcat": "外出用餐", "rel": "Fruit", "en": "We order a fresh fruit plate.", "zh": "我們點了一份新鮮水果盤。"},
+      {"id": "restaurant_030_s2", "subcat": "外出用餐", "rel": "Fruit", "en": "Eat sweet fruit every day.", "zh": "每天吃甜甜的水果。"},
+      {"id": "restaurant_031_s1", "subcat": "外出用餐", "rel": "Pie", "en": "Warm apple pie smells good.", "zh": "溫熱的蘋果派聞起來好香。"},
+      {"id": "restaurant_031_s2", "subcat": "外出用餐", "rel": "Pie", "en": "Try a bite of pie!", "zh": "嚐一口派吧！"},
+      {"id": "restaurant_032_s1", "subcat": "外出用餐", "rel": "Pancake", "en": "I want sweet pancakes with honey.", "zh": "我想要加蜂蜜的甜鬆餅。"},
+      {"id": "restaurant_032_s2", "subcat": "外出用餐", "rel": "Pancake", "en": "Pancakes are fluffy and soft.", "zh": "鬆餅蓬鬆又軟綿。"},
+      {"id": "restaurant_033_s1", "subcat": "外出用餐", "rel": "Toast", "en": "Butter toast is tasty for breakfast.", "zh": "奶油吐司當早餐很好吃。"},
+      {"id": "restaurant_033_s2", "subcat": "外出用餐", "rel": "Toast", "en": "Toast two slices of bread.", "zh": "烤兩片吐司麵包。"},
+      {"id": "restaurant_034_s1", "subcat": "外出用餐", "rel": "Butter", "en": "Spread some butter on the toast.", "zh": "在吐司上抹一些奶油。"},
+      {"id": "restaurant_034_s2", "subcat": "外出用餐", "rel": "Butter", "en": "Butter makes bread taste good.", "zh": "奶油讓麵包味道變好。"},
+      {"id": "restaurant_035_s1", "subcat": "外出用餐", "rel": "Sugar", "en": "Add a little sugar to my milk.", "zh": "在我的牛奶裡加一點糖。"},
+      {"id": "restaurant_035_s2", "subcat": "外出用餐", "rel": "Sugar", "en": "Sugar makes the tea sweet.", "zh": "糖讓茶變甜。"},
+      {"id": "restaurant_036_s1", "subcat": "外出用餐", "rel": "Salt", "en": "The soup needs a pinch of salt.", "zh": "這湯需要加少許鹽。"},
+      {"id": "restaurant_036_s2", "subcat": "外出用餐", "rel": "Salt", "en": "Pass the salt, please.", "zh": "請把鹽遞給我。"},
+      {"id": "restaurant_037_s1", "subcat": "外出用餐", "rel": "Bill", "en": "Check, please! Bring us the bill.", "zh": "結帳，請幫我們拿帳單。"},
+      {"id": "restaurant_037_s2", "subcat": "外出用餐", "rel": "Bill", "en": "Look at the bill before paying.", "zh": "付款前先看看帳單。"},
+      {"id": "restaurant_038_s1", "subcat": "外出用餐", "rel": "Cash", "en": "I will pay for the food with cash.", "zh": "我會用現金付餐費。"},
+      {"id": "restaurant_038_s2", "subcat": "外出用餐", "rel": "Cash", "en": "Keep your cash in the wallet.", "zh": "把你的現金放在皮夾裡。"},
+      {"id": "restaurant_039_s1", "subcat": "外出用餐", "rel": "Card", "en": "Do you take credit cards?", "zh": "你們接受信用卡嗎？"},
+      {"id": "restaurant_039_s2", "subcat": "外出用餐", "rel": "Card", "en": "Tap your card to pay.", "zh": "感應你的卡片來付款。"},
+      {"id": "restaurant_040_s1", "subcat": "外出用餐", "rel": "Money", "en": "Put your change money in the pouch.", "zh": "把找零的金錢放進零錢包。"},
+      {"id": "restaurant_040_s2", "subcat": "外出用餐", "rel": "Money", "en": "Count your money carefully.", "zh": "仔細數數你的錢。"},
+      {"id": "restaurant_041_s1", "subcat": "外出用餐", "rel": "Change", "en": "Here is your coin change, thank you.", "zh": "這是找給您的零錢，謝謝。"},
+      {"id": "restaurant_041_s2", "subcat": "外出用餐", "rel": "Change", "en": "Keep the small coin change.", "zh": "收好找零的小硬幣。"},
+      {"id": "restaurant_042_s1", "subcat": "外出用餐", "rel": "Receipt", "en": "Here is your receipt, keep it safe.", "zh": "這是您的收據，請妥善保管。"},
+      {"id": "restaurant_042_s2", "subcat": "外出用餐", "rel": "Receipt", "en": "Keep your receipt for memory.", "zh": "保存好你的收據。"},
+      {"id": "restaurant_043_s1", "subcat": "外出用餐", "rel": "Eat", "en": "We eat our lunch slowly.", "zh": "我們慢慢地吃午餐。"},
+      {"id": "restaurant_043_s2", "subcat": "外出用餐", "rel": "Eat", "en": "Eat healthy food to grow tall.", "zh": "吃健康的食物長高。"},
+      {"id": "restaurant_044_s1", "subcat": "外出用餐", "rel": "Taste", "en": "Taste this yummy strawberry cake!", "zh": "品嚐看看這個好吃的草莓蛋糕！"},
+      {"id": "restaurant_044_s2", "subcat": "外出用餐", "rel": "Taste", "en": "The sweet soup tastes great.", "zh": "這甜湯品嚐起來很棒。"},
+      {"id": "restaurant_045_s1", "subcat": "外出用餐", "rel": "Yummy", "en": "This chocolate milk is very yummy.", "zh": "這杯巧克力牛奶非常好喝。"},
+      {"id": "restaurant_045_s2", "subcat": "外出用餐", "rel": "Yummy", "en": "Yummy food makes me smile.", "zh": "美味的食物讓我露出笑容。"},
+      {"id": "restaurant_046_s1", "subcat": "外出用餐", "rel": "Hungry", "en": "I am hungry, let us eat food!", "zh": "我肚子餓了，我們來吃東西吧！"},
+      {"id": "restaurant_046_s2", "subcat": "外出用餐", "rel": "Hungry", "en": "Are you hungry for lunch?", "zh": "你肚子餓想吃午餐嗎？"},
+      {"id": "restaurant_047_s1", "subcat": "外出用餐", "rel": "Thirsty", "en": "I am thirsty, I need water.", "zh": "我口渴了，我需要喝水。"},
+      {"id": "restaurant_047_s2", "subcat": "外出用餐", "rel": "Thirsty", "en": "Drink water when you feel thirsty.", "zh": "覺得口渴時請喝水。"},
+      {"id": "restaurant_048_s1", "subcat": "外出用餐", "rel": "Full", "en": "I am full and happy now.", "zh": "我現在吃飽了，很開心。"},
+      {"id": "restaurant_048_s2", "subcat": "外出用餐", "rel": "Full", "en": "My belly is completely full.", "zh": "我的肚子完全飽了。"},
+      {"id": "restaurant_049_s1", "subcat": "外出用餐", "rel": "Bread", "en": "Fresh bread is soft and warm.", "zh": "新鮮麵包好軟好溫暖。"},
+      {"id": "restaurant_049_s2", "subcat": "外出用餐", "rel": "Bread", "en": "Eat bread with sweet jam.", "zh": "吐司/麵包配甜果醬吃。"},
+      {"id": "restaurant_050_s1", "subcat": "外出用餐", "rel": "Straw", "en": "I need a straw for my juice.", "zh": "我喝果汁需要一支吸管。"},
+      {"id": "restaurant_050_s2", "subcat": "外出用餐", "rel": "Straw", "en": "Sip your drink with a straw.", "zh": "用吸管慢慢喝飲料。"}
+    ]
+  },
+  "travel": {
+    "title": "出國旅遊",
+    "subcats": ["出國旅遊"],
+    "vocab": [
+      {"id": "travel_001", "subcat": "出國旅遊", "en": "Plane", "zh": "飛機"},
+      {"id": "travel_002", "subcat": "出國旅遊", "en": "Train", "zh": "火車"},
+      {"id": "travel_003", "subcat": "出國旅遊", "en": "Car", "zh": "汽車"},
+      {"id": "travel_004", "subcat": "出國旅遊", "en": "Bus", "zh": "公車"},
+      {"id": "travel_005", "subcat": "出國旅遊", "en": "Taxi", "zh": "計程車"},
+      {"id": "travel_006", "subcat": "出國旅遊", "en": "Ship", "zh": "輪船"},
+      {"id": "travel_007", "subcat": "出國旅遊", "en": "Map", "zh": "地圖"},
+      {"id": "travel_008", "subcat": "出國旅遊", "en": "Ticket", "zh": "車票"},
+      {"id": "travel_009", "subcat": "出國旅遊", "en": "Hotel", "zh": "旅館"},
+      {"id": "travel_010", "subcat": "出國旅遊", "en": "Beach", "zh": "海灘"},
+      {"id": "travel_011", "subcat": "出國旅遊", "en": "Sea", "zh": "大海"},
+      {"id": "travel_012", "subcat": "出國旅遊", "en": "Island", "zh": "島嶼"},
+      {"id": "travel_013", "subcat": "出國旅遊", "en": "Zoo", "zh": "動物園"},
+      {"id": "travel_014", "subcat": "出國旅遊", "en": "Camera", "zh": "相機"},
+      {"id": "travel_015", "subcat": "出國旅遊", "en": "Photo", "zh": "照片"},
+      {"id": "travel_016", "subcat": "出國旅遊", "en": "Passport", "zh": "護照"},
+      {"id": "travel_017", "subcat": "出國旅遊", "en": "Luggage", "zh": "行李"},
+      {"id": "travel_018", "subcat": "出國旅遊", "en": "Station", "zh": "車站"},
+      {"id": "travel_019", "subcat": "出國旅遊", "en": "Airport", "zh": "機場"},
+      {"id": "travel_020", "subcat": "出國旅遊", "en": "Guide", "zh": "導遊"},
+      {"id": "travel_021", "subcat": "出國旅遊", "en": "Trip", "zh": "旅行"},
+      {"id": "travel_022", "subcat": "出國旅遊", "en": "Tour", "zh": "觀光"},
+      {"id": "travel_023", "subcat": "出國旅遊", "en": "City", "zh": "城市"},
+      {"id": "travel_024", "subcat": "出國旅遊", "en": "Town", "zh": "小鎮"},
+      {"id": "travel_025", "subcat": "出國旅遊", "en": "Road", "zh": "道路"},
+      {"id": "travel_026", "subcat": "出國旅遊", "en": "Street", "zh": "街道"},
+      {"id": "travel_027", "subcat": "出國旅遊", "en": "Bridge", "zh": "橋樑"},
+      {"id": "travel_028", "subcat": "出國旅遊", "en": "River", "zh": "河流"},
+      {"id": "travel_029", "subcat": "出國旅遊", "en": "Mountain", "zh": "山脈"},
+      {"id": "travel_030", "subcat": "出國旅遊", "en": "Hill", "zh": "小山丘"},
+      {"id": "travel_031", "subcat": "出國旅遊", "en": "Sky", "zh": "天空"},
+      {"id": "travel_032", "subcat": "出國旅遊", "en": "Cloud", "zh": "雲朵"},
+      {"id": "travel_033", "subcat": "出國旅遊", "en": "Air", "zh": "空氣"},
+      {"id": "travel_034", "subcat": "出國旅遊", "en": "Walk", "zh": "散步"},
+      {"id": "travel_035", "subcat": "出國旅遊", "en": "Fly", "zh": "飛行"},
+      {"id": "travel_036", "subcat": "出國旅遊", "en": "Swim", "zh": "游泳"},
+      {"id": "travel_037", "subcat": "出國旅遊", "en": "Visit", "zh": "拜訪"},
+      {"id": "travel_038", "subcat": "出國旅遊", "en": "Enjoy", "zh": "享受"},
+      {"id": "travel_039", "subcat": "出國旅遊", "en": "Fun", "zh": "樂趣"},
+      {"id": "travel_040", "subcat": "出國旅遊", "en": "Gift", "zh": "禮物"},
+      {"id": "travel_041", "subcat": "出國旅遊", "en": "Postcard", "zh": "明信片"},
+      {"id": "travel_042", "subcat": "出國旅遊", "en": "Stamp", "zh": "郵票"},
+      {"id": "travel_043", "subcat": "出國旅遊", "en": "Holiday", "zh": "假期"},
+      {"id": "travel_044", "subcat": "出國旅遊", "en": "Sunglasses", "zh": "太陽眼鏡"},
+      {"id": "travel_045", "subcat": "出國旅遊", "en": "Umbrella", "zh": "雨傘"},
+      {"id": "travel_046", "subcat": "出國旅遊", "en": "Memory", "zh": "回憶"},
+      {"id": "travel_047", "subcat": "出國旅遊", "en": "Lake", "zh": "湖泊"},
+      {"id": "travel_048", "subcat": "出國旅遊", "en": "Suitcase", "zh": "旅行箱"},
+      {"id": "travel_049", "subcat": "出國旅遊", "en": "Driver", "zh": "司機"},
+      {"id": "travel_050", "subcat": "出國旅遊", "en": "Flag", "zh": "旗幟"}
+    ],
+    "sentences": [
+      {"id": "travel_001_s1", "subcat": "出國旅遊", "rel": "Plane", "en": "Look at the plane in the sky!", "zh": "看天空中的那架飛機！"},
+      {"id": "travel_001_s2", "subcat": "出國旅遊", "rel": "Plane", "en": "We fly on a big plane.", "zh": "我們乘坐大飛機飛行。"},
+      {"id": "travel_002_s1", "subcat": "出國旅遊", "rel": "Train", "en": "The fast train is coming.", "zh": "快速的火車進站了。"},
+      {"id": "travel_002_s2", "subcat": "出國旅遊", "rel": "Train", "en": "I like sitting by the train window.", "zh": "我喜歡坐在火車靠窗的位置。"},
+      {"id": "travel_003_s1", "subcat": "出國旅遊", "rel": "Car", "en": "Dad drives a clean red car.", "zh": "爸爸開著一台乾淨的紅汽車。"},
+      {"id": "travel_003_s2", "subcat": "出國旅遊", "rel": "Car", "en": "Fasten your seatbelt in the car.", "zh": "在車上請繫好安全帶。"},
+      {"id": "travel_004_s1", "subcat": "出國旅遊", "rel": "Bus", "en": "Wait for the yellow bus here.", "zh": "在這裡等黃色公車。"},
+      {"id": "travel_004_s2", "subcat": "出國旅遊", "rel": "Bus", "en": "Get on the bus one by one.", "zh": "一個接一個上公車。"},
+      {"id": "travel_005_s1", "subcat": "出國旅遊", "rel": "Taxi", "en": "Call a taxi to the hotel.", "zh": "叫一台計程車去飯店。"},
+      {"id": "travel_005_s2", "subcat": "出國旅遊", "rel": "Taxi", "en": "The yellow taxi stops for us.", "zh": "黃色的計程車為我們停了下來。"},
+      {"id": "travel_006_s1", "subcat": "出國旅遊", "rel": "Ship", "en": "The big ship floats on water.", "zh": "大輪船漂浮在水面上。"},
+      {"id": "travel_006_s2", "subcat": "出國旅遊", "rel": "Ship", "en": "We see seagulls from the ship.", "zh": "我們從輪船上看到海鷗。"},
+      {"id": "travel_007_s1", "subcat": "出國旅遊", "rel": "Map", "en": "Look at the map to find the park.", "zh": "看地圖尋找公園。"},
+      {"id": "travel_007_s2", "subcat": "出國旅遊", "rel": "Map", "en": "Fold the map carefully.", "zh": "把地圖小心地折起來。"},
+      {"id": "travel_008_s1", "subcat": "出國旅遊", "rel": "Ticket", "en": "Show your ticket to the officer.", "zh": "向站務人員出示你的車票。"},
+      {"id": "travel_008_s2", "subcat": "出國旅遊", "rel": "Ticket", "en": "Keep your train ticket safe.", "zh": "把你的火車票保管好。"},
+      {"id": "travel_009_s1", "subcat": "出國旅遊", "rel": "Hotel", "en": "Our hotel room is big and bright.", "zh": "我們的旅館房間大又明亮。"},
+      {"id": "travel_009_s2", "subcat": "出國旅遊", "rel": "Hotel", "en": "The hotel has a swimming pool.", "zh": "這家旅館有一個游泳池。"},
+      {"id": "travel_010_s1", "subcat": "出國旅遊", "rel": "Beach", "en": "Let us build a castle on the beach.", "zh": "我們去海灘上蓋城堡吧。"},
+      {"id": "travel_010_s2", "subcat": "出國旅遊", "rel": "Beach", "en": "Walk on the sandy beach.", "zh": "在沙灘上散步。"},
+      {"id": "travel_011_s1", "subcat": "出國旅遊", "rel": "Sea", "en": "The blue sea looks wonderful.", "zh": "藍色的大海看起來真美。"},
+      {"id": "travel_011_s2", "subcat": "出國旅遊", "rel": "Sea", "en": "Fish swim in the deep sea.", "zh": "魚兒在深海裡游泳。"},
+      {"id": "travel_012_s1", "subcat": "出國旅遊", "rel": "Island", "en": "We take a boat to the island.", "zh": "我們搭船去那座島嶼。"},
+      {"id": "travel_012_s2", "subcat": "出國旅遊", "rel": "Island", "en": "The green island has palm trees.", "zh": "綠色的島嶼有椰子樹。"},
+      {"id": "travel_013_s1", "subcat": "出國旅遊", "rel": "Zoo", "en": "We see pandas at the zoo.", "zh": "我們在動物園看到大熊貓。"},
+      {"id": "travel_013_s2", "subcat": "出國旅遊", "rel": "Zoo", "en": "Do not feed animals at the zoo.", "zh": "不要在動物園餵食動物。"},
+      {"id": "travel_014_s1", "subcat": "出國旅遊", "rel": "Camera", "en": "Mom takes pictures with her camera.", "zh": "媽媽用她的相機拍照。"},
+      {"id": "travel_014_s2", "subcat": "出國旅遊", "rel": "Camera", "en": "Hold the camera with both hands.", "zh": "用雙手拿好相機。"},
+      {"id": "travel_015_s1", "subcat": "出國旅遊", "rel": "Photo", "en": "Smile for the family photo!", "zh": "拍全家福照片時請微笑！"},
+      {"id": "travel_015_s2", "subcat": "出國旅遊", "rel": "Photo", "en": "Look at this nice vacation photo.", "zh": "看這張棒極了的假期照片。"},
+      {"id": "travel_016_s1", "subcat": "出國旅遊", "rel": "Passport", "en": "Show your passport at check-in.", "zh": "辦理登機時請出示護照。"},
+      {"id": "travel_016_s2", "subcat": "出國旅遊", "rel": "Passport", "en": "Put your passport in your bag.", "zh": "把你的護照放進包包裡。"},
+      {"id": "travel_017_s1", "subcat": "出國旅遊", "rel": "Luggage", "en": "Pick up your heavy luggage.", "zh": "拿起你沉重的行李。"},
+      {"id": "travel_017_s2", "subcat": "出國旅遊", "rel": "Luggage", "en": "Tag your luggage with your name.", "zh": "在行李上記上你的名字。"},
+      {"id": "travel_018_s1", "subcat": "出國旅遊", "rel": "Station", "en": "Meet me at the train station.", "zh": "在火車站和我碰面。"},
+      {"id": "travel_018_s2", "subcat": "出國旅遊", "rel": "Station", "en": "The station is full of travelers.", "zh": "車站擠滿了旅客。"},
+      {"id": "travel_019_s1", "subcat": "出國旅遊", "rel": "Airport", "en": "We arrive at the airport early.", "zh": "我們很早到達機場。"},
+      {"id": "travel_019_s2", "subcat": "出國旅遊", "rel": "Airport", "en": "Planes take off at the airport.", "zh": "飛機在機場起飛。"},
+      {"id": "travel_020_s1", "subcat": "出國旅遊", "rel": "Guide", "en": "The tour guide leads the way.", "zh": "導遊在前面帶路。"},
+      {"id": "travel_020_s2", "subcat": "出國旅遊", "rel": "Guide", "en": "Ask the guide any question.", "zh": "可以向導遊提任何問題。"},
+      {"id": "travel_021_s1", "subcat": "出國旅遊", "rel": "Trip", "en": "Have a safe and happy trip!", "zh": "祝你有個安全愉快的旅行！"},
+      {"id": "travel_021_s2", "subcat": "出國旅遊", "rel": "Trip", "en": "We planned a summer trip together.", "zh": "我們一起計畫了一次暑期旅行。"},
+      {"id": "travel_022_s1", "subcat": "出國旅遊", "rel": "Tour", "en": "Join the city tour today.", "zh": "今天參加城市觀光行程吧。"},
+      {"id": "travel_022_s2", "subcat": "出國旅遊", "rel": "Tour", "en": "The tour bus arrives on time.", "zh": "觀光巴士準時到達。"},
+      {"id": "travel_023_s1", "subcat": "出國旅遊", "rel": "City", "en": "The big city has many tall buildings.", "zh": "大城市裡有許多高樓大廈。"},
+      {"id": "travel_023_s2", "subcat": "出國旅遊", "rel": "City", "en": "Night lights make the city bright.", "zh": "夜晚的燈光讓城市明亮多彩。"},
+      {"id": "travel_024_s1", "subcat": "出國旅遊", "rel": "Town", "en": "We visit a small mountain town.", "zh": "我們造訪了一個小山城。"},
+      {"id": "travel_024_s2", "subcat": "出國旅遊", "rel": "Town", "en": "People in this town are kind.", "zh": "這個小鎮的人們很親切。"},
+      {"id": "travel_025_s1", "subcat": "出國旅遊", "rel": "Road", "en": "Look both ways before crossing the road.", "zh": "過馬路前請看左右兩邊。"},
+      {"id": "travel_025_s2", "subcat": "出國旅遊", "rel": "Road", "en": "Follow the straight road.", "zh": "沿著這條筆直的道路走。"},
+      {"id": "travel_026_s1", "subcat": "出國旅遊", "rel": "Street", "en": "The street is quiet in the morning.", "zh": "早晨的街道很安靜。"},
+      {"id": "travel_026_s2", "subcat": "出國旅遊", "rel": "Street", "en": "Shops line up along the street.", "zh": "街道兩旁排列著店家。"},
+      {"id": "travel_027_s1", "subcat": "出國旅遊", "rel": "Bridge", "en": "Cross the river over the bridge.", "zh": "走過橋樑穿過河流。"},
+      {"id": "travel_027_s2", "subcat": "出國旅遊", "rel": "Bridge", "en": "The long red bridge is famous.", "zh": "這座紅色的長橋很著名。"},
+      {"id": "travel_028_s1", "subcat": "出國旅遊", "rel": "River", "en": "Ducks swim happily in the river.", "zh": "鴨子在河流裡開心悠游。"},
+      {"id": "travel_028_s2", "subcat": "出國旅遊", "rel": "River", "en": "Clear water flows down the river.", "zh": "清澈的水沿著河流流淌。"},
+      {"id": "travel_029_s1", "subcat": "出國旅遊", "rel": "Mountain", "en": "Snow covers the high mountain.", "zh": "高山頂上覆蓋著白雪。"},
+      {"id": "travel_029_s2", "subcat": "出國旅遊", "rel": "Mountain", "en": "We climb the green mountain.", "zh": "我們攀登綠色的山脈。"},
+      {"id": "travel_030_s1", "subcat": "出國旅遊", "rel": "Hill", "en": "Roll down the grassy hill.", "zh": "在草地小山丘上滾下來。"},
+      {"id": "travel_030_s2", "subcat": "出國旅遊", "rel": "Hill", "en": "The view from the hill is great.", "zh": "從小山丘看出去的景色太棒了。"},
+      {"id": "travel_031_s1", "subcat": "出國旅遊", "rel": "Sky", "en": "White clouds float in the blue sky.", "zh": "白雲在藍色的天空中飄浮。"},
+      {"id": "travel_031_s2", "subcat": "出國旅遊", "rel": "Sky", "en": "Birds soar high in the sky.", "zh": "鳥兒在天空高高飛翔。"},
+      {"id": "travel_032_s1", "subcat": "出國旅遊", "rel": "Cloud", "en": "That cloud looks like a big dog.", "zh": "那朵雲看起來像一隻大狗。"},
+      {"id": "travel_032_s2", "subcat": "出國旅遊", "rel": "Cloud", "en": "Dark clouds bring fresh rain.", "zh": "烏雲帶來新鮮的雨水。"},
+      {"id": "travel_033_s1", "subcat": "出國旅遊", "rel": "Air", "en": "The cool air feels great.", "zh": "涼爽的空氣感覺真好。"},
+      {"id": "travel_033_s2", "subcat": "出國旅遊", "rel": "Air", "en": "Fresh air is good for your lungs.", "zh": "新鮮空氣對你的肺部有益。"},
+      {"id": "travel_034_s1", "subcat": "出國旅遊", "rel": "Walk", "en": "Take a slow walk in the park.", "zh": "在公園裡慢慢散步。"},
+      {"id": "travel_034_s2", "subcat": "出國旅遊", "rel": "Walk", "en": "I walk with my parents.", "zh": "我和父母一起散步。"},
+      {"id": "travel_035_s1", "subcat": "出國旅遊", "rel": "Fly", "en": "Kites fly high on windy days.", "zh": "有風的日子風箏飛得高高的。"},
+      {"id": "travel_035_s2", "subcat": "出國旅遊", "rel": "Fly", "en": "Can you see the bird fly away?", "zh": "你能看到小鳥飛走了嗎？"},
+      {"id": "travel_036_s1", "subcat": "出國旅遊", "rel": "Swim", "en": "Fish can swim very fast.", "zh": "魚兒可以游泳游得很快。"},
+      {"id": "travel_036_s2", "subcat": "出國旅遊", "rel": "Swim", "en": "Wear goggles when you swim.", "zh": "游泳時請戴上蛙鏡。"},
+      {"id": "travel_037_s1", "subcat": "出國旅遊", "rel": "Visit", "en": "We visit our grandparents in summer.", "zh": "夏天我們去拜訪祖父母。"},
+      {"id": "travel_037_s2", "subcat": "出國旅遊", "rel": "Visit", "en": "Visit the toy museum today!", "zh": "今天去參觀玩具博物館吧！"},
+      {"id": "travel_038_s1", "subcat": "出國旅遊", "rel": "Enjoy", "en": "Enjoy your wonderful vacation!", "zh": "好好享受你美好的假期！"},
+      {"id": "travel_038_s2", "subcat": "出國旅遊", "rel": "Enjoy", "en": "Enjoy the tasty local snacks.", "zh": "享受美味的在地小吃。"},
+      {"id": "travel_039_s1", "subcat": "出國旅遊", "rel": "Fun", "en": "Traveling with family is super fun.", "zh": "和家人一起旅行超級有趣。"},
+      {"id": "travel_039_s2", "subcat": "出國旅遊", "rel": "Fun", "en": "Have fun at the playground!", "zh": "在遊樂場玩得開心！"},
+      {"id": "travel_040_s1", "subcat": "出國旅遊", "rel": "Gift", "en": "Buy a sweet gift for your friend.", "zh": "為你的朋友買份甜美的禮物。"},
+      {"id": "travel_040_s2", "subcat": "出國旅遊", "rel": "Gift", "en": "Wrap the gift with pretty paper.", "zh": "用漂亮的紙包裝禮物。"},
+      {"id": "travel_041_s1", "subcat": "出國旅遊", "rel": "Postcard", "en": "Send a postcard to your teacher.", "zh": "寄一張明信片給你的老師。"},
+      {"id": "travel_041_s2", "subcat": "出國旅遊", "rel": "Postcard", "en": "Write your address on the postcard.", "zh": "在明信片上寫下地址。"},
+      {"id": "travel_042_s1", "subcat": "出國旅遊", "rel": "Stamp", "en": "Stick a stamp on the corner.", "zh": "在角落貼上一張郵票。"},
+      {"id": "travel_042_s2", "subcat": "出國旅遊", "rel": "Stamp", "en": "This panda stamp looks super cute.", "zh": "這張貓熊郵票看起來超級可愛。"},
+      {"id": "travel_043_s1", "subcat": "出國旅遊", "rel": "Holiday", "en": "Summer holiday is coming soon!", "zh": "暑假快到了！"},
+      {"id": "travel_043_s2", "subcat": "出國旅遊", "rel": "Holiday", "en": "We rest and play on holiday.", "zh": "在假期裡我們休息和玩耍。"},
+      {"id": "travel_044_s1", "subcat": "出國旅遊", "rel": "Sunglasses", "en": "Wear sunglasses to protect your eyes.", "zh": "戴太陽眼鏡保護你的眼睛。"},
+      {"id": "travel_044_s2", "subcat": "出國旅遊", "rel": "Sunglasses", "en": "Cool sunglasses fit you well.", "zh": "帥氣的太陽眼鏡很適合你。"},
+      {"id": "travel_045_s1", "subcat": "出國旅遊", "rel": "Umbrella", "en": "Open your umbrella when it rains.", "zh": "下雨時請撐開雨傘。"},
+      {"id": "travel_045_s2", "subcat": "出國旅遊", "rel": "Umbrella", "en": "A yellow umbrella is easy to see.", "zh": "黃色雨傘很容易被看到。"},
+      {"id": "travel_046_s1", "subcat": "出國旅遊", "rel": "Memory", "en": "Keep a happy memory of this trip.", "zh": "留住這次旅行的快樂回憶。"},
+      {"id": "travel_046_s2", "subcat": "出國旅遊", "rel": "Memory", "en": "Taking photos saves good memories.", "zh": "拍照可以留住美好的回憶。"},
+      {"id": "travel_047_s1", "subcat": "出國旅遊", "rel": "Lake", "en": "Boats sail smoothly on the lake.", "zh": "小船在湖泊上平穩航行。"},
+      {"id": "travel_047_s2", "subcat": "出國旅遊", "rel": "Lake", "en": "The clean lake reflects the sky.", "zh": "清澈的湖泊倒映著天空。"},
+      {"id": "travel_048_s1", "subcat": "出國旅遊", "rel": "Suitcase", "en": "Pack your clothes in the suitcase.", "zh": "把你的衣服裝進旅行箱。"},
+      {"id": "travel_048_s2", "subcat": "出國旅遊", "rel": "Suitcase", "en": "Roll your suitcase smoothly.", "zh": "順暢地拉著你的旅行箱。"},
+      {"id": "travel_049_s1", "subcat": "出國旅遊", "rel": "Driver", "en": "Say thank you to the bus driver.", "zh": "對公車司機說謝謝。"},
+      {"id": "travel_049_s2", "subcat": "出國旅遊", "rel": "Driver", "en": "The driver stops at red lights.", "zh": "司機在紅燈時停下來。"},
+      {"id": "travel_050_s1", "subcat": "出國旅遊", "rel": "Flag", "en": "Look at the colorful flag flying.", "zh": "看那面飄揚的彩色旗幟。"},
+      {"id": "travel_050_s2", "subcat": "出國旅遊", "rel": "Flag", "en": "Wave your small flag nicely.", "zh": "好好揮動你的小旗幟。"}
+    ]
+  },
+  "emergency": {
+    "title": "緊急情況",
+    "subcats": ["緊急情況"],
+    "vocab": [
+      {"id": "emergency_001", "subcat": "緊急情況", "en": "Help", "zh": "求助"},
+      {"id": "emergency_002", "subcat": "緊急情況", "en": "Police", "zh": "警察"},
+      {"id": "emergency_003", "subcat": "緊急情況", "en": "Fire", "zh": "火災"},
+      {"id": "emergency_004", "subcat": "緊急情況", "en": "Doctor", "zh": "醫生"},
+      {"id": "emergency_005", "subcat": "緊急情況", "en": "Nurse", "zh": "護士"},
+      {"id": "emergency_006", "subcat": "緊急情況", "en": "Hurt", "zh": "受傷"},
+      {"id": "emergency_007", "subcat": "緊急情況", "en": "Lost", "zh": "迷路"},
+      {"id": "emergency_008", "subcat": "緊急情況", "en": "Danger", "zh": "危險"},
+      {"id": "emergency_009", "subcat": "緊急情況", "en": "Safe", "zh": "安全"},
+      {"id": "emergency_010", "subcat": "緊急情況", "en": "Stop", "zh": "停止"}
+    ],
+    "sentences": [
+      {"id": "emergency_001_s1", "subcat": "緊急情況", "rel": "Help", "en": "Help! I need help here!", "zh": "救命！我這裡需要幫忙！"},
+      {"id": "emergency_001_s2", "subcat": "緊急情況", "rel": "Help", "en": "Ask the teacher for help.", "zh": "向老師尋求協助。"},
+      {"id": "emergency_002_s1", "subcat": "緊急情況", "rel": "Police", "en": "Call the police, please!", "zh": "請幫忙叫警察！"},
+      {"id": "emergency_002_s2", "subcat": "緊急情況", "rel": "Police", "en": "The police officer helps people.", "zh": "警察叔叔會幫助大家。"},
+      {"id": "emergency_003_s1", "subcat": "緊急情況", "rel": "Fire", "en": "Fire! Call for emergency now!", "zh": "火災！快點打電話報警救援！"},
+      {"id": "emergency_003_s2", "subcat": "緊急情況", "rel": "Fire", "en": "Stay away from big fire.", "zh": "遠離可怕的大火。"},
+      {"id": "emergency_004_s1", "subcat": "緊急情況", "rel": "Doctor", "en": "I need to see a doctor quickly.", "zh": "我需要盡快看醫生。"},
+      {"id": "emergency_004_s2", "subcat": "緊急情況", "rel": "Doctor", "en": "The doctor checks your health.", "zh": "醫生會檢查你的健康狀況。"},
+      {"id": "emergency_005_s1", "subcat": "緊急情況", "rel": "Nurse", "en": "The nurse will check your hand.", "zh": "護士會檢查你的手。"},
+      {"id": "emergency_005_s2", "subcat": "緊急情況", "rel": "Nurse", "en": "A kind nurse helps you feel better.", "zh": "親切的護士讓你感覺舒服些。"},
+      {"id": "emergency_006_s1", "subcat": "緊急情況", "rel": "Hurt", "en": "Ouch, my leg hurts!", "zh": "哎呀，我的腳受傷好痛！"},
+      {"id": "emergency_006_s2", "subcat": "緊急情況", "rel": "Hurt", "en": "Tell mom if you get hurt.", "zh": "如果你受傷了要告訴媽媽。"},
+      {"id": "emergency_007_s1", "subcat": "緊急情況", "rel": "Lost", "en": "I am lost, where is my mom?", "zh": "我迷路了，我媽媽在哪裡？"},
+      {"id": "emergency_007_s2", "subcat": "緊急情況", "rel": "Lost", "en": "Stay put if you are lost.", "zh": "如果迷路了請留在原地。"},
+      {"id": "emergency_008_s1", "subcat": "緊急情況", "rel": "Danger", "en": "Stop! That place is danger.", "zh": "停下來！那個地方很危險。"},
+      {"id": "emergency_008_s2", "subcat": "緊急情況", "rel": "Danger", "en": "Be careful of traffic danger.", "zh": "小心交通危險。"},
+      {"id": "emergency_009_s1", "subcat": "緊急情況", "rel": "Safe", "en": "Stay inside, you are safe here.", "zh": "待在裡面，你在這裡很安全。"},
+      {"id": "emergency_009_s2", "subcat": "緊急情況", "rel": "Safe", "en": "Hold hands to stay safe.", "zh": "牽著手保持安全。"},
+      {"id": "emergency_010_s1", "subcat": "緊急情況", "rel": "Stop", "en": "Stop right there, don't run!", "zh": "就停在那裡，不要跑！"},
+      {"id": "emergency_010_s2", "subcat": "緊急情況", "rel": "Stop", "en": "Red light means stop.", "zh": "紅燈代表要停下來。"}
+    ]
+  }
+};
+const SCENARIO_META = {
+  daily:      {icon:"👜", color:"var(--green)",  tint:"var(--green-tint)",  btn:"var(--green-btn)",  sub:"打招呼、購物、問路"},
+  travel:     {icon:"✈️", color:"var(--blue)",   tint:"var(--blue-tint)",   btn:"var(--blue-btn)",   sub:"機場、飯店、交通"},
+  restaurant: {icon:"📖", color:"var(--orange)", tint:"var(--orange-tint)", btn:"var(--orange-btn)", sub:"點餐、口味、結帳"},
+  emergency:  {icon:"➕", color:"var(--pink)",   tint:"var(--pink-tint)",   btn:"var(--pink-btn)",   sub:"求助、醫療、迷路"},
+};
+const SCENARIO_ORDER = ["daily","travel","restaurant","emergency"];
+
+/* 每個情境把「單字」跟其對應的「情境句1、情境句2」配成一個學習單元 */
+const UNITS_BY_SCENARIO = {};
+SCENARIO_ORDER.forEach(sid => {
+  const vocab = LESSON_DATA[sid].vocab;
+  const sentenceById = {};
+  LESSON_DATA[sid].sentences.forEach(s => { sentenceById[s.id] = s; });
+  UNITS_BY_SCENARIO[sid] = vocab.map(w => ({
+    word: w,
+    s1: sentenceById[w.id + "_s1"] || null,
+    s2: sentenceById[w.id + "_s2"] || null,
+  }));
+});
+
+let appSettings = { fontScale: 1.3, rate: 0.90 };
+let learnedMap = {};
+try { learnedMap = JSON.parse(localStorage.getItem("senior_eng_progress_v5") || "{}"); } catch(e) { learnedMap = {}; }
+let unitIndexByScenario = {};
+try { unitIndexByScenario = JSON.parse(localStorage.getItem("senior_eng_unit_index_v5") || "{}"); } catch(e) { unitIndexByScenario = {}; }
+
+let currentTab = "home";
+let currentScenario = "daily";
+
+function saveProgress() { try { localStorage.setItem("senior_eng_progress_v5", JSON.stringify(learnedMap)); } catch(e) {} }
+function saveUnitIndex() { try { localStorage.setItem("senior_eng_unit_index_v5", JSON.stringify(unitIndexByScenario)); } catch(e) {} }
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 1800);
+}
+
+function switchTab(name) {
+  currentTab = name;
+  ["home","vocab","favorites","profile"].forEach(t => {
+    document.getElementById("tab-"+t).classList.toggle("active", t===name);
+    document.getElementById("navtab-"+t).classList.toggle("active", t===name);
+  });
+  if (name === "vocab") renderUnit();
+  if (name === "favorites") renderFavorites();
+  if (name === "profile") renderProfile();
+  window.scrollTo(0,0);
+}
+
+function renderHome() {
+  const wrap = document.getElementById("scenario-scroll");
+  wrap.innerHTML = "";
+  const colorMap = { daily:"green", travel:"blue", restaurant:"orange", emergency:"pink" };
+  SCENARIO_ORDER.forEach(sid => {
+    const meta = SCENARIO_META[sid];
+    const title = LESSON_DATA[sid].title;
+    const card = document.createElement("button");
+    card.className = "v3-card";
+    card.style.background = "var(--"+ colorMap[sid] +"-tint)";
+    card.onclick = () => { currentScenario = sid; switchTab("vocab"); };
+    card.innerHTML = `
+      <div class="v3-icon-box">${meta.icon}</div>
+      <div class="v3-card-copy">
+        <div class="v3-card-title" style="color:${meta.color}">${title}</div>
+        <div class="v3-card-sub">${meta.sub}</div>
+      </div>
+      <div class="v3-start-btn" style="background:${meta.btn}">開始學習 ›</div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+/* ---------------- 單字學習流程 ---------------- */
+function currentUnitIndex() { return unitIndexByScenario[currentScenario] || 0; }
+function setCurrentUnitIndex(idx) {
+  const units = UNITS_BY_SCENARIO[currentScenario];
+  unitIndexByScenario[currentScenario] = Math.max(0, Math.min(idx, units.length - 1));
+  saveUnitIndex();
+}
+
+function unitProgress(sid) {
+  const units = UNITS_BY_SCENARIO[sid];
+  let done = 0;
+  units.forEach(u => {
+    const w = !!learnedMap[u.word.id];
+    const s1 = !u.s1 || !!learnedMap[u.s1.id];
+    const s2 = !u.s2 || !!learnedMap[u.s2.id];
+    if (w && s1 && s2) done++;
+  });
+  return { done, total: units.length };
+}
+
+function renderUnit() {
+  const units = UNITS_BY_SCENARIO[currentScenario];
+  const idx = currentUnitIndex();
+  const unit = units[idx];
+
+  document.getElementById("unit-topic").textContent = LESSON_DATA[currentScenario].title;
+  const topicIconBg = { daily:"#4F995722", travel:"#4D94C722", restaurant:"#CA745622", emergency:"#B45D6722" };
+  const topicIconColor = { daily:"#4F9957", travel:"#4D94C7", restaurant:"#CA7456", emergency:"#B45D67" };
+  const iconEl = document.getElementById("unit-topic-icon");
+  iconEl.textContent = SCENARIO_META[currentScenario].icon;
+  iconEl.style.background = topicIconBg[currentScenario];
+  iconEl.style.color = topicIconColor[currentScenario];
+  document.getElementById("unit-counter").querySelector("span").textContent = `第 ${idx+1} / ${units.length}`;
+  document.getElementById("unit-nav-counter").textContent = `第 ${idx+1}/${units.length} 頁`;
+
+  document.getElementById("unit-word").textContent = unit.word.en;
+  document.getElementById("unit-word-zh").textContent = unit.word.zh;
+
+  document.getElementById("unit-s1-en").textContent = unit.s1 ? unit.s1.en : "（無）";
+  document.getElementById("unit-s1-zh").textContent = unit.s1 ? unit.s1.zh : "";
+  document.getElementById("unit-s2-en").textContent = unit.s2 ? unit.s2.en : "（無）";
+  document.getElementById("unit-s2-zh").textContent = unit.s2 ? unit.s2.zh : "";
+
+  updateStarButton("word", !!learnedMap[unit.word.id]);
+  updateStarButton("s1", unit.s1 ? !!learnedMap[unit.s1.id] : true);
+  updateStarButton("s2", unit.s2 ? !!learnedMap[unit.s2.id] : true);
+
+  document.getElementById("prev-btn").disabled = idx === 0;
+  document.getElementById("next-btn").textContent = idx === units.length - 1 ? "完成本主題 ✓" : "下一頁 〉";
+
+  const prog = unitProgress(currentScenario);
+  const pct = prog.total > 0 ? Math.round(prog.done/prog.total*100) : 0;
+  document.getElementById("unit-fill").style.width = pct + "%";
+  document.getElementById("unit-complete-banner").style.display = (prog.done === prog.total) ? "block" : "none";
+}
+
+function updateStarButton(key, done) {
+  const btn = document.getElementById("star-"+key);
+  btn.textContent = done ? "⭐" : "☆";
+  btn.classList.toggle("done", done);
+}
+
+function currentUnitItem(key) {
+  const unit = UNITS_BY_SCENARIO[currentScenario][currentUnitIndex()];
+  if (key === "word") return unit.word;
+  if (key === "s1") return unit.s1;
+  if (key === "s2") return unit.s2;
+}
+
+/* 英式/美式各自獨立的按鍵：直接指定 accent 播放，兩顆鍵播放內容相同文字但語音真的不同腔調 */
+function speakItem(key, accent) {
+  const item = currentUnitItem(key);
+  if (!item) return;
+  speak(item.en, accent);
+}
+
+function toggleStar(key) {
+  const item = currentUnitItem(key);
+  if (!item) return;
+  learnedMap[item.id] = !learnedMap[item.id];
+  saveProgress();
+  renderUnit();
+}
+
+function prevUnit() {
+  const idx = currentUnitIndex();
+  if (idx === 0) return;
+  setCurrentUnitIndex(idx - 1);
+  renderUnit();
+  document.querySelector("#tab-vocab .scroll").scrollTo(0,0);
+}
+function nextUnit() {
+  const units = UNITS_BY_SCENARIO[currentScenario];
+  const idx = currentUnitIndex();
+  if (idx === units.length - 1) { showToast("🎉 這個主題已經全部學完了！"); return; }
+  setCurrentUnitIndex(idx + 1);
+  renderUnit();
+  document.querySelector("#tab-vocab .scroll").scrollTo(0,0);
+}
+
+function jumpToUnit(sid, idx) {
+  currentScenario = sid;
+  setCurrentUnitIndex(idx);
+  switchTab("vocab");
+}
+
+/* ---------------- 收藏 ---------------- */
+function renderFavorites() {
+  const list = document.getElementById("favorites-list");
+  const items = [];
+  SCENARIO_ORDER.forEach(sid => {
+    LESSON_DATA[sid].vocab.forEach(v => { if (learnedMap[v.id]) items.push({...v, scenarioTitle: LESSON_DATA[sid].title, kind:"單字"}); });
+    LESSON_DATA[sid].sentences.forEach(s => { if (learnedMap[s.id]) items.push({...s, scenarioTitle: LESSON_DATA[sid].title, kind:"情境句"}); });
+  });
+  if (items.length === 0) { list.innerHTML = `<div class="empty">還沒有標記學會的項目</div>`; return; }
+
+  // 修正：不要把單字文字直接塞進 inline onclick="" 字串裡（會跟 HTML 屬性的雙引號互咬、
+  // 遇到單引號如 It's 也會壞掉），改成先建立好 DOM 元素，再用 addEventListener 綁定，
+  // 不管單字內容是什麼都不會壞。
+  list.innerHTML = items.map((item, i) => `
+    <div class="item-card">
+      <div class="item-text">
+        <span class="item-tag">${item.scenarioTitle}</span><span class="item-tag stype">${item.kind}</span>
+        <div class="item-en">${item.en}</div>
+        <div class="item-zh">${item.zh}</div>
+      </div>
+      <button class="circle-btn" data-fav-index="${i}">🔊</button>
+    </div>
+  `).join("");
+
+  list.querySelectorAll(".circle-btn").forEach(btn => {
+    const idx = Number(btn.getAttribute("data-fav-index"));
+    btn.addEventListener("click", () => speak(items[idx].en, "en-US"));
+  });
+}
+
+/* ---------------- 我的 / 進度 ---------------- */
+function renderProfile() {
+  let total = 0, learned = 0;
+  const blocks = [];
+  SCENARIO_ORDER.forEach(sid => {
+    let sTotal = 0, sLearned = 0;
+    LESSON_DATA[sid].vocab.forEach(v => { sTotal++; total++; if (learnedMap[v.id]) { sLearned++; learned++; } });
+    LESSON_DATA[sid].sentences.forEach(s => { sTotal++; total++; if (learnedMap[s.id]) { sLearned++; learned++; } });
+    blocks.push({ sid, title: LESSON_DATA[sid].title, learned: sLearned, total: sTotal });
+  });
+  const pct = total > 0 ? Math.round(learned/total*100) : 0;
+  document.getElementById("profile-total-value").textContent = `${learned} / 480`;
+  document.getElementById("profile-total-pct").textContent = `${pct}%`;
+  document.getElementById("profile-total-fill").style.width = pct + "%";
+
+  const tintMap = { daily:"green", travel:"blue", restaurant:"orange", emergency:"pink" };
+  document.getElementById("profile-breakdown").innerHTML = blocks.map(b => {
+    const p = b.total>0 ? Math.round(b.learned/b.total*100) : 0;
+    const meta = SCENARIO_META[b.sid];
+    const tintVar = "var(--" + tintMap[b.sid] + "-tint)";
+    return `
+      <div class="theme-card-lg" style="background:${tintVar}">
+        <div class="head" onclick="toggleDetail('${b.sid}')" style="cursor:pointer">
+          <div class="icon-box">${meta.icon}</div>
+          <span class="name" style="color:${meta.color}">${b.title}</span>
+          <span class="val" style="color:${meta.color}">${b.learned}/${b.total}（${p}%）▾</span>
+        </div>
+        <div class="theme-track-lg"><div class="theme-fill-lg" style="width:${p}%;background:${meta.color}"></div></div>
+        <div class="breakdown-detail" id="detail-${b.sid}"></div>
+      </div>
+    `;
+  }).join("");
+}
+
+function toggleDetail(sid) {
+  const el = document.getElementById("detail-"+sid);
+  const willShow = !el.classList.contains("show");
+  el.classList.toggle("show", willShow);
+  if (willShow && el.innerHTML === "") {
+    const units = UNITS_BY_SCENARIO[sid];
+    el.innerHTML = units.map((u, i) => {
+      const w = !!learnedMap[u.word.id];
+      const s1 = u.s1 ? !!learnedMap[u.s1.id] : true;
+      const s2 = u.s2 ? !!learnedMap[u.s2.id] : true;
+      return `
+        <div class="detail-row" onclick="jumpToUnit('${sid}', ${i})">
+          <span class="en">${u.word.en}</span>
+          <span class="status">
+            <span class="dot ${w?'done':''}">字${w?'⭐':'○'}</span>
+            <span class="dot ${s1?'done':''}">句1${s1?'⭐':'○'}</span>
+            <span class="dot ${s2?'done':''}">句2${s2?'⭐':'○'}</span>
+          </span>
+        </div>
+      `;
+    }).join("");
+  }
+}
+
+function resetProgress() {
+  if (!confirm("確定要重置所有學習紀錄嗎？此動作無法復原。")) return;
+  learnedMap = {};
+  saveProgress();
+  renderUnit(); renderProfile();
+  showToast("🔄 學習紀錄已歸零");
+}
+
+/* ---------------- speech：英式/美式必須是真正不同語系的語音，不是同一顆換名字 ---------------- */
+let cachedVoices = [];
+function refreshVoices() { cachedVoices = window.speechSynthesis.getVoices(); }
+
+// 修正：手機瀏覽器（尤其 Safari）載入語音清單常常需要一點時間，
+// 頁面剛打開就馬上按發音，清單很可能還是空的，會誤判成「沒有偵測到語音」。
+// 這裡改成主動重試等待，最多等 1.5 秒，清單準備好了再判斷。
+function waitForVoices(maxAttempts) {
+  maxAttempts = maxAttempts || 15;
+  return new Promise(resolve => {
+    function attempt(n) {
+      const list = window.speechSynthesis.getVoices();
+      if (list.length > 0) { cachedVoices = list; resolve(list); return; }
+      if (n >= maxAttempts) { resolve(list); return; }
+      setTimeout(() => attempt(n + 1), 100);
+    }
+    attempt(0);
+  });
+}
+const FEMALE_HINTS = {
+  "en-US": ["google us english","samantha","ava","allison","susan","victoria","nicky","zira","aria","jenny","female"],
+  "en-GB": ["google uk english female","serena","hazel","kate","libby","sonia","amy","emma","olivia","female"]
+};
+const MALE_BLOCKLIST = ["daniel","fred","alex","aaron","arthur","google uk english male","ryan","guy","david","male","oliver","thomas","george","james","gordon","stuart","rishi","neel","eddy"];
+
+function isBlockedMaleVoice(text) {
+  // 關鍵修正：不能用 text.includes("male") 這種子字串比對！
+  // "female" 這個字本身就包含 "male"（fe-male），子字串比對會把女聲也一起誤刪掉。
+  // 改成「完整單字」比對，"female" 就不會再被誤判成男聲了。
+  return MALE_BLOCKLIST.some(bad => new RegExp("\\b"+bad+"\\b").test(text));
+}
+
+function pickVoice(accent) {
+  if (!cachedVoices.length) refreshVoices();
+  // 嚴格只挑語系完全對應 en-GB / en-US 的語音，兩者絕不共用同一顆
+  const langVoices = cachedVoices.filter(v => v.lang === accent || v.lang.toLowerCase() === accent.toLowerCase());
+  if (langVoices.length === 0) return null;
+  const candidates = langVoices.filter(v => !isBlockedMaleVoice(v.name.toLowerCase()));
+  const hints = FEMALE_HINTS[accent] || [];
+  let best = null, bestScore = -1;
+  (candidates.length ? candidates : langVoices).forEach(v => {
+    let score = 0;
+    hints.forEach((hint, idx) => { if (v.name.toLowerCase().includes(hint)) score += (hints.length - idx); });
+    if (!v.localService) score += 20; // 網路合成語音通常比裝置內建語音清晰自然，這次再加重權重優先挑選
+    if (score > bestScore) { bestScore = score; best = v; }
+  });
+  return best;
+}
+
+/* ---------------- 恢復的裝置預設語音邏輯 ---------------- */
+
+async function speak(text, accent) {
+  if (!("speechSynthesis" in window)) { showToast("此瀏覽器不支援語音功能"); return; }
+
+  window.speechSynthesis.cancel();
+
+  // 先確實等待語音清單載入完成（最多 1.5 秒），避免頁面剛打開語音清單還沒準備好，
+  // 就被誤判成「這支手機沒有這個語言的語音」。
+  if (cachedVoices.length === 0) {
+    await waitForVoices();
+  }
+
+  // 關鍵修正：手機瀏覽器上 cancel() 之後語音引擎不一定「立刻」釋放播放通道，
+  // 緊接著馬上 speak() 容易讓上一段語音跟新的一段疊在一起播放，聽起來就會混濁、像連音。
+  // 用短暫的延遲確保上一段確實停止乾淨後，再開始播放新的一段。
+  setTimeout(() => {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = accent;
+    utter.rate = appSettings.rate;
+    utter.pitch = 1.0;
+    const voice = pickVoice(accent);
+    if (voice) {
+      utter.voice = voice;
+      // 暫時性診斷提示：顯示這支手機實際選到的語音名稱，方便精準定位問題語音是哪一顆
+      showToast("使用語音：" + voice.name);
+    } else {
+      showToast((accent==="en-GB" ? "此裝置沒有偵測到英式語音" : "此裝置沒有偵測到美式語音") + "（將使用系統預設）");
+    }
+    window.speechSynthesis.speak(utter);
+  }, 150);
+}
+
+/* 暫時性診斷工具：列出這支手機目前所有可用的英式語音，方便一次看到全部選項 */
+function debugListGbVoices() {
+  const voices = window.speechSynthesis.getVoices().filter(v => v.lang === "en-GB" || v.lang.toLowerCase() === "en-gb");
+  if (voices.length === 0) { showToast("這支手機完全沒有偵測到 en-GB 語音"); return; }
+  alert("這支手機目前偵測到的英式語音（共 " + voices.length + " 顆）：\n\n" +
+    voices.map((v, i) => (i+1) + ". " + v.name + (v.localService ? "（本機）" : "（網路）")).join("\n"));
+}
+
+/* ---------------- settings ---------------- */
+function openSettings() { document.getElementById("settings-modal").classList.add("show"); }
+function closeSettings() { document.getElementById("settings-modal").classList.remove("show"); }
+function persistSettings() { try { localStorage.setItem("senior_eng_settings_v5", JSON.stringify(appSettings)); } catch(e) {} }
+
+function setFontScale(scale, btn) {
+  appSettings.fontScale = scale;
+  document.documentElement.style.setProperty("--scale", scale);
+  document.querySelectorAll("#m-font-md,#m-font-lg,#m-font-xl").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  persistSettings();
+}
+
+function setRate(rate, btn) {
+  appSettings.rate = rate;
+  document.querySelectorAll("#m-rate-slow,#m-rate-mid,#m-rate-norm").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  persistSettings();
+}
+
+document.getElementById("settings-modal").addEventListener("click", (e) => {
+  if (e.target.id === "settings-modal") closeSettings();
+});
+
+if ("speechSynthesis" in window) {
+  refreshVoices();
+  window.speechSynthesis.onvoiceschanged = refreshVoices;
+  // 頁面一開始載入就主動預熱一次，減少使用者第一次點擊發音時要等待的機率
+  waitForVoices();
+}
+
+try {
+  const saved = JSON.parse(localStorage.getItem("senior_eng_settings_v5") || "null");
+  if (saved) {
+    appSettings = { ...appSettings, ...saved };
+    document.documentElement.style.setProperty("--scale", appSettings.fontScale);
+    const fontId = appSettings.fontScale === 1 ? "font-md" : appSettings.fontScale === 1.6 ? "font-xl" : "font-lg";
+    const rateId = appSettings.rate === 0.78 ? "rate-slow" : appSettings.rate === 1.0 ? "rate-norm" : "rate-mid";
+    document.querySelectorAll("#m-font-md,#m-font-lg,#m-font-xl").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll("#m-rate-slow,#m-rate-mid,#m-rate-norm").forEach(b => b.classList.remove("active"));
+    document.getElementById("m-"+fontId).classList.add("active");
+    document.getElementById("m-"+rateId).classList.add("active");
+  }
+} catch(e) {}
+
+renderHome();
+</script>
+</body>
+</html>
